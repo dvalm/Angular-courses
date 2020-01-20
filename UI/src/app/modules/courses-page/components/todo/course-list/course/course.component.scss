@@ -10,6 +10,7 @@
 
     .course__description{
         font-size: 15px;
+        margin: 15px 0;
     }
 
     .course__tietle{
@@ -22,30 +23,32 @@
 
             .course__name{
                 font-size: 20px;
-                position: relative;
-                top: 7px;
             }
 
             .course__change{
                 display: flex;
             }
+
+            .course__button:focus{
+                outline: none;
+            }
     
             .buttons-background{
                 display: flex;
                 position: relative;
-                top: 5px;
-                right: 74px;
+                top: 3px;
+                right: 46px;
     
                 .background-delete{
-                    margin-right: 22px;
-                    width: 23px;
-                    height: 26px;
+                    margin-right: 16px;
+                    width: 13px;
+                    height: 14px;
                     background-image: url(src\app\styles\images\trash-alt-solid.svg);
                 }
     
                 .background-edit{
-                    width: 23px;
-                    height: 23px;
+                    width: 13px;
+                    height: 13px;
                     background-image: url(src\app\styles\images\pencil-alt-solid.svg);
                 }
             }
@@ -55,8 +58,8 @@
                 margin-left: 10px;
                 border: none;
                 background-color: $сolor-light-voilet;
-                width: 35px;
-                height: 35px;
+                width: 20px;
+                height: 20px;
                 border-radius: 50%;
             }
 
@@ -65,13 +68,11 @@
         .course__tietle-right{
             display: flex;
             font-size: 20px;
-            padding-top: 7px;
+            padding-top: 3px;
 
             .item-description{
                 margin-right: 10px;
             }
-        }
-
-       
+        }       
     }
 }

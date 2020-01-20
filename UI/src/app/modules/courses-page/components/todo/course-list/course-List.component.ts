@@ -9,14 +9,14 @@ import data from "../../../models/courses.json";
   export class CourseListComponent implements OnInit, OnChanges{
 
     public courses: any;
-    public items: Array<number> = [0, 1, 2];
+    public items: Array<number> = [0, 1, 2, 3, 4, 5];
 
     constructor(){
       this.courses = data.courses;
     }
 
     public ngOnInit(): void{
-      console.log(data.courses);
+      console.log("OnInit");
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
