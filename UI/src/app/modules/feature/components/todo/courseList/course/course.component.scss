@@ -1,0 +1,77 @@
+@import 'src/app/styles/variables/colors';
+
+.course{
+    background-color: $сolor-light;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    border-radius: 5px;
+    padding: 4px 10px;
+
+    .course__description{
+        font-size: 15px;
+    }
+
+    .course__tietle{
+        color: $сolor-dark-voilet;
+        display: flex;
+        justify-content: space-between;
+
+        .course__tietle-left{
+            display: flex;
+
+            .course__name{
+                font-size: 20px;
+                position: relative;
+                top: 7px;
+            }
+
+            .course__change{
+                display: flex;
+            }
+    
+            .buttons-background{
+                display: flex;
+                position: relative;
+                top: 5px;
+                right: 74px;
+    
+                .background-delete{
+                    margin-right: 22px;
+                    width: 23px;
+                    height: 26px;
+                    background-image: url(src\app\styles\images\trash-alt-solid.svg);
+                }
+    
+                .background-edit{
+                    width: 23px;
+                    height: 23px;
+                    background-image: url(src\app\styles\images\pencil-alt-solid.svg);
+                }
+            }
+    
+            .course__button{
+                color: $сolor-white;
+                margin-left: 10px;
+                border: none;
+                background-color: $сolor-light-voilet;
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+            }
+
+        }
+
+        .course__tietle-right{
+            display: flex;
+            font-size: 20px;
+            padding-top: 7px;
+
+            .item-description{
+                margin-right: 10px;
+            }
+        }
+
+       
+    }
+}

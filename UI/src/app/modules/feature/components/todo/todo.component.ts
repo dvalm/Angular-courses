@@ -9,20 +9,10 @@ import {ICourse} from "../../interfaces/courses";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoComponent implements OnInit {
-  public items: any = [];
+  public items: any = [ ];
 
   constructor(private httpClient: HttpClient, private cdRef: ChangeDetectorRef) { }
 
-  public ngOnInit(): void {
-  }
-
-  public getCourses(): void {
-    this.httpClient.get<ICourse[]>('http://localhost:3004/courses/')
-        .subscribe((items: ICourse[]) => {
-          this.items = items;
-          this.cdRef.markForCheck();
-          console.log(items);
-        });
-  }
+  public ngOnInit(): void {}
 
 }

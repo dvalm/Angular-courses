@@ -1,13 +1,24 @@
-.app-compomemt-wrapper{
+@import 'src/app/styles/variables/colors';
 
+.content{
+    background-color: $сolor-light-lilac;
     height: 100%;
- 
-    .content{
-        min-height: calc(100vh - 50px);
-        .header-component{
+
+    .content__top_block{
+        margin-bottom: 40px;
+
+        .content__header{
             position: sticky;
             top: 0;
         }
     }
+    
+    .content__footer{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+
 }
 

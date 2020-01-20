@@ -1,0 +1,67 @@
+@import 'src/app/styles/variables/colors';
+
+.control-panel{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .control-panel__search{
+        display: flex;
+
+        .search__input{
+            margin-right: 10px;
+            box-sizing: border-box;
+            background-color: $сolor-transparent;
+            width: 200px;
+            height: 35px;
+            padding-left: 10px;
+            border: 1px solid $сolor-light-purple;
+            border-radius: 5px;
+            color: $сolor-dark-purple;
+
+            &::placeholder {
+                color: $сolor-light-purple;
+            }
+
+            &:focus{
+                outline: none;
+            }
+        }
+    }
+
+    .search__border-button{
+        width: 120px;
+        height: 35px;
+        border: solid 1px transparent;
+        border-width: 1px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        background-image: linear-gradient($сolor-light-lilac, $сolor-light-lilac), 
+                        linear-gradient(to right, $сolor-dark-purple, $сolor-purple);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+    }
+
+    .search__button{
+        border-color: $сolor-transparent;
+        background-color: $сolor-transparent;
+        width: 100%;
+        height: 100%;
+        color: $сolor-dark-voilet;
+    }
+
+    .button{
+        &:focus{
+            outline: none;
+        }
+    }
+
+    .add-course-button__button{
+        width: 120px;
+        height: 35px;
+        border: none;
+        background-color: $сolor-light-voilet;
+        border-radius: 5px;
+    }
+
+}
