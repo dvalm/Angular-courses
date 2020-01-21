@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import data from "../../../models/courses.json";
+import { Course } from "src/app/modules/courses-page/models/course"
 
 @Component({
     selector: 'app-course-list',
@@ -8,23 +9,25 @@ import data from "../../../models/courses.json";
   })
   export class CourseListComponent implements OnInit, OnChanges{
 
-    public courses: any;
-    public items: Array<number> = [0, 1, 2, 3, 4, 5];
-
-    constructor(){
-      this.courses = data.courses;
-    }
+    public courses: Course[] = [];
 
     public ngOnInit(): void{
+      data.courses.slice(0, 6).forEach( el => {
+        this.courses.push(new Course(el.id, el.name, el.date, el.length, el.description))
+      })
       console.log("OnInit");
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
       console.log("OnChanges");
-      console.log("changes");
+      console.log(changes);
     }
 
-    public onClickDelete(): void {
-      console.log("onClickDelete");
+    public onDelete(): void {
+      console.log("onDelete");
+    }
+
+    public loadMore(): void {
+      console.log("loadMore");
     }
   }

@@ -1,8 +1,4 @@
 <div class="courses-list">
-  <div *ngFor="let item of items" class="courses-list__course">
-    <app-course [course]="courses[item]" (onClickDelete)="onClickDelete()"></app-course>
-  </div>
-  <div class="courses-list__load">
-    <button class="courses-list__button">Load more</button>
-  </div>
+  <app-course *ngFor="let course of courses" class="courses-list__course" [course]="course" (onDelete)="onDelete()"></app-course>
+  <button class="courses-list__button" (click)="loadMore()">Load more</button>
 </div>

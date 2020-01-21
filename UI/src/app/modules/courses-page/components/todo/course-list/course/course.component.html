@@ -1,10 +1,10 @@
 <div class="course">
-    <div class="course__tietle">
-        <div class="course__tietle-left">
+    <div class="course__title">
+        <div class="course__title-left">
             <div class="course__name">
-                <p>{{course.name}}</p>
+                <p>{{course.title}}</p>
             </div>
-            <div class="course__change">
+            <div class="course__control">
                 <div>
                     <button class="course__button"></button>
                     <button class="course__button" (click)="delete()"></button>
@@ -15,12 +15,12 @@
                 </div>
             </div>
         </div>
-        <div class="course__tietle-right">
+        <div class="course__title-right">
             <div class="item-description">
-                <p>{{course.length}}min</p>
+                <p>{{course.duration}}min</p>
             </div>        
             <div class="item-date-and-duration">
-                <h1>{{course.date | date:'dd.MM.yy'}}</h1>
+                <p>{{course.creationDare | date:'dd.MM.yy'}}</p>
             </div>
         </div>
     </div>

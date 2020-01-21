@@ -2,35 +2,41 @@
 
 .course{
     background-color: $сolor-light;
-    width: 100%;
     box-sizing: border-box;
-    padding: 5px;
+    margin: 20px 0;
     border-radius: 5px;
     padding: 4px 10px;
+    min-width: fit-content;
 
-    .course__description{
+    &__description{
         font-size: 15px;
         margin: 15px 0;
     }
 
-    .course__tietle{
+    &__title{
         color: $сolor-dark-voilet;
         display: flex;
         justify-content: space-between;
+        flex-shrink: 1;
 
-        .course__tietle-left{
+        &-left{
             display: flex;
 
             .course__name{
                 font-size: 20px;
             }
 
-            .course__change{
+            .course__control{
                 display: flex;
+                min-width: fit-content;
             }
 
-            .course__button:focus{
+            .course__button{
+                cursor: pointer;
+                
+                &:focus{
                 outline: none;
+                }
             }
     
             .buttons-background{
@@ -38,6 +44,7 @@
                 position: relative;
                 top: 3px;
                 right: 46px;
+                cursor: pointer;
     
                 .background-delete{
                     margin-right: 16px;
@@ -65,7 +72,7 @@
 
         }
 
-        .course__tietle-right{
+        &-right{
             display: flex;
             font-size: 20px;
             padding-top: 3px;

@@ -1,26 +1,21 @@
 @import 'src/app/styles/variables/colors';
 
 .courses-list{
-    margin: 10px 0px;
+    padding-bottom: 20px;
 
-    .courses-list__course{
-        padding: 10px 0px;
-    }
-
-    .courses-list__load{
-        margin: 10px 0;
-        border-radius: 5px;
+    &__button{
+        background-color: $сolor-transparent;
         background-color: $сolor-light;
+        border-radius: 5px;
+        border: none;
+        width: 100%;
+        padding: 25px 0;
+        cursor: pointer;
+        color: $сolor-voilet;
+        font-size: 20px;
 
-        .courses-list__button{
-            background-color: $сolor-transparent;
-            border: none;
-            width: 100%;
-            padding: 15px;
-
-            &:focus{
-                outline: none;
-            }
+        &:focus{
+            outline: none;
         }
-    }
+    }        
 }

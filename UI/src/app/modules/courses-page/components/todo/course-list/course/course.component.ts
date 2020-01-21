@@ -8,10 +8,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   export class CourseComponent{
     
     @Input() course: any;
-    @Output() onClickDelete = new EventEmitter();
+    @Output() onDelete:  EventEmitter<any> = new EventEmitter();
 
     public delete(): void{
-      this.onClickDelete.emit();
+      this.onDelete.emit();
     }
   
   }

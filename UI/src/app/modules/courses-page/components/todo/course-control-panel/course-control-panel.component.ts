@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
   })
   export class CourseControlPanelComponent{
 
-    public inputText: string;
+    public searchText: string;
 
     public search(): void{
-      console.log(this.inputText);
+      console.log(this.searchText);
     }  
   }

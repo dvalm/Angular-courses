@@ -5,7 +5,7 @@
     flex-direction: row;
     justify-content: space-between;
 
-    .control-panel__search{
+    &__search{
         display: flex;
 
         .search__input{
@@ -51,12 +51,15 @@
     }
 
     .button{
+        cursor: pointer;
+
         &:focus{
             outline: none;
         }
     }
 
     .add-course-button__button{
+        margin-left: 10px;
         width: 120px;
         height: 35px;
         border: none;
