@@ -6,6 +6,8 @@
 
     &__top_block{
         margin-bottom: 40px;
+        min-width: 460px;
+        background-color: $сolor-light-lilac;
 
         &_center{
             max-width: 1200px;

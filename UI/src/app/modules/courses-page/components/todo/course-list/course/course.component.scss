@@ -7,6 +7,11 @@
     border-radius: 5px;
     padding: 4px 10px;
     min-width: fit-content;
+    box-shadow: 2px 2px 5px 5px $сolor-lilac;
+
+    &:hover {
+        box-shadow: 1px 1px 15px 1px $сolor-purple-light-pink;
+    }
 
     &__description{
         font-size: 15px;
@@ -37,39 +42,32 @@
                 &:focus{
                 outline: none;
                 }
-            }
-    
-            .buttons-background{
-                display: flex;
-                position: relative;
-                top: 3px;
-                right: 46px;
-                cursor: pointer;
-    
-                .background-delete{
-                    margin-right: 16px;
-                    width: 13px;
-                    height: 14px;
-                    background-image: url(src\app\styles\images\trash-alt-solid.svg);
-                }
-    
-                .background-edit{
-                    width: 13px;
-                    height: 13px;
-                    background-image: url(src\app\styles\images\pencil-alt-solid.svg);
-                }
-            }
+            }    
     
             .course__button{
-                color: $сolor-white;
                 margin-left: 10px;
                 border: none;
                 background-color: $сolor-light-voilet;
+                background-size: 13px 13px;
+                background-position: center;
+                background-repeat: no-repeat;
                 width: 20px;
                 height: 20px;
                 border-radius: 50%;
-            }
 
+                &:hover {
+                    background-color: $сolor-purple-pink;
+                    box-shadow: 1px 1px 5px 1px $сolor-purple-light-pink;
+                }
+
+                &.button-delete{
+                    background-image: url(src\app\styles\images\trash-alt-solid.svg);
+                }
+
+                &.button-edit{
+                    background-image: url(src\app\styles\images\pencil-alt-solid.svg);
+                }
+            }
         }
 
         &-right{
