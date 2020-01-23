@@ -1,5 +1,9 @@
-.breadcrumbs-wrapper{
-    
-    background-color: lightgrey;
+@import 'src/app/styles/variables/colors';
+
+.breadcrumbs{
     height: 40px;
+    padding: 10px 30px;
+    font-size: 35px;  
+    color: $сolor-dark-purple;
+    background-color: $сolor-light-lilac;
 }

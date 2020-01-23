@@ -6,6 +6,7 @@ import { SharedModule } from './modules/shared/shared.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule} from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { FormsModule } from '@angular/forms';
 
 // tslint:disable-next-line:typedef
 export function HttpLoaderFactory(http: HttpClient) {
@@ -21,6 +22,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRouting,
     SharedModule,
     HttpClientModule,
+    FormsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

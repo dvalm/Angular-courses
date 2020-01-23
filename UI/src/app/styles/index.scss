@@ -1,2 +1,6 @@
 // import here all styles which should be global
 @import 'reset';
+
+body, html{
+    height: 100%;
+}

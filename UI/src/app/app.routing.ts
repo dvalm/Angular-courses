@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     // component: TodoComponent
     // If your future module not lazy loaded, you should using this way + import your feature module to app module
-    loadChildren: () => import('./modules/feature/feature.module').then(m => m.FeatureModule)
+    loadChildren: () => import('./modules/courses-page/courses-page.module').then(m => m.CoursesPageModule)
     // it's lazy module, all routing in this path will be perform by feature.routing.ts
   }
 ];

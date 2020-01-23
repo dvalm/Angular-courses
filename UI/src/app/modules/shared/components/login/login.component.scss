@@ -1,0 +1,44 @@
+@import 'src/app/styles/variables/colors';
+
+.login{
+    display: flex;
+
+    
+    .login__border-button{
+        width: 120px;
+        height: 35px;
+        border: solid 1px transparent;
+        border-width: 1px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        background-image: linear-gradient($сolor-lilac, $сolor-lilac), 
+                        linear-gradient(to right, $сolor-dark-purple, $сolor-purple);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+    }
+
+    .login__button{
+        border-color: $сolor-transparent;
+        background-color: $сolor-transparent;
+        width: 100%;
+        height: 100%;
+        color: $сolor-dark-voilet;
+        cursor: pointer;
+
+        &:focus{
+            outline: none;
+        }
+    }
+
+    .login__text{
+        color: $сolor-light-purple;
+        position: relative;
+        font-size: 15px;
+        top: 10px;
+        margin-right: 10px;
+    }
+
+    .login__text_dark{
+        color: $сolor-dark-voilet;
+    }
+}

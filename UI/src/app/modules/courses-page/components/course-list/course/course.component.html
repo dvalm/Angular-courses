@@ -1,0 +1,26 @@
+<div class="course">
+    <div class="course__title">
+        <div class="course__title-left">
+            <div class="course__name">
+                <p>{{course.title}}</p>
+            </div>
+            <div class="course__control">
+                <div>
+                    <button class="course__button button-edit"></button>
+                    <button class="course__button button-delete" (click)="delete()"></button>
+                </div>
+            </div>
+        </div>
+        <div class="course__title-right">
+            <div class="item-description">
+                <p>{{course.duration}}min</p>
+            </div>        
+            <div class="item-date-and-duration">
+                <p>{{course.creationDare | date:'dd.MM.yy'}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="course__description">
+            <p>{{course.description}}</p>
+    </div>
+</div>

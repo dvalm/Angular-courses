@@ -1,10 +1,27 @@
 @import 'src/app/styles/variables/colors';
 
-.header-wrapper{
-    height: 40px;
-    background-color: gray;
+.header{
+    background-color: $сolor-lilac;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    padding: 5px;
+    padding: 15px 30px;
+
+    .header__title{
+        display: flex;
+
+        .header__text{
+            color: $сolor-dark-voilet;
+            font-size: 20px;
+            position: relative;
+            top: 5px;
+            margin-left: 10px;
+        }
+    
+        .header__image{
+            background-image: url(src\app\styles\images\sun-regular.svg);
+            width: 35px;
+            height: 35px;
+        }
+    }    
 }
