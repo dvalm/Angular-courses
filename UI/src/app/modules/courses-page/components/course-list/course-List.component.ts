@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import data from "../../../models/courses.json";
+import data from "src/app/modules/courses-page/models/courses.json";
 import { Course } from "src/app/modules/courses-page/models/course"
 
 @Component({
