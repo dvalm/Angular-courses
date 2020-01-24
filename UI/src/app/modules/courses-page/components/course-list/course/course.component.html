@@ -1,8 +1,8 @@
-<div class="course">
+<div class="course" appCoursePlateBorder [courseDate]="course.creationDate">
     <div class="course__title">
         <div class="course__title-left">
             <div class="course__name">
-                <p>{{course.title}}</p>
+                <p><span class="course__star"></span>{{course.title}}</p>
             </div>
             <div class="course__control">
                 <div>
@@ -16,7 +16,7 @@
                 <p>{{course.duration}}min</p>
             </div>        
             <div class="item-date-and-duration">
-                <p>{{course.creationDare | date:'dd.MM.yy'}}</p>
+                <p>{{course.creationDate | date:'dd.MM.yy'}}</p>
             </div>
         </div>
     </div>

@@ -4,35 +4,17 @@ export class Course { //implements ICourse {
 
     id: number;    
     title: string;
-    creationDare: Date;
+    creationDate: Date;
     duration: number;
     description: string;
+    isTopRated: boolean;
 
-    constructor(id: number, title: string, creationDare: string, duration: number, description: string) {
+    constructor(id: number, title: string, creationDate: string, duration: number, description: string, isTopRated: boolean) {
         this.id = id;
         this.title = title;
-        this.creationDare = new Date(creationDare);
+        this.creationDate = new Date(creationDate);
         this.duration = duration;
         this.description = description;
+        this.isTopRated = isTopRated;
     }
-
-    // id: number;    
-    // name: string;
-    // date: Date;
-    // length: number;
-    // description: string;
-    // isTopRated: boolean;
-    // authors: any;
-
-
-    // constructor(id: number, name: string, date: Date, length: number, description: string, isTopRated: boolean, authors: any) {
-    //     this.id = id;
-    //     this.name = name;
-    //     this.date = date;
-    //     this.length = length;
-    //     this.description = description;
-    //     this.isTopRated = isTopRated;
-    //     this.authors = authors;
-    // }
-
 }

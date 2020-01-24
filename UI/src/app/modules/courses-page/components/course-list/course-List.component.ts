@@ -13,9 +13,10 @@ import { Course } from "src/app/modules/courses-page/models/course"
 
     public ngOnInit(): void{
       data.courses.slice(0, 6).forEach( el => {
-        this.courses.push(new Course(el.id, el.name, el.date, el.length, el.description))
+        this.courses.push(new Course(el.id, el.name, el.date, el.length, el.description, el.isTopRated))
       })
       console.log("OnInit");
+      console.log(this.courses.length);
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

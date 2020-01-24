@@ -8,12 +8,14 @@ import { FormsModule } from '@angular/forms';
 import { CourseControlPanelComponent } from 'src/app/modules/courses-page/components/course-control-panel/course-control-panel.component';
 import { CourseListComponent } from 'src/app/modules/courses-page/components/course-list/course-List.component';
 import { CourseComponent } from 'src/app/modules/courses-page/components/course-list/course/course.component';
+import { CoursePlateBorderDirective } from 'src/app/modules/courses-page/directives/course-plate-border';
 
 const declarations = [
   CoursesPageComponent,
   CourseControlPanelComponent,
   CourseListComponent,
-  CourseComponent
+  CourseComponent,
+  CoursePlateBorderDirective
 ];
 
 @NgModule({

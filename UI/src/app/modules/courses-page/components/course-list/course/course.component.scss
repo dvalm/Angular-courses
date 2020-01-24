@@ -13,6 +13,15 @@
         box-shadow: 1px 1px 15px 1px $сolor-purple-light-pink;
     }
 
+    &__star{
+        //background-size: 13px 13px;
+                //background-position: center;
+                //background-repeat: no-repeat;
+                width: 20px;
+                height: 20px;
+                //background-image: url(src\app\styles\images\trash-alt-solid.svg);
+    }
+
     &__description{
         font-size: 15px;
         margin: 15px 0;
