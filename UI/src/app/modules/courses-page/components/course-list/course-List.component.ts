@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import data from "src/app/modules/courses-page/models/courses.json";
 import { Course } from "src/app/modules/courses-page/models/course"
 
@@ -9,6 +9,7 @@ import { Course } from "src/app/modules/courses-page/models/course"
   })
   export class CourseListComponent implements OnInit, OnChanges{
 
+    @Input() searchText: string;
     public courses: Course[] = [];
 
     public ngOnInit(): void{
@@ -16,7 +17,6 @@ import { Course } from "src/app/modules/courses-page/models/course"
         this.courses.push(new Course(el.id, el.name, el.date, el.length, el.description, el.isTopRated))
       })
       console.log("OnInit");
-      console.log(this.courses.length);
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

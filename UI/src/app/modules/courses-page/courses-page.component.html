@@ -1,4 +1,4 @@
-<div class="todo">
-  <app-course-control-panel></app-course-control-panel>
-  <app-course-list></app-course-list>
+<div class="courses-page">
+  <app-course-control-panel [searchText]="searchText" (changeSearchText)="changeSearchText($event)"></app-course-control-panel>
+  <app-course-list [searchText]="searchText"></app-course-list>
 </div>

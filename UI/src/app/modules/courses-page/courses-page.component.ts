@@ -10,9 +10,14 @@ import {ICourse} from "src/app/modules/courses-page/interfaces/courses";
 })
 export class CoursesPageComponent implements OnInit {
   public items: any = [ ];
+  public searchText: string;
 
   constructor(private httpClient: HttpClient, private cdRef: ChangeDetectorRef) { }
 
   public ngOnInit(): void {}
+
+  public changeSearchText(searchText: string):void {
+    this.searchText = searchText;
+  }
 
 }
