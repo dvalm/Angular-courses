@@ -10,7 +10,7 @@ import { CourseListComponent } from 'src/app/modules/courses-page/components/cou
 import { CourseComponent } from 'src/app/modules/courses-page/components/course-list/course/course.component';
 import { CoursePlateBorderDirective } from 'src/app/modules/courses-page/directives/course-plate-border.directive';
 import { HourglassDirective } from 'src/app/modules/courses-page/directives/hourglass.directive';
-import { HoursAndMinutesPipe } from 'src/app/modules/courses-page/pipes/hours-and-minutes.pipe';
+import { DurationPipe } from 'src/app/modules/courses-page/pipes/duration.pipe';
 import { OrderCourseByDatePipe } from 'src/app/modules/courses-page/pipes/order-course-by-date.pipe';
 import { SearchCoursesPipe }  from 'src/app/modules/courses-page/pipes/search-courses.pipe';
 
@@ -21,7 +21,12 @@ const declarations = [
   CourseComponent,
   CoursePlateBorderDirective,
   HourglassDirective,
-  HoursAndMinutesPipe,
+  DurationPipe,
+  OrderCourseByDatePipe,
+  SearchCoursesPipe
+];
+
+const providers = [
   OrderCourseByDatePipe,
   SearchCoursesPipe
 ];
@@ -35,6 +40,7 @@ const declarations = [
         FormsModule,
         SharedModule,
     ],
+  providers:[ ...providers ],
   exports: [ ...declarations ]
 })
 export class CoursesPageModule { }
