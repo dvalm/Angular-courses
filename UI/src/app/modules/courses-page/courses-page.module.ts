@@ -11,7 +11,7 @@ import { CourseComponent } from 'src/app/modules/courses-page/components/course-
 import { CoursePlateBorderDirective } from 'src/app/modules/courses-page/directives/course-plate-border.directive';
 import { HourglassDirective } from 'src/app/modules/courses-page/directives/hourglass.directive';
 import { DurationPipe } from 'src/app/modules/courses-page/pipes/duration.pipe';
-import { OrderCourseByDatePipe } from 'src/app/modules/courses-page/pipes/order-course-by-date.pipe';
+import { CoursesOrderBy } from 'src/app/modules/courses-page/pipes/courses-order-by.pipe';
 import { SearchCoursesPipe }  from 'src/app/modules/courses-page/pipes/search-courses.pipe';
 
 const declarations = [
@@ -22,12 +22,12 @@ const declarations = [
   CoursePlateBorderDirective,
   HourglassDirective,
   DurationPipe,
-  OrderCourseByDatePipe,
+  CoursesOrderBy,
   SearchCoursesPipe
 ];
 
 const providers = [
-  OrderCourseByDatePipe,
+  CoursesOrderBy,
   SearchCoursesPipe
 ];
 

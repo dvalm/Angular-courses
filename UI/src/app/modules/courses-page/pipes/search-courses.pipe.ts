@@ -9,13 +9,10 @@ export class SearchCoursesPipe implements PipeTransform {
     if(!searchText){
         return courses;
     }
-    let filtredCourses: Course[] = [];
-    // courses.filter(function(item, index, array){
-    //   return item.title.indexOf(searchText) >= 0
-    // });
-    courses.forEach(function(item, i, arr) {
-        item.title.indexOf(searchText) >= 0 ? filtredCourses.push(item) : false ;
+    courses.filter(function(item, index, array){
+      return item.title.indexOf(searchText) >= 0;
     });
-    return filtredCourses; 
+    //console.log(courses);
+    return courses.slice(); 
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import data from "src/app/modules/courses-page/models/courses.json";
 import { Course } from "src/app/modules/courses-page/models/course"
-import { OrderCourseByDatePipe } from "src/app/modules/courses-page/pipes/order-course-by-date.pipe"
+import { CoursesOrderBy } from "src/app/modules/courses-page/pipes/courses-order-by.pipe"
 import { SearchCoursesPipe } from "src/app/modules/courses-page/pipes/search-courses.pipe"
 
 @Component({
@@ -15,22 +15,21 @@ import { SearchCoursesPipe } from "src/app/modules/courses-page/pipes/search-cou
     private courses: Course[] = [];
     public sortedCourses: Course[] = [];
 
-    constructor(private orderByPipe: OrderCourseByDatePipe,
+    constructor(private orderByPipe: CoursesOrderBy,
                 private searchCourse: SearchCoursesPipe){}
 
     public ngOnInit(): void{
       data.courses.slice(0, 6).forEach( el => {
         this.courses.push(new Course(el.id, el.name, el.date, el.length, el.description, el.isTopRated))
       })
-      this.sortedCourses = this.orderByPipe.transform(this.courses);
-      console.log("OnInit");
+      this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-      this.sortedCourses = this.orderByPipe.transform(this.courses);
+      this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
+      //nfr не работает
+      //this.searchCourse.transform(this.sortedCourses, this.searchText);
       this.sortedCourses = this.searchCourse.transform(this.sortedCourses, this.searchText);
-      console.log("OnChanges");
-      console.log(changes);
     }
 
     public onDelete(): void {
