@@ -9,10 +9,8 @@ export class SearchCoursesPipe implements PipeTransform {
     if(!searchText){
         return courses;
     }
-    courses.filter(function(item, index, array){
-      return item.title.indexOf(searchText) >= 0;
-    });
-    //console.log(courses);
-    return courses.slice(); 
+    return courses.filter(item =>
+      item.title.indexOf(searchText) >= 0
+    ); 
   }
 }

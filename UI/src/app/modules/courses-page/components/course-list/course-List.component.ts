@@ -27,8 +27,6 @@ import { SearchCoursesPipe } from "src/app/modules/courses-page/pipes/search-cou
 
     public ngOnChanges(changes: SimpleChanges): void {
       this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
-      //nfr не работает
-      //this.searchCourse.transform(this.sortedCourses, this.searchText);
       this.sortedCourses = this.searchCourse.transform(this.sortedCourses, this.searchText);
     }
 
