@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Course } from 'src/app/modules/courses-page/models/course';
 
 @Component({
     selector: 'app-course',
@@ -8,10 +9,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   export class CourseComponent{
     
     @Input() course: any;
-    @Output() onDelete:  EventEmitter<any> = new EventEmitter();
+    @Output() onDelete:  EventEmitter<Course> = new EventEmitter<Course>();
 
     public delete(): void{
-      this.onDelete.emit();
+      this.onDelete.emit(this.course);
     }
   
   }

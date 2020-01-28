@@ -1,16 +1,22 @@
+<!-- <div class="modal-dialog">
+    <app-delete-course-modal-dialog></app-delete-course-modal-dialog>
+</div> -->
 <div class="content">
     <div class="content__top_block">
         <div class="content__top_block_sticky">
-            <app-header></app-header>
+            <app-header [visibleLoginPage]="visibleLoginPage"></app-header>
             <div class="content__top_block_center">            
-                <app-breadcrumbs></app-breadcrumbs>
+                <app-breadcrumbs *ngIf="!visibleLoginPage"></app-breadcrumbs>
             </div>
         </div>
         <div class="content__top_block_center">            
-            <router-outlet></router-outlet>
+            <router-outlet *ngIf="!visibleLoginPage"></router-outlet>
+            <app-login-page *ngIf="visibleLoginPage"></app-login-page>
         </div>
     </div>
     <div class="content__footer">
         <app-footer></app-footer>
-    </div>
+    </div>   
+    <!-- <div class="content__background-hiddwen"></div>  -->
 </div>
+

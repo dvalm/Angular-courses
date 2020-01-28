@@ -1,0 +1,14 @@
+<div class="login">
+    <div class="login__content">
+        <div>
+            <p class="login__tietle bold">Nice to see you again!</p>
+        </div>
+        <input class="login__input login__fields" [(ngModel)]="email" placeholder="email">
+        <input  class="login__input login__fields" [(ngModel)]="password" placeholder="password" type="password">
+        <button class="login__button login__fields link" (click)="login()">Sign in</button>
+        <div class="login__text">
+            <div><p class="link">Forgot Password</p></div>
+            <div><p>Dont't have an account? <span class="bold link">Get started</span></p></div>
+        </div>
+    </div>
+</div>

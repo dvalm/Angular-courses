@@ -10,7 +10,7 @@ export class SearchCoursesPipe implements PipeTransform {
         return courses;
     }
     return courses.filter(item =>
-      item.title.indexOf(searchText) >= 0
+      item.title.toUpperCase().indexOf(searchText.toUpperCase()) >= 0
     ); 
   }
 }

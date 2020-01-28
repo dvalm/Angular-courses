@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthorizationService } from './modules/shared/services/authorization.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,12 @@ import { TranslateService } from '@ngx-translate/core';
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-  constructor(private translate: TranslateService) {
+  
+  public visibleLoginPage: boolean;
+  
+  constructor(private translate: TranslateService,
+              private authorizationService: AuthorizationService) {
     translate.setDefaultLang('en');
+    this.visibleLoginPage = !this.authorizationService.isAuthenticated();
   }
 }

@@ -5,7 +5,7 @@
             <p>angular.commons</p>
         </div>
     </div>
-    <div class="header__login">
+    <div *ngIf="!visibleLoginPage" class="header__login">
         <app-login></app-login>
     </div>
 </div>

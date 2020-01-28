@@ -1,0 +1,68 @@
+@import 'src/app/styles/variables/colors';
+
+.login{
+    min-height: 100%;
+    display: flex;
+    margin-top: 150px;
+    justify-content: center;
+
+    &__content{
+        padding: 50px;
+        box-sizing: border-box;
+        border: 2px solid $сolor-transparent;
+        border-radius: 5px;
+        border-image: linear-gradient(to right, $сolor-dark-purple 0%, $сolor-purple 100%);
+        border-image-slice: 1;
+    }
+
+    &__tietle{
+        font-size: 25px;
+        color: $сolor-dark-voilet;
+        text-align: center;
+    }
+
+    &__input{
+        color: $сolor-dark-purple;
+
+        &::placeholder {
+            color: $сolor-light-purple;
+        }        
+    }
+
+    &__fields{
+        box-sizing: border-box;
+        display: block;
+        outline: none;
+        width: 350px;
+        border-radius: 15px;
+        border: none;
+        padding: 10px;
+        box-shadow: 2px 2px 5px 5px $сolor-lilac;
+        margin: 20px 0;
+
+        &:hover {
+            box-shadow: 1px 1px 15px 1px $сolor-purple-light-pink;
+        }        
+    }
+
+    &__text{
+        font-size: 15px;
+        display: flex;
+        justify-content: space-between;
+        color: $сolor-dark-voilet;
+    }
+
+    &__button{
+        color: $сolor-white;
+        font-size: 15px;
+        background-image:  linear-gradient(to right, $сolor-light-voilet, $сolor-purple);;
+    }
+
+    .bold{
+        font-weight: bold;
+    }
+
+    .link{
+        cursor: pointer;
+    }
+}
