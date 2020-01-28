@@ -3,17 +3,25 @@
 .courses-list{
     padding-bottom: 20px;
 
-    &__button{
-        background-color: $сolor-transparent;
+    &__block{
         background-color: $сolor-light;
         border-radius: 5px;
-        border: none;
         width: 100%;
         padding: 25px 0;
-        cursor: pointer;
         color: $сolor-voilet;
         font-size: 20px;
         box-shadow: 2px 2px 5px 5px $сolor-lilac;
+    }
+
+    &__no-data{
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    &__button{
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
 
         &:hover {
             box-shadow: 1px 1px 20px 1px $сolor-purple-light-pink;

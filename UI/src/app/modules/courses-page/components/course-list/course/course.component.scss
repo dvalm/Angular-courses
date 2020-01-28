@@ -3,7 +3,7 @@
 .course{
     background-color: $сolor-light;
     box-sizing: border-box;
-    margin: 20px 0;
+    margin-top: 20px;
     border-radius: 5px;
     padding: 4px 10px;
     min-width: fit-content;
@@ -11,6 +11,28 @@
 
     &:hover {
         box-shadow: 1px 1px 15px 1px $сolor-purple-light-pink;
+    }
+
+    &-top-rated{
+        background-color: $сolor-light-purple-background;
+    }
+
+    &__icon{
+        background-position: center;
+        background-repeat: no-repeat;
+        margin-right: 5px;
+        width: 23px;
+
+        &.course__star{
+            height: 20px;
+            background-image: url(src\app\styles\images\star-regular.svg);
+        }
+
+        &.course__hourglass{
+            height: 18px;
+            margin-top: 2px;
+            background-image: url(src\app\styles\images\hourglass-half-solid.svg);
+        }         
     }
 
     &__description{
@@ -72,7 +94,7 @@
 
         &-right{
             display: flex;
-            font-size: 20px;
+            font-size: 18px;
             padding-top: 3px;
 
             .item-description{

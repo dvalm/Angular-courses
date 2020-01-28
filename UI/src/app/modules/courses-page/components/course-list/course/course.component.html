@@ -1,8 +1,11 @@
-<div class="course">
+<div class="course" [appCoursePlateBorder]="course.creationDate"
+    [ngClass]="{'course-top-rated': course.isTopRated}">
     <div class="course__title">
         <div class="course__title-left">
+            <div *ngIf="course.isTopRated" class="course__icon course__star"></div>
+            <div *hourglass="course.duration"class="course__icon course__hourglass"></div>
             <div class="course__name">
-                <p>{{course.title}}</p>
+                <p>{{course.title | uppercase}}</p>
             </div>
             <div class="course__control">
                 <div>
@@ -13,10 +16,10 @@
         </div>
         <div class="course__title-right">
             <div class="item-description">
-                <p>{{course.duration}}min</p>
+                <p>{{course.duration | appDiration }}</p>
             </div>        
             <div class="item-date-and-duration">
-                <p>{{course.creationDare | date:'dd.MM.yy'}}</p>
+                <p>{{course.creationDate | date:'dd.MMM.yy'}}</p>
             </div>
         </div>
     </div>

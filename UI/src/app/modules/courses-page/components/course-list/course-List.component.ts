@@ -1,6 +1,8 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import data from "src/app/modules/courses-page/models/courses.json";
 import { Course } from "src/app/modules/courses-page/models/course"
+import { CoursesOrderBy } from "src/app/modules/courses-page/pipes/courses-order-by.pipe"
+import { SearchCoursesPipe } from "src/app/modules/courses-page/pipes/search-courses.pipe"
 
 @Component({
     selector: 'app-course-list',
@@ -9,18 +11,23 @@ import { Course } from "src/app/modules/courses-page/models/course"
   })
   export class CourseListComponent implements OnInit, OnChanges{
 
-    public courses: Course[] = [];
+    @Input() searchText: string;
+    private courses: Course[] = [];
+    public sortedCourses: Course[] = [];
+
+    constructor(private orderByPipe: CoursesOrderBy,
+                private searchCourse: SearchCoursesPipe){}
 
     public ngOnInit(): void{
       data.courses.slice(0, 6).forEach( el => {
-        this.courses.push(new Course(el.id, el.name, el.date, el.length, el.description))
+        this.courses.push(new Course(el.id, el.name, el.date, el.length, el.description, el.isTopRated))
       })
-      console.log("OnInit");
+      this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-      console.log("OnChanges");
-      console.log(changes);
+      this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
+      this.sortedCourses = this.searchCourse.transform(this.sortedCourses, this.searchText);
     }
 
     public onDelete(): void {
