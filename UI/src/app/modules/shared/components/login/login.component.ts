@@ -15,4 +15,8 @@ import { AuthorizationService } from '../../services/authorization.service';
     public ngOnInit(){
       this.name = this.authorizationService.getUserInfo().firstName;
     }
+
+    public logout():void {
+      this.authorizationService.logout();
+    }
   }

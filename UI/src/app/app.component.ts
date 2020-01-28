@@ -16,6 +16,6 @@ export class AppComponent {
   constructor(private translate: TranslateService,
               private authorizationService: AuthorizationService) {
     translate.setDefaultLang('en');
-    this.visibleLoginPage = !this.authorizationService.isAuthenticated();
+    this.visibleLoginPage = this.authorizationService.isAuthenticated();
   }
 }
