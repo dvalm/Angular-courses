@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'app-header',
@@ -8,5 +8,10 @@ import { Component, Input } from '@angular/core';
   export class HeaderComponent{
 
     @Input() visibleLoginPage: boolean;
+    @Output() logoutSubmit:  EventEmitter<any> = new EventEmitter<any>();
+
+    public logout():void {
+      this.logoutSubmit.emit();
+    }
   
   }

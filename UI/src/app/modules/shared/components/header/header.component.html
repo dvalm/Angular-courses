@@ -6,6 +6,6 @@
         </div>
     </div>
     <div *ngIf="!visibleLoginPage" class="header__login">
-        <app-login></app-login>
+        <app-login (logoutSubmit)="logout()"></app-login>
     </div>
 </div>

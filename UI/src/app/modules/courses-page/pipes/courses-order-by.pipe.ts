@@ -4,7 +4,7 @@ import { Course } from "src/app/modules/courses-page/models/course"
 @Pipe({
   name: 'appCoursesOrderBy'
 })
-export class CoursesOrderBy implements PipeTransform {
+export class CoursesOrderByPipe implements PipeTransform {
   public transform(courses: Course[], parameter: keyof Course): Course[] {
     let sortedCourses: Course[] = [];
     courses.forEach(function(item, i, arr) {

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import { AuthorizationService } from '../shared/services/authorization.service';
 
 @Component({
@@ -12,9 +12,11 @@ export class LoginPageComponent {
 
     public email: string;
     public password: string;
+    @Output() loginPageSubmit:  EventEmitter<any> = new EventEmitter<any>();
 
     public login():void {
-        this.authorizationService.login(this.email, this.password);
+      this.authorizationService.login(this.email, this.password);
+      this.loginPageSubmit.emit();
     }
   
 }

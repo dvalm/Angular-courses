@@ -10,7 +10,7 @@ export class DurationPipe implements PipeTransform {
 
   public transform(value: number): string {
     let hours: number = 0;
-    let minutesInHour: number = 60;
+    const minutesInHour: number = 60;
     while(value >= minutesInHour){
       hours++;
       value -= minutesInHour;

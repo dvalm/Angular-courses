@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewEncapsulation, OnInit} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthorizationService } from './modules/shared/services/authorization.service';
 
@@ -9,13 +9,21 @@ import { AuthorizationService } from './modules/shared/services/authorization.se
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   
-  public visibleLoginPage: boolean;
+  public isAuthenticated: boolean;
   
   constructor(private translate: TranslateService,
               private authorizationService: AuthorizationService) {
     translate.setDefaultLang('en');
-    this.visibleLoginPage = this.authorizationService.isAuthenticated();
+    //this.visibleLoginPage = this.authorizationService.isAuthenticated();
   }
+
+  ngOnInit(): void {
+    this.handleLogin();
+  }
+
+  public handleLogin(): void { 
+    this.isAuthenticated = this.authorizationService.isAuthenticated; 
+  };
 }

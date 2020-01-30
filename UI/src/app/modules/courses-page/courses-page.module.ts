@@ -11,7 +11,7 @@ import { CourseComponent } from 'src/app/modules/courses-page/components/course-
 import { CoursePlateBorderDirective } from 'src/app/modules/courses-page/directives/course-plate-border.directive';
 import { HourglassDirective } from 'src/app/modules/courses-page/directives/hourglass.directive';
 import { DurationPipe } from 'src/app/modules/courses-page/pipes/duration.pipe';
-import { CoursesOrderBy } from 'src/app/modules/courses-page/pipes/courses-order-by.pipe';
+import { CoursesOrderByPipe } from "src/app/modules/courses-page/pipes/courses-order-by.pipe";
 import { SearchCoursesPipe }  from 'src/app/modules/courses-page/pipes/search-courses.pipe';
 import { CoursesService } from 'src/app/modules/courses-page/services/courses.service';
 import { DecimalPipe } from '@angular/common';
@@ -24,15 +24,15 @@ const declarations = [
   CoursePlateBorderDirective,
   HourglassDirective,
   DurationPipe,
-  CoursesOrderBy,
+  CoursesOrderByPipe,
   SearchCoursesPipe
 ];
 
 const providers = [
-  CoursesOrderBy,
+  CoursesOrderByPipe,
   SearchCoursesPipe,
-  CoursesService,
-  DecimalPipe
+  DecimalPipe,
+  CoursesService
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import data from "src/app/modules/courses-page/models/courses.json";
 import { Course } from "src/app/modules/courses-page/models/course"
+import { ICourse } from '../interfaces/courses';
  
 @Injectable()
 export class CoursesService{
@@ -27,13 +28,9 @@ export class CoursesService{
         );
     }
 
-    public updateCourse(course: Course, newCourse: Course): void{
-        let index = this.courses.findIndex( item => item===course );
-        for(let key in course){
-            if(key!='id' &&  this.courses[index][key]!=newCourse[key]){
-                this.courses[index][key]=newCourse[key]
-            }
-        }
+    public updateCourse(config: ICourse): void{
+        let index = this.courses.findIndex( item => item.id==config.id );
+        Object.assign(this.courses[index], config);
     }
 
     public removeCourse(course: Course): void{
