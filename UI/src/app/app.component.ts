@@ -12,11 +12,11 @@ import { AuthorizationService } from './modules/shared/services/authorization.se
 export class AppComponent implements OnInit{
   
   public isAuthenticated: boolean;
+  public modalDialogOpen: boolean;
   
   constructor(private translate: TranslateService,
               private authorizationService: AuthorizationService) {
     translate.setDefaultLang('en');
-    //this.visibleLoginPage = this.authorizationService.isAuthenticated();
   }
 
   ngOnInit(): void {
@@ -24,6 +24,7 @@ export class AppComponent implements OnInit{
   }
 
   public handleLogin(): void { 
-    this.isAuthenticated = this.authorizationService.isAuthenticated; 
+    this.isAuthenticated = true;
+    this.isAuthenticated = this.authorizationService.isAuthenticated(); 
   };
 }

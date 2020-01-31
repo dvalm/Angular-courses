@@ -3,14 +3,16 @@ import data from "src/app/modules/courses-page/models/courses.json";
 import { Course } from "src/app/modules/courses-page/models/course"
 import { ICourse } from '../interfaces/courses';
  
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class CoursesService{
 
     public courses: Course[] = [];
 
     constructor(){
-        data.courses.slice(0, 6).forEach( el => {
-            this.courses.push(new Course(el.id, el.name, el.date, el.length, el.description, el.isTopRated))
+        this.courses = data.courses.slice(0, 6).map( el => {
+            return new Course(el.id, el.name, el.date, el.length, el.description, el.isTopRated)
         })
     }
 

@@ -1,7 +1,17 @@
 <div class="modal-dialog">
-    <div><p>Delete this course?</p></div>
-    <div class="modal-dialog__buttons">
-        <button (click)="daleteCourse(true)">Yes</button>
-        <button (click)="daleteCourse(false)">No</button>
+    <div class="modal-dialog__container">
+        <div class="modal-dialog__content">
+            <div class="modal-dialog__text"><p>Delete this course?</p></div>
+            <div class="modal-dialog__buttons">
+                <div class="modal-dialog__border-button-yes">
+                    <button class="modal-dialog__button-yes button"
+                        (click)="daleteCourse(true)">Yes</button>
+                </div>
+                <button class="modal-dialog__button-no button"
+                        (click)="daleteCourse(false)">No</button>
+            </div>
+        </div>
     </div>
+    <div class="modal-dialog__background"></div>
 </div>
+    

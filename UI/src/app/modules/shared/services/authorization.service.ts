@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { User } from "src/app/modules/shared/models/user"
  
 @Injectable({
@@ -9,13 +9,10 @@ export class AuthorizationService{
     private users: User[] = [new User(1, "name1", "lastName1", "name1@mail.com", "111"),
                         new User(2, "name2", "lastName2", "name2@mail.com", "222"),
                         new User(3, "name3", "lastName3", "name3@mail.com", "333")];
-    private user: User;
     private readonly token: string = 'userToken';
     private _isAuthenticated: boolean = false;
-    // private set isAuthenticated(value: boolean) {
-    //     this._isAuthenticated = value;
-    // }
-    public get isAuthenticated(): boolean{
+
+    public isAuthenticated():boolean {
         return this._isAuthenticated;
     }
 
@@ -36,5 +33,4 @@ export class AuthorizationService{
         let user: User = JSON.parse(localStorage.getItem(this.token));
         return user ? user : null ;
     }
-
 }
