@@ -6,13 +6,17 @@ import { Course } from 'src/app/modules/courses-page/models/course';
     templateUrl: './course.component.html',
     styleUrls: ['./course.component.scss']
   })
-  export class CourseComponent{
-    
-    @Input() course: any;
-    @Output() onDelete:  EventEmitter<Course> = new EventEmitter<Course>();
+  export class CourseComponent {
 
-    public delete(): void{
-      this.onDelete.emit(this.course);
+    @Input() course: Course;
+    @Output() deleteCourse:  EventEmitter<Course> = new EventEmitter<Course>();
+    @Output() changePage:  EventEmitter<any> = new EventEmitter();
+
+    public delete(): void {
+      this.deleteCourse.emit(this.course);
     }
-  
+
+    public openDescriptionCourse(): void {
+      this.changePage.emit();
+    }
   }

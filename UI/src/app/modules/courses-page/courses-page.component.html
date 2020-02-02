@@ -1,4 +1,6 @@
 <div class="courses-page">
-  <app-course-control-panel [searchText]="searchText" (changeSearchText)="changeSearchText($event)"></app-course-control-panel>
-  <app-course-list [searchText]="searchText"></app-course-list>
+  <app-course-description *ngIf="isCourseDescriptionOpen"
+                          (changePage)="changePage($event)"></app-course-description>
+  <app-course-list *ngIf="!isCourseDescriptionOpen"
+                          (changePage)="changePage($event)"></app-course-list>
 </div>

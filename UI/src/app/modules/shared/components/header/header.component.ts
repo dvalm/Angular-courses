@@ -5,13 +5,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
   })
-  export class HeaderComponent{
+  export class HeaderComponent {
 
     @Input() visibleLoginPage: boolean;
-    @Output() logoutSubmit:  EventEmitter<any> = new EventEmitter<any>();
+    @Output() logoutSubmit:  EventEmitter<any> = new EventEmitter();
 
-    public logout():void {
+    public logout(): void {
       this.logoutSubmit.emit();
     }
-  
   }

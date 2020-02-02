@@ -7,7 +7,9 @@ import { HeaderComponent } from 'src/app/modules/shared/components/header/header
 import { LoginComponent } from 'src/app/modules/shared/components/login/login.component';
 import { FooterComponent } from 'src/app/modules/shared/components/footer/footer.component';
 import { BreadcrumbsComponent } from 'src/app/modules/shared/components/breadcrumbs/breadcrumbs.component';
-import { DeleteCourseModalDialogComponent } from 'src/app/modules/shared/components/delete-course-modal-dialog/delete-course-modal-dialog.component';
+import {
+  DeleteCourseModalDialogComponent
+} from 'src/app/modules/shared/components/delete-course-modal-dialog/delete-course-modal-dialog.component';
 
 const declarations = [
   HeaderComponent,
@@ -31,6 +33,7 @@ const declarations = [
       multi: true
     },
   ],
+  entryComponents: [ DeleteCourseModalDialogComponent ],
   exports: [
     TranslateModule,
     HttpClientModule,

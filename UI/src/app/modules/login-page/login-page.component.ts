@@ -8,15 +8,14 @@ import { AuthorizationService } from '../shared/services/authorization.service';
 })
 export class LoginPageComponent {
 
-    constructor(private authorizationService: AuthorizationService){}
+    constructor(private authorizationService: AuthorizationService) {}
 
     public email: string;
     public password: string;
-    @Output() loginPageSubmit:  EventEmitter<any> = new EventEmitter<any>();
+    @Output() loginPageSubmit:  EventEmitter<any> = new EventEmitter();
 
-    public login():void {
+    public login(): void {
       this.authorizationService.login(this.email, this.password);
       this.loginPageSubmit.emit();
     }
-  
 }

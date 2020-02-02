@@ -1,8 +1,8 @@
-import { ICourse } from "../interfaces/courses";
+import { ICourse } from '../interfaces/courses';
 
 export class Course implements ICourse {
 
-    id: number;    
+    id: number;
     title: string;
     creationDate: Date;
     duration: number;

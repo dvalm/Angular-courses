@@ -9,11 +9,11 @@ import { AuthorizationService } from './modules/shared/services/authorization.se
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements OnInit{
-  
+export class AppComponent implements OnInit {
+
   public isAuthenticated: boolean;
   public modalDialogOpen: boolean;
-  
+
   constructor(private translate: TranslateService,
               private authorizationService: AuthorizationService) {
     translate.setDefaultLang('en');
@@ -23,8 +23,7 @@ export class AppComponent implements OnInit{
     this.handleLogin();
   }
 
-  public handleLogin(): void { 
-    this.isAuthenticated = true;
-    this.isAuthenticated = this.authorizationService.isAuthenticated(); 
-  };
+  public handleLogin(): void {
+    this.isAuthenticated = this.authorizationService.isAuthenticated();
+  }
 }
