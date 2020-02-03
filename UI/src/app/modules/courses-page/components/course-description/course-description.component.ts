@@ -7,7 +7,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
   })
   export class CoursesDescriptionComponent {
 
-    @Output() changePage:  EventEmitter<any> = new EventEmitter();
+    @Output() changePage:  EventEmitter<boolean> = new EventEmitter();
 
     public back(): void {
         this.changePage.emit(false);

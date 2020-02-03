@@ -15,7 +15,7 @@ import {
   })
   export class CourseListComponent implements OnInit, OnChanges {
 
-    @Output() changePage:  EventEmitter<any> = new EventEmitter();
+    @Output() changePage:  EventEmitter<boolean> = new EventEmitter();
 
     private searchText: string;
     private courses: Course[] = [];

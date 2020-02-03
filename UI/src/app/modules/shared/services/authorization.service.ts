@@ -6,7 +6,7 @@ import { User } from 'src/app/modules/shared/models/user';
 })
 export class AuthorizationService {
 
-    private users: User[] = [new User(1, 'name1', 'lastName1', 'i', '111'),
+    private users: User[] = [new User(1, 'name1', 'lastName1', 'name1@mail.com', '111'),
                         new User(2, 'name2', 'lastName2', 'name2@mail.com', '222'),
                         new User(3, 'name3', 'lastName3', 'name3@mail.com', '333')];
     private readonly token: string = 'userToken';
@@ -17,10 +17,10 @@ export class AuthorizationService {
     }
 
     public login(email: string, password: string): void {
-        const user = this.users.find( (user: User) => user.email === email && user.password === password);
-        if (user) {
+        const matchedUser = this.users.find( (user: User) => user.email === email && user.password === password);
+        if (matchedUser) {
             this._isAuthenticated = true;
-            localStorage.setItem(this.token, JSON.stringify(user));
+            localStorage.setItem(this.token, JSON.stringify(matchedUser));
         }
     }
 

@@ -8,7 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   export class CourseControlPanelComponent {
 
     @Output() changeSearchText:  EventEmitter<string> = new EventEmitter<string>();
-    @Output() changePage:  EventEmitter<any> = new EventEmitter();
+    @Output() changePage:  EventEmitter<void> = new EventEmitter();
 
     public searchText: string;
 

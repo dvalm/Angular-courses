@@ -21,7 +21,7 @@ export class CoursePlateBorderDirective implements OnInit {
     }
 
     private createCourseBorder(): void {
-        if (this.courseDate < this.currentDate && (this.courseDate.getTime() >= (this.currentDate.getTime() - this.day * 14) )){
+        if (this.courseDate < this.currentDate && (this.courseDate.getTime() >= (this.currentDate.getTime() - this.day * 14) )) {
             this.hostHTMLElemenStyle.borderLeft = `3px solid ${this.green}`;
             this.hostHTMLElemenStyle.paddingLeft = '7px';
         } else if (this.currentDate < this.courseDate) {

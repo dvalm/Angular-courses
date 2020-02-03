@@ -14,7 +14,7 @@ import { HourglassDirective } from 'src/app/modules/courses-page/directives/hour
 import { DurationPipe } from 'src/app/modules/courses-page/pipes/duration.pipe';
 import { CoursesOrderByPipe } from 'src/app/modules/courses-page/pipes/courses-order-by.pipe';
 import { SearchCoursesPipe } from 'src/app/modules/courses-page/pipes/search-courses.pipe';
-import { CoursesService } from 'src/app/modules/courses-page/services/courses.service'
+import { CoursesService } from 'src/app/modules/courses-page/services/courses.service';
 
 const declarations = [
   CoursesPageComponent,

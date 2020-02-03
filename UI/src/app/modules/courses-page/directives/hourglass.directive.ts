@@ -7,7 +7,7 @@ export class HourglassDirective {
 
     @Input('hourglass') maxDuration = 90;
 
-    constructor(private templateRef: TemplateRef<any>,
+    constructor(private templateRef: TemplateRef<void>,
                 private viewContainer: ViewContainerRef) {}
 
     @Input() set hourglass(duration: number) {

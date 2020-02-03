@@ -10,7 +10,7 @@ import { Course } from 'src/app/modules/courses-page/models/course';
 
     @Input() course: Course;
     @Output() deleteCourse:  EventEmitter<Course> = new EventEmitter<Course>();
-    @Output() changePage:  EventEmitter<any> = new EventEmitter();
+    @Output() changePage:  EventEmitter<void> = new EventEmitter();
 
     public delete(): void {
       this.deleteCourse.emit(this.course);

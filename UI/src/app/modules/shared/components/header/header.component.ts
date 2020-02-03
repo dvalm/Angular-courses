@@ -8,7 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   export class HeaderComponent {
 
     @Input() visibleLoginPage: boolean;
-    @Output() logoutSubmit:  EventEmitter<any> = new EventEmitter();
+    @Output() logoutSubmit:  EventEmitter<void> = new EventEmitter();
 
     public logout(): void {
       this.logoutSubmit.emit();
