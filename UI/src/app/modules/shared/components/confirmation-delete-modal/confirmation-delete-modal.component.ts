@@ -1,9 +1,10 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'app-confirmation-delete-modal',
     templateUrl: './confirmation-delete-modal.component.html',
-    styleUrls: ['./confirmation-delete-modal.component.scss']
+    styleUrls: ['./confirmation-delete-modal.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
   })
   export class ConfirmationDeleteModalComponent {
 

@@ -1,0 +1,10 @@
+<div class="course-date">
+    <p class="course-date__text">Date</p>
+    <div class="course-date__field" [formGroup]="formGroup">
+        <input class="course-date__input"
+            (input)="inputValidator($event)"
+            placeholder="dd/mm/yyyy"
+            [formControlName]="formControlName"
+            required>
+    </div>
+</div>

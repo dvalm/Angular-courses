@@ -1,4 +1,6 @@
-import { Component, OnInit, OnChanges, SimpleChanges, EventEmitter, Output, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component, OnInit, OnChanges, SimpleChanges, EventEmitter, Output, ChangeDetectionStrategy, ChangeDetectorRef
+} from '@angular/core';
 import { Course } from 'src/app/modules/courses-page/models/course';
 import { CoursesOrderByPipe } from 'src/app/modules/courses-page/pipes/courses-order-by.pipe';
 import { SearchCoursesPipe } from 'src/app/modules/courses-page/pipes/search-courses.pipe';
@@ -16,7 +18,8 @@ import {
   })
   export class CourseListComponent implements OnInit, OnChanges {
 
-    @Output() changePage:  EventEmitter<boolean> = new EventEmitter();
+    @Output() changePage:  EventEmitter<void> = new EventEmitter();
+    @Output() changeDescriptionCourse:  EventEmitter<Course> = new EventEmitter();
 
     private searchText: string;
     private courses: Course[] = [];
@@ -62,7 +65,11 @@ import {
       this.sortedCourses = this.searchCourse.transform(this.sortedCourses, this.searchText);
     }
 
-    public openDescriptionCourse(): void {
-      this.changePage.emit(true);
+    public openDescriptionCourse(course: Course): void {
+      this.changeDescriptionCourse.emit(course);
+    }
+
+    public addCourse(): void {
+      this.changePage.emit();
     }
   }

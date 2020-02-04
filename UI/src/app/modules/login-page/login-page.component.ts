@@ -1,10 +1,11 @@
-import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import { AuthorizationService } from '../shared/services/authorization.service';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPageComponent {
 

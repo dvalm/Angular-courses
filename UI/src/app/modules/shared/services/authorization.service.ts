@@ -13,7 +13,9 @@ export class AuthorizationService {
     private readonly token: string = 'userToken';
     private _isAuthenticated = false;
 /* tslint: enable */
+
     public isAuthenticated(): boolean {
+        this.readUserFromLocalStorage();
         return this._isAuthenticated;
     }
 
@@ -33,5 +35,14 @@ export class AuthorizationService {
     public getUserInfo(): User {
         const user: User = JSON.parse(localStorage.getItem(this.token));
         return user ? user : null ;
+    }
+
+    private readUserFromLocalStorage(): void {
+        if (localStorage.getItem(this.token)) {
+            const matchedUser = JSON.parse(localStorage.getItem(this.token));
+            if (this.users.find( (user: User) => user.email === matchedUser.email && user.password === matchedUser.password)) {
+                this._isAuthenticated = true;
+            }
+        }
     }
 }
