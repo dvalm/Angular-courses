@@ -5,13 +5,14 @@ import { User } from 'src/app/modules/shared/models/user';
     providedIn: 'root'
 })
 export class AuthorizationService {
-
+/* tslint:disable */
+    //1,2,3 are fake user ids
     private users: User[] = [new User(1, 'name1', 'lastName1', 'name1@mail.com', '111'),
                         new User(2, 'name2', 'lastName2', 'name2@mail.com', '222'),
                         new User(3, 'name3', 'lastName3', 'name3@mail.com', '333')];
     private readonly token: string = 'userToken';
     private _isAuthenticated = false;
-
+/* tslint: enable */
     public isAuthenticated(): boolean {
         return this._isAuthenticated;
     }

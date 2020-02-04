@@ -8,15 +8,15 @@ import { LoginComponent } from 'src/app/modules/shared/components/login/login.co
 import { FooterComponent } from 'src/app/modules/shared/components/footer/footer.component';
 import { BreadcrumbsComponent } from 'src/app/modules/shared/components/breadcrumbs/breadcrumbs.component';
 import {
-  DeleteCourseModalDialogComponent
-} from 'src/app/modules/shared/components/delete-course-modal-dialog/delete-course-modal-dialog.component';
+  ConfirmationDeleteModalComponent
+} from 'src/app/modules/shared/components/confirmation-delete-modal/confirmation-delete-modal.component';
 
 const declarations = [
   HeaderComponent,
   LoginComponent,
   FooterComponent,
   BreadcrumbsComponent,
-  DeleteCourseModalDialogComponent
+  ConfirmationDeleteModalComponent
 ];
 
 @NgModule({
@@ -33,7 +33,7 @@ const declarations = [
       multi: true
     },
   ],
-  entryComponents: [ DeleteCourseModalDialogComponent ],
+  entryComponents: [ ConfirmationDeleteModalComponent ],
   exports: [
     TranslateModule,
     HttpClientModule,

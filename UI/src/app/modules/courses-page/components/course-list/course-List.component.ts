@@ -1,17 +1,18 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, EventEmitter, Output, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Course } from 'src/app/modules/courses-page/models/course';
 import { CoursesOrderByPipe } from 'src/app/modules/courses-page/pipes/courses-order-by.pipe';
 import { SearchCoursesPipe } from 'src/app/modules/courses-page/pipes/search-courses.pipe';
 import { CoursesService } from '../../services/courses.service';
-import { ModalService } from 'src/app/modules/shared/services/madal.service';
+import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import {
-  DeleteCourseModalDialogComponent
-} from 'src/app/modules/shared/components/delete-course-modal-dialog/delete-course-modal-dialog.component';
+  ConfirmationDeleteModalComponent
+} from 'src/app/modules/shared/components/confirmation-delete-modal/confirmation-delete-modal.component';
 
 @Component({
     selector: 'app-course-list',
     templateUrl: './course-list.component.html',
-    styleUrls: ['./course-list.component.scss']
+    styleUrls: ['./course-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
   })
   export class CourseListComponent implements OnInit, OnChanges {
 
@@ -24,10 +25,11 @@ import {
     constructor(private orderByPipe: CoursesOrderByPipe,
                 private searchCourse: SearchCoursesPipe,
                 private coursesService: CoursesService,
-                private modalService: ModalService) {}
+                private modalService: ModalService,
+                private changeDetectorRef: ChangeDetectorRef) {}
 
     public ngOnInit(): void {
-      this.courses = this.coursesService.courses;
+      this.courses = this.coursesService.getAllCourses();
       this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
     }
 
@@ -41,20 +43,19 @@ import {
     }
 
     public onDelete(course: Course): void {
-      const modalRef = this.modalService.openModal(DeleteCourseModalDialogComponent);
+      const modalRef = this.modalService.openModal(ConfirmationDeleteModalComponent);
       modalRef.instance.userAction.subscribe( (isDelete: boolean) => {
         if (isDelete) {
           this.coursesService.removeCourse(course);
-          this.courses = this.coursesService.courses;
+          this.courses = this.coursesService.getAllCourses();
           this.updateCourseVisability();
+          this.changeDetectorRef.detectChanges();
         }
         this.modalService.closeModel(modalRef);
       });
     }
 
-    public loadMore(): void {
-      console.log('loadMore');
-    }
+    public loadMore(): void {}
 
     public updateCourseVisability(): void {
       this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');

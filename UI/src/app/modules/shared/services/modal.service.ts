@@ -1,8 +1,4 @@
 import {Injectable, ApplicationRef, Injector, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef} from '@angular/core';
-import { DeleteCourseModalDialogComponent } from '../components/delete-course-modal-dialog/delete-course-modal-dialog.component';
-import { Course } from '../../courses-page/models/course';
-import { CoursesService } from '../../courses-page/services/courses.service';
-import { CourseListComponent } from '../../courses-page/components/course-list/course-list.component';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +8,7 @@ export class ModalService {
     constructor(private appRef: ApplicationRef,
                 private injector: Injector,
                 private resolver: ComponentFactoryResolver) {}
-
+ /* tslint:disable */
     public openModal(modalInstance: any): ComponentRef<any> {
         return this.attachComponentToBody(modalInstance);
     }
@@ -33,6 +29,7 @@ export class ModalService {
     }
 
     private removeComponentFromBody(componentRef: ComponentRef<any>): void {
+/* tslint:enable */
         this.appRef.detachView(componentRef.hostView);
         componentRef.destroy();
     }

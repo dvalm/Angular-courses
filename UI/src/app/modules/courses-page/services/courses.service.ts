@@ -7,14 +7,17 @@ import { ICourse } from '../interfaces/courses';
 export class CoursesService {
 
     public courses: Course[] = [];
-
+/* tslint:disable */
+    // 6 is random number
+    private maxCourseAmount = 6;
+/* tslint:enable */
     constructor() {
-        this.courses = data.courses.slice(0, 6).map( el => {
+        this.courses = data.courses.slice(0, this.maxCourseAmount).map( (el: ICourse) => {
             return new Course(el.id, el.name, el.date, el.length, el.description, el.isTopRated);
         });
     }
 
-    public getCoursesList(): Course[] {
+    public getAllCourses(): Course[] {
         return this.courses;
     }
 

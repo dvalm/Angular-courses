@@ -9,7 +9,7 @@ import { AuthorizationService } from '../../services/authorization.service';
   export class LoginComponent implements OnInit {
 
     public name: string;
-    @Output() logoutSubmit:  EventEmitter<any> = new EventEmitter();
+    @Output() logoutSubmit:  EventEmitter<void> = new EventEmitter();
 
     constructor(public authorizationService: AuthorizationService) {}
 
