@@ -1,6 +1,12 @@
 <div class="courses-list">
+  <app-course-control-panel (changeSearchText)="changeSearchText($event)"
+                            (changePage)="openDescriptionCourse()"></app-course-control-panel>
   <ng-container *ngIf="sortedCourses.length; else noCoursesBlock">
-    <app-course *ngFor="let course of sortedCourses" class="courses-list__course" [course]="course" (onDelete)="onDelete()"></app-course>
+    <app-course *ngFor="let course of sortedCourses"
+                class="courses-list__course"
+                [course]="course" 
+                (deleteCourse)="onDelete(course)"
+                (changePage)="openDescriptionCourse()"></app-course>
     <button class="courses-list__button courses-list__block" (click)="loadMore()">Load more</button>
   </ng-container>
   <ng-template #noCoursesBlock>

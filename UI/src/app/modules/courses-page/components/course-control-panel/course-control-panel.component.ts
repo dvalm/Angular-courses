@@ -5,13 +5,18 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     templateUrl: './course-control-panel.component.html',
     styleUrls: ['./course-control-panel.component.scss']
   })
-  export class CourseControlPanelComponent{
+  export class CourseControlPanelComponent {
 
-    @Input() searchText: string;
-    @Output() changeSearchText:  EventEmitter<any> = new EventEmitter<string>();
+    @Output() changeSearchText:  EventEmitter<string> = new EventEmitter<string>();
+    @Output() changePage:  EventEmitter<void> = new EventEmitter();
 
-    public search(): void{
+    public searchText: string;
+
+    public search(): void {
       this.changeSearchText.emit(this.searchText);
-      console.log(this.searchText);
-    }  
+    }
+
+    public openDescriptionCourse(): void {
+      this.changePage.emit();
+    }
   }

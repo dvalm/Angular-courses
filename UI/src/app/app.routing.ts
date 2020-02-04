@@ -1,5 +1,4 @@
 import { Routes, RouterModule } from '@angular/router';
-// import {TodoComponent} from './modules/feature/components/todo/todo.component';
 
 /* tslint:disable:typedef */
 /* tslint:disable:arrow-parens */

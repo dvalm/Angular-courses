@@ -3,15 +3,21 @@ import {Directive, ElementRef, Input, OnInit} from '@angular/core';
 @Directive({
     selector: '[appCoursePlateBorder]'
 })
-export class CoursePlateBorderDirective implements OnInit{
-    
+export class CoursePlateBorderDirective implements OnInit {
+
     @Input('appCoursePlateBorder') courseDate: Date;
     private currentDate: Date;
-    private green: string = "#d9e46a";
-    private blue: string = "#98e1ea";
-    private hostHTMLElemenStyle: any = this.elementRef.nativeElement.style;
-     
-    constructor(private elementRef: ElementRef){
+    private green = '#d9e46a';
+    private blue = '#98e1ea';
+/* tslint:disable */
+    // 100 * 60 * 60 * 24 is day in seconds
+    // 14 days are in two weeks
+    private day = 1000 * 60 * 60 * 24;
+    private twoWeaks = 14;
+/* tslint:enable */
+    private hostHTMLElemenStyle = this.elementRef.nativeElement.style;
+
+    constructor(private elementRef: ElementRef) {
         this.currentDate = new Date();
     }
 
@@ -19,14 +25,13 @@ export class CoursePlateBorderDirective implements OnInit{
        this.createCourseBorder();
     }
 
-    private createCourseBorder(): void{
-        if(this.courseDate < this.currentDate && (this.courseDate.getTime() >= (this.currentDate.getTime() - 1000*60*60*24*14))){
+    private createCourseBorder(): void {
+        if (this.courseDate < this.currentDate && (this.courseDate.getTime() >= (this.currentDate.getTime() - this.day * this.twoWeaks) )) {
             this.hostHTMLElemenStyle.borderLeft = `3px solid ${this.green}`;
-            this.hostHTMLElemenStyle.paddingLeft = "7px"; 
-        }else if(this.currentDate < this.courseDate){
-            console.log(typeof this.elementRef.nativeElement.style);
+            this.hostHTMLElemenStyle.paddingLeft = '7px';
+        } else if (this.currentDate < this.courseDate) {
             this.hostHTMLElemenStyle.borderLeft = `3px solid ${this.blue}`;
-            this.hostHTMLElemenStyle.paddingLeft = "7px"; 
+            this.hostHTMLElemenStyle.paddingLeft = '7px';
         }
     }
 }

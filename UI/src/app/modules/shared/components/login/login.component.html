@@ -1,9 +1,9 @@
 <div class="login">
     <div class="login__text">
-        <p>you're signed in as <span class="login__text_dark">Lera</span></p>
+        <p>you're signed in as <span class="login__text_dark">{{name}}</span></p>
     </div>
     <div class="login__border-button">
-        <button class="login__button">log out</button>
+        <button class="login__button" (click)="logout()">log out</button>
     </div>
     
 </div>
