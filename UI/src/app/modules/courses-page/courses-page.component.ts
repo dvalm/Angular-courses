@@ -13,7 +13,8 @@ export class CoursesPageComponent implements OnInit {
   public isCourseDescriptionOpen = false;
   public course: Course;
 
-  constructor(private httpClient: HttpClient, private cdRef: ChangeDetectorRef) { }
+  constructor(private httpClient: HttpClient,
+              private cdRef: ChangeDetectorRef) { }
 
   public ngOnInit(): void {}
 

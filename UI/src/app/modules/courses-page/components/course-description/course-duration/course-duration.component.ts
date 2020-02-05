@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input, Attribute, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-course-duration',
@@ -7,13 +7,11 @@ import { FormGroup, FormControl } from '@angular/forms';
     styleUrls: ['./course-duration.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
   })
-  export class CourseDurationComponent implements OnInit {
+  export class CourseDurationComponent {
 /* tslint:disable */
-    @Input('formGroupName') formGroup: FormGroup;
+    @Input('parentForm') formGroup: FormGroup;
     @Input('courseFormControlName') formControlName: string;
 /* tslint:enable */
-
-    public ngOnInit(): void {}
 
 /* tslint:disable */
     public inputValidator(event: any): void {

@@ -6,8 +6,7 @@
                 #duration
                 (input)="inputValidator($event)"
                 placeholder="What is the duation of the course? (in minutes)"
-                [formControlName]="formControlName"
-                required>   
+                [formControlName]="formControlName">   
         </div>
         <p *ngIf="duration.value" 
             class="course-duration__text">

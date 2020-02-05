@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule, DecimalPipe } from '@angular/common';
+import { NgModule} from '@angular/core';
+import { CommonModule, DecimalPipe, DatePipe } from '@angular/common';
 import { CoursesPageRoutingModule } from 'src/app/modules/courses-page/courses-page.routing';
 import { CoursesPageComponent } from 'src/app/modules/courses-page/courses-page.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
@@ -13,6 +13,9 @@ import { CourseDateComponent } from 'src/app/modules/courses-page/components/cou
 import {
   CourseDurationComponent
 } from 'src/app/modules/courses-page/components/course-description/course-duration/course-duration.component';
+import {
+  CourseAuthorsComponent
+} from 'src/app/modules/courses-page/components/course-description/course-authors/course-authors.component';
 import { CoursePlateBorderDirective } from 'src/app/modules/courses-page/directives/course-plate-border.directive';
 import { HourglassDirective } from 'src/app/modules/courses-page/directives/hourglass.directive';
 import { DurationPipe } from 'src/app/modules/courses-page/pipes/duration.pipe';
@@ -28,6 +31,7 @@ const declarations = [
   CoursesDescriptionComponent,
   CourseDateComponent,
   CourseDurationComponent,
+  CourseAuthorsComponent,
   CoursePlateBorderDirective,
   HourglassDirective,
   DurationPipe,
@@ -39,6 +43,7 @@ const providers = [
   CoursesOrderByPipe,
   SearchCoursesPipe,
   DecimalPipe,
+  DatePipe,
   CoursesService
 ];
 
