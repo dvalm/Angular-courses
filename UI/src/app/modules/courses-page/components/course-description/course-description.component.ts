@@ -5,6 +5,8 @@ import { DatePipe } from '@angular/common';
 import { CoursesService } from '../../services/courses.service';
 import { ICourse } from '../../interfaces/courses';
 
+type TNullable<T> = T | null;
+
 @Component({
     selector: 'app-course-description',
     templateUrl: './course-description.component.html',
@@ -14,7 +16,7 @@ import { ICourse } from '../../interfaces/courses';
   export class CoursesDescriptionComponent implements OnInit {
 
     @Output() changePage:  EventEmitter<void> = new EventEmitter();
-    @Input() course: Course;
+    @Input() course: TNullable<Course>;
     public courseDescription: FormGroup;
 
     constructor(private fb: FormBuilder,
@@ -22,44 +24,41 @@ import { ICourse } from '../../interfaces/courses';
                 private coursesService: CoursesService) {}
 
     public ngOnInit(): void {
-      if (!this.course) {
-        this.courseDescription = this.fb.group({
-          title: ['', Validators.required],
-          description: ['', Validators.required],
-          duration: ['', Validators.required],
-          date: ['', Validators.required],
-          isTopRated: [false]
-        });
-      } else {
-        this.courseDescription = this.fb.group({
-          title: [this.course.title, Validators.required],
-          description: [this.course.description, Validators.required],
-          creationDate: [this.datePipe.transform(this.course.creationDate, 'dd/MM/yyyy'), Validators.required],
-          duration: [this.course.duration, Validators.required],
-          isTopRated: [this.course.isTopRated]
-        });
-      }
+      this.setCourseDescripton();
     }
 
     public back(): void {
         this.changePage.emit();
     }
 
-    public save(): void {
+    public submit(): void {
       const course: ICourse = this.courseDescription.value;
-/* tslint:disable */
-      course.creationDate = new Date(parseInt(course.date.slice(6)), parseInt(course.date.slice(3,5))-1, parseInt(course.date.slice(0,2)));
-/* tslint:enable */
-      if (this.course) {
-        course.id = this.course.id;
-        this.coursesService.updateCourse(course);
-      } else {
-/* tslint:disable */
-        let id = parseInt(Math.random().toFixed(7).slice(2));
-/* tslint:enable */
-        this.coursesService.createCourse(new Course(id, course.title, course.creationDate.toString(),
-                                         course.duration, course.description, course.isTopRated));
-      }
+      course.creationDate = this.parseDateString(course.date);
+      //course.id = this.course.id;
+      //this.coursesService.updateCourse(course);
+      this.coursesService.createCourse(new Course(course.id, course.title, course.creationDate.toString(),
+                                          course.duration, course.description, course.isTopRated));
       this.back();
     }
-  }
+
+    private setCourseDescripton(): void {
+      const course: Course = this.course || new Course(null, '', '', null, '', false);
+      this.courseDescription = this.fb.group({
+          title: [course.title, Validators.required],
+          description: [course.description, Validators.required],
+          date: [this.datePipe.transform(course.creationDate, 'dd/MM/yyyy'), Validators.required],
+          duration: [course.duration, Validators.required],
+          isTopRated: [course.isTopRated]
+      });
+    }
+
+    private parseDateString(dateString: string): Date {
+/* tslint:disable */
+      // 6, 3, 5, 0, 2 are symbol position with we cotout in pattern: dd/mm/yyyy
+      const year = parseInt(dateString.slice(6), 10);
+      const month =  parseInt(dateString.slice(3,5), 10);
+      const day = parseInt(dateString.slice(0,2), 10);
+      return new Date(year, month - 1, day);
+/* tslint:enable */
+    }
+}

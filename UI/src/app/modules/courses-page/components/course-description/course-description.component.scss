@@ -1,6 +1,7 @@
 @import 'src/app/styles/variables/colors';
 
 .course-description{
+    min-width: 510px;
 
     &__text{
         color: $сolor-light-voilet;

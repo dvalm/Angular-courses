@@ -38,8 +38,9 @@ export class AuthorizationService {
     }
 
     private readUserFromLocalStorage(): void {
-        if (localStorage.getItem(this.token)) {
-            const matchedUser = JSON.parse(localStorage.getItem(this.token));
+        const userInLocalStorage = localStorage.getItem(this.token);
+        if (userInLocalStorage) {
+            const matchedUser = JSON.parse(userInLocalStorage);
             if (this.users.find( (user: User) => user.email === matchedUser.email && user.password === matchedUser.password)) {
                 this._isAuthenticated = true;
             }

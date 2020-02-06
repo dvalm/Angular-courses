@@ -1,9 +1,8 @@
 <div class="course-date">
     <p class="course-date__text">Date</p>
-    <div class="course-date__field" [formGroup]="formGroup">
+    <div class="course-date__field" [formGroup]="parentForm">
         <input class="course-date__input"
-            (input)="inputValidator($event)"
             placeholder="dd/mm/yyyy"
-            [formControlName]="formControlName">
+            [formControlName]="courseFormControlName">
     </div>
 </div>

@@ -8,15 +8,12 @@ import { FormGroup } from '@angular/forms';
     changeDetection: ChangeDetectionStrategy.OnPush
   })
   export class CourseDurationComponent {
-/* tslint:disable */
-    @Input('parentForm') formGroup: FormGroup;
-    @Input('courseFormControlName') formControlName: string;
-/* tslint:enable */
 
-/* tslint:disable */
-    public inputValidator(event: any): void {
- /* tslint:enable */
-        event.target.value = event.target.value.replace(/[^0-9]/g, '');
-        this.formGroup.get(this.formControlName).setValue(event.target.value);
+    @Input() parentForm: FormGroup;
+    @Input() courseFormControlName: string;
+
+    public inputValidator(event: Event): void {
+        (event.target as HTMLInputElement).value = (event.target as HTMLInputElement).value.replace(/[^0-9]/g, '');
+        this.parentForm.get(this.courseFormControlName).setValue((event.target as HTMLInputElement).value);
     }
   }

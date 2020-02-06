@@ -1,12 +1,12 @@
 <div class="course-duration">
     <p class="course-duration__text">Duration</p>
     <div class="course-duration__time">
-        <div class="course-duration__field" [formGroup]="formGroup">
+        <div class="course-duration__field" [formGroup]="parentForm">
             <input class="course-duration__input"
                 #duration
                 (input)="inputValidator($event)"
                 placeholder="What is the duation of the course? (in minutes)"
-                [formControlName]="formControlName">   
+                [formControlName]="courseFormControlName">   
         </div>
         <p *ngIf="duration.value" 
             class="course-duration__text">

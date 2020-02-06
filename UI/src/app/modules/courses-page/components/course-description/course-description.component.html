@@ -1,5 +1,6 @@
 <div [formGroup]="courseDescription"
-     class="course-description">
+     class="course-description"
+     (ngSubmit)="submit()">
     <div class="course-description__block">
         <p class="course-description__text">Title</p>
         <div class="course-description__block-horizontal">
@@ -44,7 +45,8 @@
         <div class="save__border-button">
             <button class="save__button button"
                     type="submit"
-                    [disabled]="courseDescription.invalid" (click)="save()">Save</button>
+                    (click)="submit()"
+                    [disabled]="courseDescription.invalid">Save</button>
         </div>
         <div>
             <button class="cancel-button__button button" (click)="back()">Cancel</button>

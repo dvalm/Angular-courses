@@ -8,10 +8,6 @@ import { FormGroup } from '@angular/forms';
     changeDetection: ChangeDetectionStrategy.OnPush
   })
   export class CourseAuthorsComponent implements OnInit {
-/* tslint:disable */
-    @Input('parentForm') formGroup: FormGroup;
-    @Input('courseFormControlName') formControlName: string;
-/* tslint:enable */
 
     public ngOnInit(): void {}
   }
