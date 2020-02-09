@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'app-course-control-panel',
     templateUrl: './course-control-panel.component.html',
-    styleUrls: ['./course-control-panel.component.scss']
+    styleUrls: ['./course-control-panel.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
   })
   export class CourseControlPanelComponent {
 

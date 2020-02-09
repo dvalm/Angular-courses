@@ -1,14 +1,21 @@
-import { NgModule } from '@angular/core';
-import { CommonModule, DecimalPipe } from '@angular/common';
+import { NgModule} from '@angular/core';
+import { CommonModule, DecimalPipe, DatePipe } from '@angular/common';
 import { CoursesPageRoutingModule } from 'src/app/modules/courses-page/courses-page.routing';
 import { CoursesPageComponent } from 'src/app/modules/courses-page/courses-page.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoursesDescriptionComponent } from 'src/app/modules/courses-page/components/course-description/course-description.component';
 import { CourseControlPanelComponent } from 'src/app/modules/courses-page/components/course-control-panel/course-control-panel.component';
 import { CourseListComponent } from 'src/app/modules/courses-page/components/course-list/course-list.component';
 import { CourseComponent } from 'src/app/modules/courses-page/components/course-list/course/course.component';
+import { CourseDateComponent } from 'src/app/modules/courses-page/components/course-description/course-date/course-date.component';
+import {
+  CourseDurationComponent
+} from 'src/app/modules/courses-page/components/course-description/course-duration/course-duration.component';
+import {
+  CourseAuthorsComponent
+} from 'src/app/modules/courses-page/components/course-description/course-authors/course-authors.component';
 import { CoursePlateBorderDirective } from 'src/app/modules/courses-page/directives/course-plate-border.directive';
 import { HourglassDirective } from 'src/app/modules/courses-page/directives/hourglass.directive';
 import { DurationPipe } from 'src/app/modules/courses-page/pipes/duration.pipe';
@@ -19,9 +26,12 @@ import { CoursesService } from 'src/app/modules/courses-page/services/courses.se
 const declarations = [
   CoursesPageComponent,
   CourseControlPanelComponent,
-  CourseListComponent,
   CourseComponent,
+  CourseListComponent,
   CoursesDescriptionComponent,
+  CourseDateComponent,
+  CourseDurationComponent,
+  CourseAuthorsComponent,
   CoursePlateBorderDirective,
   HourglassDirective,
   DurationPipe,
@@ -33,6 +43,7 @@ const providers = [
   CoursesOrderByPipe,
   SearchCoursesPipe,
   DecimalPipe,
+  DatePipe,
   CoursesService
 ];
 
@@ -43,6 +54,7 @@ const providers = [
         CoursesPageRoutingModule,
         HttpClientModule,
         FormsModule,
+        ReactiveFormsModule,
         SharedModule,
     ],
   providers: [ ...providers ],

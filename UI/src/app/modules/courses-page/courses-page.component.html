@@ -1,6 +1,8 @@
 <div class="courses-page">
   <app-course-description *ngIf="isCourseDescriptionOpen"
-                          (changePage)="changePage($event)"></app-course-description>
+                          (changePage)="changePage()"
+                          [course]="course"></app-course-description>
   <app-course-list *ngIf="!isCourseDescriptionOpen"
-                          (changePage)="changePage($event)"></app-course-list>
+                          (changePage)="changePage()"
+                          (changeDescriptionCourse)="changeCourse($event)"></app-course-list>
 </div>

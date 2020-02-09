@@ -39,6 +39,11 @@
         padding: 10px;
         box-shadow: 2px 2px 5px 5px $сolor-lilac;
         margin: 20px 0;
+        cursor: text;
+
+        &::placeholder {
+            color: $сolor-light-purple;
+        }
 
         &:hover {
             box-shadow: 1px 1px 15px 1px $сolor-purple-light-pink;

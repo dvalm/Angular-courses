@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { Course } from './models/course';
 
 @Component({
   selector: 'app-courses-page',
@@ -10,13 +11,20 @@ import {HttpClient} from '@angular/common/http';
 export class CoursesPageComponent implements OnInit {
 
   public isCourseDescriptionOpen = false;
+  public course: Course;
 
-  constructor(private httpClient: HttpClient, private cdRef: ChangeDetectorRef) { }
+  constructor(private httpClient: HttpClient,
+              private cdRef: ChangeDetectorRef) { }
 
   public ngOnInit(): void {}
 
-  public changePage(value: boolean): void {
-    this.isCourseDescriptionOpen = value;
+  public changePage(): void {
+    this.course = null;
+    this.isCourseDescriptionOpen = !this.isCourseDescriptionOpen;
   }
 
+  public changeCourse(course: Course): void {
+    this.isCourseDescriptionOpen = !this.isCourseDescriptionOpen;
+    this.course = course;
+  }
 }

@@ -1,4 +1,55 @@
-<div>
-    <p>Course Form</p>
-    <button (click)="back()">Back</button>
+<div [formGroup]="courseDescription"
+     class="course-description"
+     (ngSubmit)="submit()">
+    <div class="course-description__block">
+        <p class="course-description__text">Title</p>
+        <div class="course-description__block-horizontal">
+            <div class="course-description__fields course-description__fields-input">
+                <input class="course-description__input fields"
+                       formControlName="title"
+                       placeholder="Your title"
+                       required>
+            </div>
+            <div class="course-description__block-horizontal course-description__block-checkbox">
+                <label class="course-description__block-horizontal">
+                    <div class="course-description__checkbox-border">
+                        <input #isTopRated class="course-description__checkbox" type="checkbox" formControlName="isTopRated"> 
+                    </div>
+                    <p class="course-description__text">Is Top Rated</p>
+                    <div *ngIf="courseDescription.value.isTopRated" class="course-description__checkbox-checked"></div>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="course-description__block">
+        <p class="course-description__text">Description</p>
+        <div class="course-description__fields">
+            <textarea class="course-description__textarea fields"
+                      formControlName="description"
+                      placeholder="Your description"
+                      required></textarea>
+        </div>
+    </div>
+    <div class="course-description__block">
+        <app-course-date [courseFormControlName]="'date'"
+                         [parentForm]="courseDescription"></app-course-date>
+    </div>
+    <div class="course-description__block">
+        <app-course-duration [courseFormControlName]="'duration'"
+                             [parentForm]="courseDescription"></app-course-duration>
+    </div>
+    <div class="course-description__block">
+        <app-course-authors></app-course-authors>
+    </div>
+    <div class="course-description__buttons">
+        <div class="save__border-button">
+            <button class="save__button button"
+                    type="submit"
+                    (click)="submit()"
+                    [disabled]="courseDescription.invalid">Save</button>
+        </div>
+        <div>
+            <button class="cancel-button__button button" (click)="back()">Cancel</button>
+        </div>
+    </div>
 </div>

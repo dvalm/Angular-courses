@@ -1,0 +1,43 @@
+@import 'src/app/styles/variables/colors';
+
+.course-duration{
+
+    &__time{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    &__text{
+        color: $сolor-light-voilet;
+        font-size: 15px;
+        margin: 10px;
+    }
+    
+    &__field{
+        box-shadow: 0px 0px 5px 5px $сolor-lilac;
+        border-radius: 5px;
+        max-width: fit-content;
+
+        &:hover {
+            box-shadow: 1px 1px 15px 1px $сolor-purple-light-pink;
+        }
+    }
+
+    &__input{
+        width: 350px;
+        height: 35px;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        color: $сolor-dark-voilet;
+        background-color: $сolor-light;
+        cursor: text;
+        padding: 10px;
+
+        &::placeholder {
+            color: $сolor-light-purple;
+        }
+    }
+}
