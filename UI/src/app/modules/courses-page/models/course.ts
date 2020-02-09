@@ -13,8 +13,8 @@ export class Course implements ICourse {
     description: string;
     isTopRated: boolean;
 
-    constructor(id: number = idDefaultValue, title: string, creationDate: string,
-                duration: number, description: string, isTopRated: boolean) {
+    constructor(id: number = idDefaultValue, title: string = '', creationDate: string = null,
+                duration: number = null, description: string = '', isTopRated: boolean = false) {
         this.id = id;
         this.title = title;
         this.creationDate = creationDate ? new Date(creationDate) : null;

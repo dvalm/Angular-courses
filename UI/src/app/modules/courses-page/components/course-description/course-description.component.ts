@@ -4,8 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { CoursesService } from '../../services/courses.service';
 import { ICourse } from '../../interfaces/courses';
-
-type TNullable<T> = T | null;
+import { TNullable } from '../../types/nullable.type';
 
 @Component({
     selector: 'app-course-description',
@@ -24,7 +23,8 @@ type TNullable<T> = T | null;
                 private coursesService: CoursesService) {}
 
     public ngOnInit(): void {
-      this.setCourseDescripton();
+      const course: Course = this.course || new Course();
+      this.setCourseDescripton(course);
     }
 
     public back(): void {
@@ -41,8 +41,7 @@ type TNullable<T> = T | null;
       this.back();
     }
 
-    private setCourseDescripton(): void {
-      const course: Course = this.course || new Course(null, '', '', null, '', false);
+    private setCourseDescripton(course: Course): void {
       this.courseDescription = this.fb.group({
           title: [course.title, Validators.required],
           description: [course.description, Validators.required],
