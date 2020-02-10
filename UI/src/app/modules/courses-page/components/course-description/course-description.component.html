@@ -46,10 +46,12 @@
             <button class="save__button button"
                     type="submit"
                     (click)="submit()"
-                    [disabled]="courseDescription.invalid">Save</button>
+                    [disabled]="courseDescription.invalid"
+                    routerLink='/courses'>Save</button>
         </div>
         <div>
-            <button class="cancel-button__button button" (click)="back()">Cancel</button>
+            <button class="cancel-button__button button"
+                    (click)="goBack()">Cancel</button>
         </div>
     </div>
 </div>

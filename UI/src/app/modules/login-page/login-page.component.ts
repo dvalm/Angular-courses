@@ -17,6 +17,5 @@ export class LoginPageComponent {
 
     public login(): void {
       this.authorizationService.login(this.email, this.password);
-      this.loginPageSubmit.emit();
     }
 }

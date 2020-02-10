@@ -1,4 +1,6 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, ChangeDetectorRef} from '@angular/core';
+import { AuthorizationService } from '../../services/authorization.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-header',
@@ -6,12 +8,24 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
     styleUrls: ['./header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
   })
-  export class HeaderComponent {
+  export class HeaderComponent implements OnInit, OnDestroy {
 
-    @Input() visibleLoginPage: boolean;
-    @Output() logoutSubmit:  EventEmitter<void> = new EventEmitter();
+    public isAuthenticated: boolean;
+    private subscription: Subscription;
 
-    public logout(): void {
-      this.logoutSubmit.emit();
+    constructor(private authorizationService: AuthorizationService,
+                private changeDetectorRef: ChangeDetectorRef) {}
+
+    public ngOnInit(): void {
+      this.subscription = this.authorizationService.isAuthenticated().subscribe(
+        (value: boolean) => {
+          this.isAuthenticated = value;
+          this.changeDetectorRef.detectChanges();
+        }
+      );
+    }
+
+    public ngOnDestroy(): void {
+      this.subscription.unsubscribe();
     }
   }

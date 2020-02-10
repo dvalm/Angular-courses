@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginPageComponent } from 'src/app/modules/login-page/login-page.component';
 import { FormsModule } from '@angular/forms';
-import { LoginPageRoutingModule } from './login-page.routing';
+import { NotFoundPageRoutingModule } from './not-found-page.routing';
+import { NotFoundPageComponent } from './not-found-page.component';
 
 const declarations = [
-  LoginPageComponent
+  NotFoundPageComponent
 ];
 
 @NgModule({
@@ -13,9 +13,9 @@ const declarations = [
   imports: [
     CommonModule,
     FormsModule,
-    LoginPageRoutingModule
+    NotFoundPageRoutingModule
   ],
   providers: [],
   exports: [ ...declarations ]
 })
-export class LoginPageModule { }
+export class NotFoundPagePageModule { }

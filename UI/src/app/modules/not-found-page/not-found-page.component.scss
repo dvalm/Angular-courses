@@ -1,0 +1,28 @@
+@import 'src/app/styles/variables/colors';
+
+.not-found-page{
+    display: flex;
+    justify-content: center;
+
+    &__text{
+
+        &-title{
+            font-size: 50px;
+            padding: 20px;
+            background: linear-gradient(to right, $сolor-light-voilet, $сolor-purple);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-top: 150px;
+        }
+
+        &-link{
+            text-align: center;
+        }
+    }
+
+    &__link{
+        color: $сolor-dark-purple;
+        font-size: 20px;
+        text-decoration: none;
+    }
+}

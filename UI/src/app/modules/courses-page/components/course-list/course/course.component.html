@@ -10,7 +10,7 @@
             <div class="course__control">
                 <div>
                     <button class="course__button button-edit"
-                            (click)="openDescriptionCourse()"></button>
+                        [routerLink]="[course.id]"></button>
                     <button class="course__button button-delete"
                             (click)="delete()"></button>
                 </div>

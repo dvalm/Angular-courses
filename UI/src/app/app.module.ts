@@ -7,7 +7,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule} from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule } from '@angular/forms';
-import { LoginPageModule } from 'src/app/modules/login-page/login-page.module';
+import { CoursesGuard } from './modules/shared/guards/courses.guard';
 
 // tslint:disable-next-line:typedef
 export function HttpLoaderFactory(http: HttpClient) {
@@ -22,7 +22,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     AppRouting,
     SharedModule,
-    LoginPageModule,
     HttpClientModule,
     FormsModule,
     TranslateModule.forRoot({
@@ -33,8 +32,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [
-  ],
+  providers: [CoursesGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

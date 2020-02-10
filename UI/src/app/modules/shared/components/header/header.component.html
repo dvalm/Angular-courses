@@ -5,7 +5,8 @@
             <p>angular.commons</p>
         </div>
     </div>
-    <div *ngIf="!visibleLoginPage" class="header__login">
-        <app-login (logoutSubmit)="logout()"></app-login>
+    <div *ngIf="isAuthenticated" class="header__login">
+        <!-- <app-login (logoutSubmit)="logout()"></app-login> -->
+        <app-login></app-login>
     </div>
 </div>

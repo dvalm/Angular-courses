@@ -1,4 +1,5 @@
 import { Routes, RouterModule } from '@angular/router';
+import { CoursesGuard } from './modules/shared/guards/courses.guard';
 
 /* tslint:disable:typedef */
 /* tslint:disable:arrow-parens */
@@ -6,11 +7,23 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    // component: TodoComponent
-    // If your future module not lazy loaded, you should using this way + import your feature module to app module
+    pathMatch: 'full',
+    redirectTo: '/courses',
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./modules/login-page/login-page.module').then(m => m.LoginPageModule)
+  },
+  {
+    path: 'courses',
+    canActivate: [CoursesGuard],
     loadChildren: () => import('./modules/courses-page/courses-page.module').then(m => m.CoursesPageModule)
-    // it's lazy module, all routing in this path will be perform by feature.routing.ts
-  }
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./modules/not-found-page/not-found-page.module').then(m => m.NotFoundPagePageModule)
+  },
+
 ];
 
 export const AppRouting = RouterModule.forRoot(routes);

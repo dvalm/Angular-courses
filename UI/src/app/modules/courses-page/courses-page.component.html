@@ -1,8 +1,3 @@
 <div class="courses-page">
-  <app-course-description *ngIf="isCourseDescriptionOpen"
-                          (changePage)="changePage()"
-                          [course]="course"></app-course-description>
-  <app-course-list *ngIf="!isCourseDescriptionOpen"
-                          (changePage)="changePage()"
-                          (changeDescriptionCourse)="changeCourse($event)"></app-course-list>
+  <router-outlet></router-outlet>
 </div>
