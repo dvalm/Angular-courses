@@ -27,9 +27,9 @@ export class AuthorizationService {
     public login(email: string, password: string): void {
         const matchedUser = this.users.find( (user: User) => user.email === email && user.password === password);
         if (matchedUser) {
-            this._isAuthenticated.next(true);
+            
             localStorage.setItem(this.token, JSON.stringify(matchedUser));
-            //console.log("login", JSON.parse(localStorage.getItem(this.token)));
+            this._isAuthenticated.next(true);
             this.router.navigateByUrl('');
         }
     }
@@ -41,7 +41,6 @@ export class AuthorizationService {
     }
 
     public getUserInfo(): User {
-        //console.log("getUserInfo", JSON.parse(localStorage.getItem(this.token)));
         const user: User = JSON.parse(localStorage.getItem(this.token));
         return user ? user : null ;
     }

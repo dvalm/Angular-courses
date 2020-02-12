@@ -51,13 +51,17 @@ ConfirmationDontSaveModalComponent
     }
 
     public goBack(): void {
-      const modalRef = this.modalService.openModal(ConfirmationDontSaveModalComponent);
-      modalRef.instance.userAction.subscribe( (isDelete: boolean) => {
-        if (isDelete) {
-          this.router.navigateByUrl('/courses');
-        }
-        this.modalService.closeModel(modalRef);
-      });
+      if (this.courseDescription.touched) {
+        const modalRef = this.modalService.openModal(ConfirmationDontSaveModalComponent);
+        modalRef.instance.userAction.subscribe( (isDelete: boolean) => {
+          if (isDelete) {
+            this.router.navigateByUrl('/courses');
+          }
+          this.modalService.closeModel(modalRef);
+        });
+      } else {
+        this.router.navigateByUrl('/courses');
+      }
     }
 
     private setCourseDescripton(course: Course): void {

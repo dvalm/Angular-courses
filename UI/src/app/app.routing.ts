@@ -1,15 +1,14 @@
 import { Routes, RouterModule } from '@angular/router';
 import { CoursesGuard } from './modules/shared/guards/courses.guard';
 
-/* tslint:disable:typedef */
-/* tslint:disable:arrow-parens */
-
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
     redirectTo: '/courses',
   },
+/* tslint:disable:arrow-parens */
+/* tslint:disable:typedef */
   {
     path: 'login',
     loadChildren: () => import('./modules/login-page/login-page.module').then(m => m.LoginPageModule)
@@ -23,7 +22,8 @@ const routes: Routes = [
     path: '**',
     loadChildren: () => import('./modules/not-found-page/not-found-page.module').then(m => m.NotFoundPagePageModule)
   },
-
+/* tslint:enable:arrow-parens */
+/* tslint:enable:typedef */
 ];
 
 export const AppRouting = RouterModule.forRoot(routes);

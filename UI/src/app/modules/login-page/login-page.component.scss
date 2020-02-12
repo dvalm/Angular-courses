@@ -41,6 +41,15 @@
         margin: 20px 0;
         cursor: text;
 
+        &.ng-invalid.ng-touched{
+            background-color: $сolor-pink;
+            border: 1px solid $сolor-red;
+
+            &::placeholder {
+                color: $сolor-red;
+            }
+        }
+
         &::placeholder {
             color: $сolor-light-purple;
         }

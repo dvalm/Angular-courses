@@ -6,12 +6,14 @@
         <input class="login__input login__fields"
                [(ngModel)]="email"
                placeholder="email"
-               (keyup.enter)="login()">
+               (keyup.enter)="login()"
+               required>
         <input  class="login__input login__fields"
                 (keyup.enter)="login()"
                 [(ngModel)]="password"
                 placeholder="password"
-                type="password">
+                type="password"
+                required>
         <button class="login__button login__fields link" 
                 (click)="login()">Sign in</button>
         <div class="login__text">

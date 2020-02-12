@@ -4,9 +4,6 @@ import { CoursesDescriptionComponent } from 'src/app/modules/courses-page/compon
 import { CourseListComponent } from 'src/app/modules/courses-page/components/course-list/course-list.component';
 import { CoursesPageComponent } from 'src/app/modules/courses-page/courses-page.component';
 
-/* tslint:disable:typedef */
-/* tslint:disable:arrow-parens */
-
 const routes: Routes = [
   {
     path: '',

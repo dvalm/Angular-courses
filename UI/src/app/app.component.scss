@@ -17,13 +17,13 @@
         margin-bottom: 40px;
         background-color: $сolor-light-lilac;
 
-        &_center{
+        &--center{
             height: 100%;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        &_sticky{
+        &--sticky{
             position: sticky;
             top: 0;
         }

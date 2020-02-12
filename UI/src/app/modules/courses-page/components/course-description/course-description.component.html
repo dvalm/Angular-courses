@@ -3,15 +3,17 @@
      (ngSubmit)="submit()">
     <div class="course-description__block">
         <p class="course-description__text">Title</p>
-        <div class="course-description__block-horizontal">
+        <div class="course-description__block--horizontal">
             <div class="course-description__fields course-description__fields-input">
                 <input class="course-description__input fields"
                        formControlName="title"
                        placeholder="Your title"
-                       required>
+                       required
+                       #title>
+                       <p *ngIf="title.invalid">aa - {{title.valid}}</p>
             </div>
-            <div class="course-description__block-horizontal course-description__block-checkbox">
-                <label class="course-description__block-horizontal">
+            <div class="course-description__block--horizontal course-description__block-checkbox">
+                <label class="course-description__block--horizontal">
                     <div class="course-description__checkbox-border">
                         <input #isTopRated class="course-description__checkbox" type="checkbox" formControlName="isTopRated"> 
                     </div>
