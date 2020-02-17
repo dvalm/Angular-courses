@@ -12,7 +12,7 @@ import { AuthorizationService } from '../../services/authorization.service';
   })
   export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
-    public routePath: string;
+    public routePath: string[];
     private subscriptionURL: Subscription;
     private subscriptionIsAuthenticated: Subscription;
     public isAuthenticated: boolean;
@@ -37,17 +37,22 @@ import { AuthorizationService } from '../../services/authorization.service';
       );
     }
 
+    public navigate(path: string): void {
+      if (path === 'courses') {
+        this.router.navigateByUrl('/courses');
+      }
+    }
+
     public ngOnDestroy(): void {
       this.subscriptionURL.unsubscribe();
       this.subscriptionIsAuthenticated.unsubscribe();
     }
 
     private setRoutePath(url: string): void {
-      const path: string[] = url.slice(1).split('/');
-      const id = parseInt(path[path.length - 1 ], 10);
+      this.routePath = url.slice(1).split('/');
+      const id = parseInt(this.routePath[this.routePath.length - 1 ], 10);
       if (id) {
-        path[path.length - 1] = this.coursesService.getCourseById(id).title;
+        this.routePath[this.routePath.length - 1] = this.coursesService.getCourseById(id).title;
       }
-      this.routePath = path.join(' / ');
     }
   }

@@ -22,7 +22,7 @@ ConfirmationDontSaveModalComponent
     @Output() changePage:  EventEmitter<void> = new EventEmitter();
     @Input() course: TNullable<Course>;
     public courseDescription: FormGroup;
-    private url: string = this.activateRoute.snapshot.url[0].path;
+    private courseId: number = parseInt(this.activateRoute.snapshot.url[0].path, 10);
 
     constructor(private fb: FormBuilder,
                 private datePipe: DatePipe,
@@ -32,17 +32,15 @@ ConfirmationDontSaveModalComponent
                 private coursesService: CoursesService) {}
 
     public ngOnInit(): void {
-      const id = parseInt(this.url, 10);
-      const course = id ? this.coursesService.getCourseById(id) : new Course();
+      const course = this.courseId ? this.coursesService.getCourseById(this.courseId) : new Course();
       this.setCourseDescripton(course);
     }
 
     public submit(): void {
       const course: ICourse = this.courseDescription.value;
       course.creationDate = this.parseDateString(course.date);
-      const id = parseInt(this.url, 10);
-      if (id) {
-        course.id = id;
+      if (this.courseId) {
+        course.id = this.courseId;
         this.coursesService.updateCourse(course);
       } else {
         this.coursesService.createCourse(new Course(course.id, course.title, course.creationDate.toString(),
@@ -53,8 +51,8 @@ ConfirmationDontSaveModalComponent
     public goBack(): void {
       if (this.courseDescription.touched) {
         const modalRef = this.modalService.openModal(ConfirmationDontSaveModalComponent);
-        modalRef.instance.userAction.subscribe( (isDelete: boolean) => {
-          if (isDelete) {
+        modalRef.instance.userAction.subscribe( (goBack: boolean) => {
+          if (goBack) {
             this.router.navigateByUrl('/courses');
           }
           this.modalService.closeModel(modalRef);

@@ -15,11 +15,9 @@ export class CoursesGuard implements CanActivate  {
         this.authorizationService.isAuthenticated().subscribe(
             (value: boolean) => isAuthenticated = value
           );
-        if (isAuthenticated) {
-            return true;
-        } else {
-            this.router.navigateByUrl('/login');
-            return false;
+        if (!isAuthenticated) {
+          this.router.navigateByUrl('/login');
         }
+        return isAuthenticated;
     }
 }
