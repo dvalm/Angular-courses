@@ -17,14 +17,4 @@ export class CoursesPageComponent implements OnInit {
               private cdRef: ChangeDetectorRef) { }
 
   public ngOnInit(): void {}
-
-  public changePage(): void {
-    this.course = null;
-    this.isCourseDescriptionOpen = !this.isCourseDescriptionOpen;
-  }
-
-  public changeCourse(course: Course): void {
-    this.isCourseDescriptionOpen = !this.isCourseDescriptionOpen;
-    this.course = course;
-  }
 }

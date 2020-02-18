@@ -41,6 +41,15 @@
         margin: 20px 0;
         cursor: text;
 
+        &.ng-invalid.ng-touched{
+            background-color: $сolor-pink;
+            border: 1px solid $сolor-red;
+
+            &::placeholder {
+                color: $сolor-red;
+            }
+        }
+
         &::placeholder {
             color: $сolor-light-purple;
         }
@@ -60,7 +69,7 @@
     &__button{
         color: $сolor-white;
         font-size: 15px;
-        background-image:  linear-gradient(to right, $сolor-light-voilet, $сolor-purple);;
+        background-image:  linear-gradient(to right, $сolor-light-voilet, $сolor-purple);
     }
 
     .bold{

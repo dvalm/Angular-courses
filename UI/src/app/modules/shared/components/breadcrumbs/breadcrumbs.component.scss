@@ -3,7 +3,12 @@
 .breadcrumbs{
     height: 40px;
     padding: 10px 30px;
-    font-size: 35px;  
-    color: $сolor-dark-purple;
     background-color: $сolor-light-lilac;
+
+    &__path{
+        display: inline;
+        font-size: 30px;  
+        color: $сolor-dark-purple;
+        cursor: pointer;
+    }
 }

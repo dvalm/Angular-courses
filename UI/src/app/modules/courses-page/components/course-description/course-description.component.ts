@@ -2,9 +2,14 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy, OnInit, Input
 import { Course } from '../../models/course';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { CoursesService } from '../../services/courses.service';
+import { CoursesService } from '../../../shared/services/courses.service';
 import { ICourse } from '../../interfaces/courses';
 import { TNullable } from '../../types/nullable.type';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalService } from 'src/app/modules/shared/services/modal.service';
+import {
+ConfirmationDontSaveModalComponent
+} from 'src/app/modules/shared/components/confirmation-dont-save-modal/confirmation-dont-save-modal.component';
 
 @Component({
     selector: 'app-course-description',
@@ -17,28 +22,44 @@ import { TNullable } from '../../types/nullable.type';
     @Output() changePage:  EventEmitter<void> = new EventEmitter();
     @Input() course: TNullable<Course>;
     public courseDescription: FormGroup;
+    private courseId: number = parseInt(this.activateRoute.snapshot.url[0].path, 10);
 
     constructor(private fb: FormBuilder,
                 private datePipe: DatePipe,
+                private modalService: ModalService,
+                private activateRoute: ActivatedRoute,
+                private router: Router,
                 private coursesService: CoursesService) {}
 
     public ngOnInit(): void {
-      const course: Course = this.course || new Course();
+      const course = this.courseId ? this.coursesService.getCourseById(this.courseId) : new Course();
       this.setCourseDescripton(course);
-    }
-
-    public back(): void {
-        this.changePage.emit();
     }
 
     public submit(): void {
       const course: ICourse = this.courseDescription.value;
       course.creationDate = this.parseDateString(course.date);
-      //course.id = this.course.id;
-      //this.coursesService.updateCourse(course);
-      this.coursesService.createCourse(new Course(course.id, course.title, course.creationDate.toString(),
-                                          course.duration, course.description, course.isTopRated));
-      this.back();
+      if (this.courseId) {
+        course.id = this.courseId;
+        this.coursesService.updateCourse(course);
+      } else {
+        this.coursesService.createCourse(new Course(course.id, course.title, course.creationDate.toString(),
+        course.duration, course.description, course.isTopRated));
+      }
+    }
+
+    public goBack(): void {
+      if (this.courseDescription.touched) {
+        const modalRef = this.modalService.openModal(ConfirmationDontSaveModalComponent);
+        modalRef.instance.userAction.subscribe( (goBack: boolean) => {
+          if (goBack) {
+            this.router.navigateByUrl('/courses');
+          }
+          this.modalService.closeModel(modalRef);
+        });
+      } else {
+        this.router.navigateByUrl('/courses');
+      }
     }
 
     private setCourseDescripton(course: Course): void {

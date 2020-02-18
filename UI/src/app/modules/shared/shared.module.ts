@@ -10,13 +10,17 @@ import { BreadcrumbsComponent } from 'src/app/modules/shared/components/breadcru
 import {
   ConfirmationDeleteModalComponent
 } from 'src/app/modules/shared/components/confirmation-delete-modal/confirmation-delete-modal.component';
+import {
+  ConfirmationDontSaveModalComponent
+} from 'src/app/modules/shared/components/confirmation-dont-save-modal/confirmation-dont-save-modal.component';
 
 const declarations = [
   HeaderComponent,
   LoginComponent,
   FooterComponent,
   BreadcrumbsComponent,
-  ConfirmationDeleteModalComponent
+  ConfirmationDeleteModalComponent,
+  ConfirmationDontSaveModalComponent
 ];
 
 @NgModule({
@@ -33,7 +37,7 @@ const declarations = [
       multi: true
     },
   ],
-  entryComponents: [ ConfirmationDeleteModalComponent ],
+  entryComponents: [ ConfirmationDeleteModalComponent, ConfirmationDontSaveModalComponent ],
   exports: [
     TranslateModule,
     HttpClientModule,

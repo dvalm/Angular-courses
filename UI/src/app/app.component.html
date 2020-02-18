@@ -1,16 +1,13 @@
 <div class="content">
     <div class="content__top_block">
-        <div class="content__top_block_sticky">
-            <app-header [visibleLoginPage]="!isAuthenticated"
-                        (logoutSubmit)=handleLogin()></app-header>
-            <div class="content__top_block_center">            
-                <app-breadcrumbs *ngIf="isAuthenticated"></app-breadcrumbs>
+        <div class="content__top_block--sticky">
+            <app-header></app-header>
+            <div class="content__top_block--center">            
+                <app-breadcrumbs></app-breadcrumbs>
             </div>
         </div>
-        <div class="content__top_block_center">            
-            <router-outlet *ngIf="isAuthenticated"></router-outlet>
-            <app-login-page *ngIf="!isAuthenticated"
-                            (loginPageSubmit)=handleLogin()></app-login-page>
+        <div class="content__top_block--center">            
+            <router-outlet></router-outlet>
         </div>
     </div>
     <div class="content__footer">

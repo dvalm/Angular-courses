@@ -1,14 +1,12 @@
-import {
-  Component, OnInit, OnChanges, SimpleChanges, EventEmitter, Output, ChangeDetectionStrategy, ChangeDetectorRef
-} from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Course } from 'src/app/modules/courses-page/models/course';
 import { CoursesOrderByPipe } from 'src/app/modules/courses-page/pipes/courses-order-by.pipe';
 import { SearchCoursesPipe } from 'src/app/modules/courses-page/pipes/search-courses.pipe';
-import { CoursesService } from '../../services/courses.service';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import {
   ConfirmationDeleteModalComponent
 } from 'src/app/modules/shared/components/confirmation-delete-modal/confirmation-delete-modal.component';
+import { CoursesService } from 'src/app/modules/shared/services/courses.service';
 
 @Component({
     selector: 'app-course-list',
@@ -17,9 +15,6 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush
   })
   export class CourseListComponent implements OnInit, OnChanges {
-
-    @Output() changePage:  EventEmitter<void> = new EventEmitter();
-    @Output() changeDescriptionCourse:  EventEmitter<Course> = new EventEmitter();
 
     private searchText: string;
     private courses: Course[] = [];
@@ -63,13 +58,5 @@ import {
     public updateCourseVisability(): void {
       this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
       this.sortedCourses = this.searchCourse.transform(this.sortedCourses, this.searchText);
-    }
-
-    public openDescriptionCourse(course: Course): void {
-      this.changeDescriptionCourse.emit(course);
-    }
-
-    public addCourse(): void {
-      this.changePage.emit();
     }
   }

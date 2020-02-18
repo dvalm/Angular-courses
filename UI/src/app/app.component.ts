@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthorizationService } from './modules/shared/services/authorization.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,21 +9,11 @@ import { AuthorizationService } from './modules/shared/services/authorization.se
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
   public isAuthenticated: boolean;
-  public modalDialogOpen: boolean;
 
-  constructor(private translate: TranslateService,
-              private authorizationService: AuthorizationService) {
+  constructor(private translate: TranslateService) {
     translate.setDefaultLang('en');
-  }
-
-  ngOnInit(): void {
-    this.handleLogin();
-  }
-
-  public handleLogin(): void {
-    this.isAuthenticated = this.authorizationService.isAuthenticated();
   }
 }

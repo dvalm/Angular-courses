@@ -9,15 +9,10 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angul
   export class CourseControlPanelComponent {
 
     @Output() changeSearchText:  EventEmitter<string> = new EventEmitter<string>();
-    @Output() changePage:  EventEmitter<void> = new EventEmitter();
 
     public searchText: string;
 
     public search(): void {
       this.changeSearchText.emit(this.searchText);
-    }
-
-    public openDescriptionCourse(): void {
-      this.changePage.emit();
     }
   }
