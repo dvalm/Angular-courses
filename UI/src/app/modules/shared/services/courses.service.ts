@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import data from 'src/app/modules/courses-page/models/courses.json';
 import { Course } from 'src/app/modules/courses-page/models/course';
 import { ICourse } from '../../courses-page/interfaces/courses';
+import { TNullable } from '../../courses-page/types/nullable.type';
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +28,7 @@ export class CoursesService {
         this.courses.push(course);
     }
 
-    public getCourseById(id: number): Course {
+    public getCourseById(id: number): TNullable<Course> {
         return this.courses.find(
             (course: Course) => course.id === id
         );
