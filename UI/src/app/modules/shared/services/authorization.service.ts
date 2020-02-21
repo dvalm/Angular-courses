@@ -27,7 +27,6 @@ export class AuthorizationService {
     public login(email: string, password: string): void {
         const matchedUser = this.users.find( (user: User) => user.email === email && user.password === password);
         if (matchedUser) {
-            
             localStorage.setItem(this.token, JSON.stringify(matchedUser));
             this._isAuthenticated.next(true);
             this.router.navigateByUrl('');

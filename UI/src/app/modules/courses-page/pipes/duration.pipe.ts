@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 
 @Pipe({
-  name: 'appDiration'
+  name: 'appDuration'
 })
 export class DurationPipe implements PipeTransform {
 
@@ -15,6 +15,7 @@ export class DurationPipe implements PipeTransform {
       hours++;
       value -= minutesInHour;
     }
-    return hours ? `${hours}h ${value}min` : `${this.numberPipe.transform(value, '2.')}min`;
+    const minValue = (value === 0 && hours === 0) ? 0 : this.numberPipe.transform(value, '2.');
+    return hours ? `${hours}h ${value}min` : `${minValue}min`;
   }
 }

@@ -3,7 +3,7 @@
     <div class="course__title">
         <div class="course__title-left">
             <div *ngIf="course.isTopRated" class="course__icon course__star"></div>
-            <div *hourglass="course.duration"class="course__icon course__hourglass"></div>
+            <div *hourglass="course.duration" class="course__icon course__hourglass"></div>
             <div class="course__name">
                 <p>{{course.title | uppercase}}</p>
             </div>
@@ -18,7 +18,7 @@
         </div>
         <div class="course__title-right">
             <div class="item-description">
-                <p>{{course.duration | appDiration }}</p>
+                <p>{{course.duration | appDuration }}</p>
             </div>        
             <div class="item-date-and-duration">
                 <p>{{course.creationDate | date:'dd.MMM.yy'}}</p>
