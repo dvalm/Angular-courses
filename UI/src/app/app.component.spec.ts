@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -9,6 +9,9 @@ const TranslateServiceStub = {
 };
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -24,11 +27,15 @@ describe('AppComponent', () => {
         { provide: TranslateService, useValue:  TranslateServiceStub }
       ],
     }).compileComponents();
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
   }));
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 });
