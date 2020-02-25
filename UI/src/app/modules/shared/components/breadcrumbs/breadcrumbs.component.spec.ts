@@ -4,14 +4,12 @@ import { BreadcrumbsComponent } from './breadcrumbs.component';
 import { AuthorizationService } from '../../services/authorization.service';
 import { CoursesService } from '../../services/courses.service';
 import { Router } from '@angular/router';
+import { CoursesServiceStub } from '../../testing-stub/courses-service-stub';
+import { RouterStub } from '../../testing-stub/router-stub';
+import { AuthorizationServiceStub } from '../../testing-stub/authorization-service-stub';
 
-class CoursesServiceStub {
-  constructor() {}
-  public isAuthenticated(): boolean { return true; }
-}
-const router = {
-  navigateByUrl: jasmine.createSpy('navigate')
-};
+const routerStub = new RouterStub();
+const authorizationServiceStub = new AuthorizationServiceStub();
 
 describe('BreadcrumbsComponent', () => {
   let component: BreadcrumbsComponent;
@@ -27,10 +25,10 @@ describe('BreadcrumbsComponent', () => {
         NO_ERRORS_SCHEMA
       ],
       providers:  [
-        AuthorizationService,
         ChangeDetectorRef,
-        { provide: Router, useValue: router },
-        { provide: CoursesService, useValue : CoursesServiceStub }
+        { provide: AuthorizationService, useValue: authorizationServiceStub },
+        { provide: Router, useValue: routerStub },
+        { provide: CoursesService, useValue : new CoursesServiceStub() }
       ],
     }).compileComponents();
   }));
@@ -38,6 +36,11 @@ describe('BreadcrumbsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BreadcrumbsComponent);
     component = fixture.componentInstance;
+    component.ngOnInit();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
   });
 
   it('should create component', () => {
@@ -47,12 +50,12 @@ describe('BreadcrumbsComponent', () => {
   it('should call navigate(\'courses\') and naviagate when path=\'courses\'', () => {
     const path = 'courses';
     component.navigate(path);
-    expect(router.navigateByUrl).toHaveBeenCalledWith('/' + path);
+    expect(routerStub.navigateByUrl).toHaveBeenCalledWith('/' + path);
   });
 
   it('should call navigate(\'aaa\') and naviagate when path=\'courses\'', () => {
     const path = 'aaa';
     component.navigate(path);
-    expect(router.navigateByUrl).not.toHaveBeenCalledWith('/' + path);
+    expect(routerStub.navigateByUrl).not.toHaveBeenCalledWith('/' + path);
   });
 });

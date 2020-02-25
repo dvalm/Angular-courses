@@ -6,6 +6,7 @@ import { CoursesOrderByPipe } from '../../pipes/courses-order-by.pipe';
 import { SearchCoursesPipe } from '../../pipes/search-courses.pipe';
 import { CoursesService } from 'src/app/modules/shared/services/courses.service';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
+import { CoursesServiceStub } from 'src/app/modules/shared/testing-stub/courses-service-stub';
 
 const allCourses = [
 /* tslint:disable */
@@ -17,12 +18,6 @@ const allCourses = [
   new Course(2, 'reprehenderit eiusmod nostrud amet', '2019-01-18T19:10:51+00:00', 120, 'magna excepteur aute deserunt', true),
 /* tslint:enable */
 ];
-
-const CoursesServiceStub = {
-  getAllCourses(): Course[] {
-    return allCourses;
-  },
-};
 
 describe('CourseListComponent', () => {
   let component: CourseListComponent;
@@ -36,8 +31,8 @@ describe('CourseListComponent', () => {
       providers: [
         CoursesOrderByPipe,
         SearchCoursesPipe,
-        { provide: CoursesService, useValue:  CoursesServiceStub },
-        ModalService,
+        { provide: CoursesService, useValue:  new CoursesServiceStub() },
+        { provide: ModalService, useValue: {} }
       ],
       schemas: [
         NO_ERRORS_SCHEMA
@@ -51,13 +46,21 @@ describe('CourseListComponent', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   it('should get and sort course list in OnInit()', () => {
     component.ngOnInit();
-    expect(component.sortedCourses).toBe(allCourses);
+/* tslint:disable */
+    // 2, 0, 1, 4 and 3 are numbers of elements in allCourses[]
+    const sortedCourses = [allCourses[2], allCourses[0], allCourses[1], allCourses[4], allCourses[3]];
+/* tslint:enable */
+    expect(component.sortedCourses).toEqual(sortedCourses);
   });
 
   it('should update sourses visability in OnChanges()', () => {

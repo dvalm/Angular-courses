@@ -2,10 +2,9 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
 import { NO_ERRORS_SCHEMA, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { RouterStub } from '../../testing-stub/router-stub';
 
-const router = {
-  navigateByUrl: jasmine.createSpy('navigate')
-};
+const routerStub = new RouterStub();
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -21,7 +20,7 @@ describe('HeaderComponent', () => {
       ],
       providers:  [
         ChangeDetectorRef,
-        { provide: Router, useValue: router },
+        { provide: Router, useValue: routerStub },
       ],
     }).compileComponents();
   }));
@@ -29,6 +28,11 @@ describe('HeaderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
+    component.ngOnInit();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
   });
 
   it('should create component', () => {

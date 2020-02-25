@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LoginPageComponent } from './login-page.component';
 import { AuthorizationService } from '../shared/services/authorization.service';
+import { By } from '@angular/platform-browser';
 
 describe('LoginPageComponent', () => {
   let component: LoginPageComponent;
@@ -27,6 +28,10 @@ describe('LoginPageComponent', () => {
     component = fixture.componentInstance;
   }));
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   it('should create component', () => {
     expect(component).toBeTruthy();
   });
@@ -36,5 +41,11 @@ describe('LoginPageComponent', () => {
     spyOn(comp, 'login');
     comp.login();
     expect(comp.login).toHaveBeenCalled();
+  });
+
+  it('click login button and call method login()', () => {
+    spyOn(component, 'login');
+    fixture.debugElement.query(By.css('.login__button')).triggerEventHandler('click', null);
+    expect(component.login).toHaveBeenCalled();
   });
 });

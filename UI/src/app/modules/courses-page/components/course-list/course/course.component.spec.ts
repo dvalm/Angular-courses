@@ -44,6 +44,10 @@ describe('CourseComponent', () => {
     component.course = expectedCourse;
   });
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

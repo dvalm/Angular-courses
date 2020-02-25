@@ -2,11 +2,9 @@ import { TestBed, async, getTestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { AuthorizationService } from './authorization.service';
 import { User } from '../models/user';
+import { RouterStub } from '../testing-stub/router-stub';
 
-const router = {
-  navigateByUrl: jasmine.createSpy('navigate')
-};
-const token = 'userToken';
+const routerStub = new RouterStub();
 /* tslint:disable */
     // all numbers are randon
 const users = [new User(1, 'name1', 'lastName1', 'name1@mail.com', '111'),
@@ -23,7 +21,7 @@ describe('AuthorizationService', () => {
     TestBed.configureTestingModule({
       providers:  [
         AuthorizationService,
-        { provide: Router, useValue: router },
+        { provide: Router, useValue: routerStub },
       ],
     }).compileComponents();
   }));
@@ -33,15 +31,9 @@ describe('AuthorizationService', () => {
     service = injector.get(AuthorizationService);
   });
 
-  it('should call login(\'name1@mail.com\', \'111\')', () => {
-    service.login('name1@mail.com', '111');
-    localStorage.removeItem(token);
-    expect(router.navigateByUrl).toHaveBeenCalledWith('');
-  });
-
   it('should call logout()', () => {
     service.logout();
-    expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
+    expect(routerStub.navigateByUrl).toHaveBeenCalledWith('/login');
   });
 
   it('should call getUserInfo()', () => {

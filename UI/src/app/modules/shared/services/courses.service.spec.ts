@@ -2,11 +2,9 @@ import { TestBed, async, getTestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { CoursesService } from './courses.service';
 import { Course } from '../../courses-page/models/course';
+import { RouterStub } from '../testing-stub/router-stub';
 
-const router = {
-  navigateByUrl: jasmine.createSpy('navigate')
-};
-
+const routerStub = new RouterStub();
 const courses = [
 /* tslint:disable */
     // all number are randon
@@ -26,7 +24,7 @@ describe('CoursesService', () => {
     TestBed.configureTestingModule({
       providers:  [
         CoursesService,
-        { provide: Router, useValue: router },
+        { provide: Router, useValue: routerStub },
       ],
     }).compileComponents();
   }));
@@ -60,15 +58,50 @@ describe('CoursesService', () => {
 
   it('should call getCourseById(1) and retun course', () => {
     service.courses = courses.slice();
-/* tslint:disable */
-    // 1 ad 67 are random numbers
-    const course = new Course(1, 'duis mollit reprehenderit ad', '2020-01-28T04:39:24+00:00', 67, 'reprehenderit est veniam elit', true);
-/* tslint:enable */
-    expect(service.getCourseById(1)).toEqual(course);
+    expect(service.getCourseById(1)).toEqual(service.courses[0]);
   });
 
   it('should call getCourseById(incorrectValue) and retun any course', () => {
     service.courses = courses.slice();
     expect(service.getCourseById(0)).toBeUndefined();
+  });
+
+  it('should call updateCourse(config: ICourse) and update courses', () => {
+    service.courses = courses.slice();
+    const config = {id: 1, title: 'newTitle', description: 'newDescription', isTopRated: true};
+    const allCourses = courses.slice();
+    Object.assign(allCourses[0], config);
+    service.updateCourse(config);
+    expect(service.courses).toEqual(allCourses.slice());
+  });
+
+  it('should call removeCourse(course: Course) and update courses', () => {
+    service.courses = courses.slice();
+/* tslint:disable */
+    // 2 is the id of course[4]
+    const course = service.getCourseById(2);
+/* tslint:enable */
+    service.removeCourse(course);
+    const allCourses = courses.slice();
+/* tslint:disable */
+    // 4 is the position of remove element and 1 is the count of elements
+    allCourses.splice(4, 1);
+/* tslint:enable */
+    expect(service.courses).toEqual(allCourses);
+  });
+
+  it('should call removeCourse(course: Course) and update courses', () => {
+    service.courses = courses.slice();
+/* tslint:disable */
+    // 3 is the id of course[2]
+    const course = service.getCourseById(3);
+/* tslint:enable */
+    service.removeCourse(course);
+    const allCourses = courses.slice();
+/* tslint:disable */
+    // 2 is the position of remove element and 1 is the count of elements
+    allCourses.splice(2, 1);
+/* tslint:enable */
+    expect(service.courses).toEqual(allCourses);
   });
 });

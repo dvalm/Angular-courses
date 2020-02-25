@@ -23,6 +23,10 @@ describe('ConfirmationDontSaveModalComponent', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   it('should create component', () => {
     expect(component).toBeTruthy();
   });
