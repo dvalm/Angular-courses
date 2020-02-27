@@ -2,7 +2,7 @@ import { TestBed, async, getTestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { CoursesService } from './courses.service';
 import { Course } from '../../courses-page/models/course';
-import { RouterStub } from '../testing-stub/router-stub';
+import { RouterStub } from '../testing-stub/router-stub.mock';
 
 const routerStub = new RouterStub();
 const courses = [

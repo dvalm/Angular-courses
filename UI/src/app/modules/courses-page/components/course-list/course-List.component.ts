@@ -7,6 +7,7 @@ import {
   ConfirmationDeleteModalComponent
 } from 'src/app/modules/shared/components/confirmation-delete-modal/confirmation-delete-modal.component';
 import { CoursesService } from 'src/app/modules/shared/services/courses.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-course-list',
@@ -27,8 +28,17 @@ import { CoursesService } from 'src/app/modules/shared/services/courses.service'
                 private changeDetectorRef: ChangeDetectorRef) {}
 
     public ngOnInit(): void {
-      this.courses = this.coursesService.getAllCourses();
+      this.coursesService.getAllCourses().subscribe(
+        (courses: Course[]) => {
+          this.courses = courses;
+          //console.log("11", this.courses);
+          this.updateCourseVisability();
+          //console.log("sortedCourses", this.sortedCourses);
+        } 
+      );
+      console.log("OnInit");
       this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
+     
     }
 
     public ngOnChanges(_changes: SimpleChanges): void {
@@ -45,7 +55,7 @@ import { CoursesService } from 'src/app/modules/shared/services/courses.service'
       modalRef.instance.userAction.subscribe( (isDelete: boolean) => {
         if (isDelete) {
           this.coursesService.removeCourse(course);
-          this.courses = this.coursesService.getAllCourses();
+          //this.courses = this.coursesService.getAllCourses();
           this.updateCourseVisability();
           this.changeDetectorRef.detectChanges();
         }
@@ -53,10 +63,18 @@ import { CoursesService } from 'src/app/modules/shared/services/courses.service'
       });
     }
 
-    public loadMore(): void {}
+    public loadMore(): void {
+      this.coursesService.loadCourses().subscribe(
+        (courses: Course[]) => {
+          this.courses.splice(this.courses.length, 0, ...courses);
+          this.updateCourseVisability();
+        } 
+      );
+    }
 
     public updateCourseVisability(): void {
       this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
       this.sortedCourses = this.searchCourse.transform(this.sortedCourses, this.searchText);
+      this.changeDetectorRef.detectChanges();
     }
   }

@@ -2,7 +2,7 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
 import { NO_ERRORS_SCHEMA, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { RouterStub } from '../../testing-stub/router-stub';
+import { RouterStub } from '../../testing-stub/router-stub.mock';
 
 const routerStub = new RouterStub();
 

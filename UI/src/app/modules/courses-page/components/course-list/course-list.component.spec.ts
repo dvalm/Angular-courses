@@ -6,7 +6,7 @@ import { CoursesOrderByPipe } from '../../pipes/courses-order-by.pipe';
 import { SearchCoursesPipe } from '../../pipes/search-courses.pipe';
 import { CoursesService } from 'src/app/modules/shared/services/courses.service';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
-import { CoursesServiceStub } from 'src/app/modules/shared/testing-stub/courses-service-stub';
+import { CoursesServiceStub } from 'src/app/modules/shared/testing-stub/courses-service-stub.mock';
 
 const allCourses = [
 /* tslint:disable */

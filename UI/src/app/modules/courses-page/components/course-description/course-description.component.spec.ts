@@ -8,8 +8,8 @@ import { CoursesDescriptionComponent } from './course-description.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { Course } from '../../models/course';
 import { DatePipe } from '@angular/common';
-import { CoursesServiceStub } from 'src/app/modules/shared/testing-stub/courses-service-stub';
-import { RouterStub } from 'src/app/modules/shared/testing-stub/router-stub';
+import { CoursesServiceStub } from 'src/app/modules/shared/testing-stub/courses-service-stub.mock';
+import { RouterStub } from 'src/app/modules/shared/testing-stub/router-stub.mock';
 
 class ActivatedRouteStub {
   public snapshot: object = {

@@ -2,7 +2,7 @@ import { TestBed, async, getTestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { AuthorizationService } from './authorization.service';
 import { User } from '../models/user';
-import { RouterStub } from '../testing-stub/router-stub';
+import { RouterStub } from '../testing-stub/router-stub.mock';
 
 const routerStub = new RouterStub();
 /* tslint:disable */
