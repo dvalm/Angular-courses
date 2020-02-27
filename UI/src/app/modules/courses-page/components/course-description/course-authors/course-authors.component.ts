@@ -1,5 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'app-course-authors',
@@ -7,7 +6,4 @@ import { FormGroup } from '@angular/forms';
     styleUrls: ['./course-authors.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
   })
-  export class CourseAuthorsComponent implements OnInit {
-
-    public ngOnInit(): void {}
-  }
+  export class CourseAuthorsComponent {}

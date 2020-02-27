@@ -1,6 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import { Course } from './models/course';
+import {ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-courses-page',
@@ -8,13 +6,4 @@ import { Course } from './models/course';
   styleUrls: ['./courses-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CoursesPageComponent implements OnInit {
-
-  public isCourseDescriptionOpen = false;
-  public course: Course;
-
-  constructor(private httpClient: HttpClient,
-              private cdRef: ChangeDetectorRef) { }
-
-  public ngOnInit(): void {}
-}
+export class CoursesPageComponent {}

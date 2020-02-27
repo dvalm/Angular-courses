@@ -13,9 +13,9 @@ import { AuthorizationService } from '../../services/authorization.service';
   export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
     public routePath: string[];
+    public isAuthenticated: boolean;
     private subscriptionURL: Subscription;
     private subscriptionIsAuthenticated: Subscription;
-    public isAuthenticated: boolean;
 
     constructor(private router: Router,
                 private changeDetectorRef: ChangeDetectorRef,

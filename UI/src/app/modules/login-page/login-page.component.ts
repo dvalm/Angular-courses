@@ -13,7 +13,6 @@ export class LoginPageComponent {
 
     public email: string;
     public password: string;
-    @Output() loginPageSubmit:  EventEmitter<void> = new EventEmitter();
 
     public login(): void {
       this.authorizationService.login(this.email, this.password);

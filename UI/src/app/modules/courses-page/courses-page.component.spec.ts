@@ -1,14 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CoursesPageComponent } from './courses-page.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('TodoComponent', () => {
+describe('CoursesPageComponent', () => {
   let component: CoursesPageComponent;
   let fixture: ComponentFixture<CoursesPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CoursesPageComponent ]
+      declarations: [
+        CoursesPageComponent
+      ],
+      schemas: [
+        NO_ERRORS_SCHEMA
+      ],
     })
     .compileComponents();
   }));
@@ -16,7 +21,6 @@ describe('TodoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CoursesPageComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
