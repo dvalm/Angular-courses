@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IUser } from '../interfaces/user';
 import { IToken } from '../interfaces/token';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +18,8 @@ export class AuthorizationService {
     private _user: BehaviorSubject<User>  = new BehaviorSubject<User>(null);
 
     constructor(private router: Router,
-                private http: HttpClient) {}
+                private http: HttpClient,
+                private toastr: ToastrService) {}
 
     public isAuthenticated(): Observable<boolean> {
         this.readUserFromLocalStorage();
@@ -32,7 +34,8 @@ export class AuthorizationService {
             (data: IToken)  => {
                 localStorage.setItem(this.token, JSON.stringify(data));
                 this.readUserFromLocalStorage('');
-            }
+            },
+            (error: HttpErrorResponse) =>  this.toastr.error('Internal Server Error')
         );
     }
 
