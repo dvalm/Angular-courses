@@ -19,6 +19,16 @@
     },
     "login": "Morales",
     "password": "id"
+  },
+  {
+    "id": 3,
+    "fakeToken": "58ebfdf7ec92657493b64ff",
+    "name": {
+      "first": "Lera",
+      "last": "Dribas"
+    },
+    "login": "Lera",
+    "password": "lera"
   }
 ]
 }
