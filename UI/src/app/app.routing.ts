@@ -1,5 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { CoursesGuard } from './modules/shared/guards/courses.guard';
+import { LoginGuard } from './modules/shared/guards/login.guard';
 
 const routes: Routes = [
   {
@@ -11,6 +12,7 @@ const routes: Routes = [
 /* tslint:disable:typedef */
   {
     path: 'login',
+    canActivate: [LoginGuard],
     loadChildren: () => import('./modules/login-page/login-page.module').then(m => m.LoginPageModule)
   },
   {

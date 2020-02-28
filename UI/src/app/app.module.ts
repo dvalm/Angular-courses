@@ -4,10 +4,12 @@ import { AppRouting } from './app.routing';
 import { AppComponent } from './app.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpClient, HttpClientModule} from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule } from '@angular/forms';
 import { CoursesGuard } from './modules/shared/guards/courses.guard';
+import { AuthInterceptor } from './modules/shared/interceptors/auth.interceptor';
+import { LoginGuard } from './modules/shared/guards/login.guard';
 
 // tslint:disable-next-line:typedef
 export function HttpLoaderFactory(http: HttpClient) {
@@ -30,9 +32,17 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
   ],
-  providers: [CoursesGuard],
+  providers: [
+    CoursesGuard,
+    LoginGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 import { Course } from '../../courses-page/models/course';
 import { ICourse } from '../../courses-page/interfaces/courses';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 const allCourses = [
  /* tslint:disable */
@@ -33,8 +34,15 @@ export class CoursesServiceStub {
 /* tslint:enable */
     }
 
-    getAllCourses(): Course[] {
-        return this.allCourses;
+    public searchCourses(searchText: string): Observable<Course[]> {
+        const courses = allCourses.slice().filter( (item: Course) =>
+            item.title.toUpperCase().indexOf(searchText.toUpperCase()) >= 0
+        );
+        return new BehaviorSubject<Course[]>(courses);
+    }
+
+    getAllCourses(): Observable<Course[]> {
+        return new BehaviorSubject<Course[]>(allCourses);
     }
 
     public isAuthenticated(): boolean {
