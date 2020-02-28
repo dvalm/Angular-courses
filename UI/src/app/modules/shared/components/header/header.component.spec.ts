@@ -4,6 +4,7 @@ import { NO_ERRORS_SCHEMA, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import {HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterStub } from '../../testing-stub/router-stub.mock';
+import { ToastrService } from 'ngx-toastr';
 
 const routerStub = new RouterStub();
 
@@ -25,6 +26,7 @@ describe('HeaderComponent', () => {
       providers:  [
         ChangeDetectorRef,
         { provide: Router, useValue: routerStub },
+        { provide: ToastrService, useValue: {} },
       ],
     }).compileComponents();
   }));

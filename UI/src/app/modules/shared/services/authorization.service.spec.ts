@@ -4,6 +4,7 @@ import { AuthorizationService } from './authorization.service';
 import { User } from '../models/user';
 import { RouterStub } from '../testing-stub/router-stub.mock';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ToastrService } from 'ngx-toastr';
 
 const routerStub = new RouterStub();
 /* tslint:disable */
@@ -22,6 +23,7 @@ describe('AuthorizationService', () => {
     TestBed.configureTestingModule({
       providers:  [
         AuthorizationService,
+        { provide: ToastrService, useValue: {} },
         { provide: Router, useValue: routerStub },
       ],
       imports: [
