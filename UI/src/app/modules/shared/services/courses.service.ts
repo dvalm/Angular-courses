@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class CoursesService {
 
-    public courses: Course[] = [];
+    private courses: Course[] = [];
     private baseURL = 'http://localhost:3004';
 
     constructor(private http: HttpClient) {}
@@ -66,10 +66,18 @@ export class CoursesService {
     private getCourses(url: string = '/courses?start=0&count=6'): Observable<Course[]> {
         return this.http.get<Course[]>(this.baseURL + url).pipe(
             map((data: Course[]) => {
-                this.courses = data.map( (course: ICourse) => {
-                    return new Course(course.id, course.name, course.date, course.length, course.description, course.isTopRated);
+                const courses = data.map( (course: ICourse) => {
+                    const courseItem = new Course(course.id, course.name, course.date, course.length,
+                        course.description, course.isTopRated);
+                    const courseItemInList = this.courses.some(
+                        (item: Course) => item.id === courseItem.id
+                    );
+                    if (!courseItemInList) {
+                        return courseItem;
+                    }
                 });
-                return this.courses;
+                this.courses = this.courses.concat(courses);
+                return courses;
             })
         );
     }

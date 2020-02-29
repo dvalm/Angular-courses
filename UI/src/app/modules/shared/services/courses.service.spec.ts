@@ -1,4 +1,4 @@
-import { TestBed, async, getTestBed } from '@angular/core/testing';
+import { TestBed, async, getTestBed, fakeAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { CoursesService } from './courses.service';
 import { Course } from '../../courses-page/models/course';
@@ -45,12 +45,12 @@ describe('CoursesService', () => {
     () => httpTestingController.verify()
   );
 
-  it('should call getAllCourses() and retun course list', () => {
+  it('should call getAllCourses() and retun course list', async(() => {
     service.getAllCourses().subscribe(
       (allCourses: Course[]) => expect(allCourses).toEqual(courses.slice())
     );
     const req = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
     expect(req.request.method).toBe('GET');
     req.flush(JSON.stringify(courses));
-  });
+  }));
 });
