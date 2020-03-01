@@ -3,7 +3,9 @@ import {Observable} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AuthorizationService } from '../services/authorization.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CoursesGuard implements CanActivate  {
 
     constructor(private router: Router,

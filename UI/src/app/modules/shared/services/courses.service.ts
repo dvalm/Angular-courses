@@ -66,16 +66,16 @@ export class CoursesService {
     private getCourses(url: string = '/courses?start=0&count=6'): Observable<Course[]> {
         return this.http.get<Course[]>(this.baseURL + url).pipe(
             map((data: Course[]) => {
-                const courses = data.map( (course: ICourse) => {
-                    const courseItem = new Course(course.id, course.name, course.date, course.length,
-                        course.description, course.isTopRated);
-                    const courseItemInList = this.courses.some(
-                        (item: Course) => item.id === courseItem.id
-                    );
-                    if (!courseItemInList) {
-                        return courseItem;
-                    }
-                });
+                let courses = data.map(
+                    (course: ICourse) => new Course(course.id, course.name, course.date, course.length,
+                        course.description, course.isTopRated)
+                );
+                if (!url.includes('search')) {
+/* tslint:disable */
+// 6 courses should be loaded in one request
+                    courses = courses.slice(0, 6);
+/* tslint:enable */
+                }
                 this.courses = this.courses.concat(courses);
                 return courses;
             })

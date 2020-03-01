@@ -33,7 +33,10 @@ export class CourseListComponent implements OnInit {
 
   public changeSearchText(searchText: string): void {
     this.coursesService.searchCourses(searchText).subscribe(
-      (courses: Course[]) => this.updateCourseVisability(courses)
+      (courses: Course[]) => {
+        const searchCoursesList = this.searchCourse.transform(courses, searchText);
+        this.updateCourseVisability(searchCoursesList);
+      }
     );
   }
 

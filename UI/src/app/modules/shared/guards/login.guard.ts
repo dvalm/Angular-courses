@@ -3,14 +3,15 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AuthorizationService } from '../services/authorization.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LoginGuard implements CanActivate  {
 
     constructor(private router: Router,
                 private authorizationService: AuthorizationService) {}
 
-    canActivate(route: ActivatedRouteSnapshot,
-                state: RouterStateSnapshot): Observable<boolean> | boolean {
+    canActivate(): Observable<boolean> | boolean {
         let isAuthenticated: boolean;
         this.authorizationService.isAuthenticated().subscribe(
             (value: boolean) => isAuthenticated = value

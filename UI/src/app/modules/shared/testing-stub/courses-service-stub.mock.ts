@@ -35,8 +35,12 @@ export class CoursesServiceStub {
     }
 
     public searchCourses(searchText: string): Observable<Course[]> {
+        if (searchText === '') {
+            return new BehaviorSubject<Course[]>(allCourses);
+        }
         const courses = allCourses.slice().filter( (item: Course) =>
-            item.title.toUpperCase().indexOf(searchText.toUpperCase()) >= 0
+            item.title.toUpperCase().indexOf(searchText.toUpperCase()) >= 0 ||
+                item.description.toUpperCase().indexOf(searchText.toUpperCase()) >= 0
         );
         return new BehaviorSubject<Course[]>(courses);
     }

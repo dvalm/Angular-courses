@@ -7,10 +7,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule } from '@angular/forms';
-import { CoursesGuard } from './modules/shared/guards/courses.guard';
 import { AuthInterceptor } from './modules/shared/interceptors/auth.interceptor';
-import { LoginGuard } from './modules/shared/guards/login.guard';
-import { ToastrModule, ToastNoAnimation, ToastNoAnimationModule } from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // tslint:disable-next-line:typedef
@@ -42,8 +40,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
   ],
   providers: [
-    CoursesGuard,
-    LoginGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

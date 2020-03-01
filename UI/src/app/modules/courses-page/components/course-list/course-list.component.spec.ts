@@ -72,31 +72,21 @@ describe('CourseListComponent', () => {
     expect(component.updateCourseVisability).toHaveBeenCalled();
   });
 
-  it('should update courses visability with oreder by parametr - \'creationDate\' and searchText=\'aaa\'' +
-    +'in updateCourseVisability()', () => {
+  it('should update courses visability with oreder by parametr - \'creationDate\' and searchText=\'aaa\'', () => {
     component.ngOnInit();
     component.changeSearchText('aaa');
     component.updateCourseVisability(component.sortedCourses);
     let courses = (new CoursesOrderByPipe()).transform(allCourses.slice(), 'creationDate');
     courses = (new SearchCoursesPipe()).transform(courses, 'aaa');
-    expect(component.sortedCourses.slice()).toEqual(courses);
+    expect(component.sortedCourses).toEqual(courses);
   });
 
-  it('should update courses visability with oreder by parametr - \'creationDate\' and searchText=\'\' in updateCourseVisability()', () => {
+  it('should update courses visability with oreder by parametr - \'creationDate\' and searchText=\'\'', () => {
     component.ngOnInit();
     component.changeSearchText('');
     component.updateCourseVisability(component.sortedCourses);
     let courses = (new CoursesOrderByPipe()).transform(allCourses.slice(), 'creationDate');
     courses = (new SearchCoursesPipe()).transform(courses, '');
-    expect(component.sortedCourses).toEqual(courses);
-  });
-
-  it('should update courses visability with oreder by parametr - \'id\' and searchText=\'re\' in updateCourseVisability()', () => {
-    component.ngOnInit();
-    component.changeSearchText('re');
-    component.updateCourseVisability(component.sortedCourses);
-    let courses = (new CoursesOrderByPipe()).transform(allCourses.slice(), 'id');
-    courses = (new SearchCoursesPipe()).transform(courses, 're');
     expect(component.sortedCourses).toEqual(courses);
   });
 });
