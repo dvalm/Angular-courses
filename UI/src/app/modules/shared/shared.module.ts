@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import { TokenInterceptor } from './interceptors/auth.interceptor';
+import { HttpClientModule} from '@angular/common/http';
 import { HeaderComponent } from 'src/app/modules/shared/components/header/header.component';
 import { LoginComponent } from 'src/app/modules/shared/components/login/login.component';
 import { FooterComponent } from 'src/app/modules/shared/components/footer/footer.component';
@@ -30,13 +29,7 @@ const declarations = [
     TranslateModule,
     HttpClientModule,
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    },
-  ],
+  providers: [],
   entryComponents: [ ConfirmationDeleteModalComponent, ConfirmationDontSaveModalComponent ],
   exports: [
     TranslateModule,

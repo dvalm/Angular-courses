@@ -2,7 +2,9 @@ import { TestBed, async, getTestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { AuthorizationService } from './authorization.service';
 import { User } from '../models/user';
-import { RouterStub } from '../testing-stub/router-stub';
+import { RouterStub } from '../testing-stub/router-stub.mock';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ToastrService } from 'ngx-toastr';
 
 const routerStub = new RouterStub();
 /* tslint:disable */
@@ -21,7 +23,11 @@ describe('AuthorizationService', () => {
     TestBed.configureTestingModule({
       providers:  [
         AuthorizationService,
+        { provide: ToastrService, useValue: {} },
         { provide: Router, useValue: routerStub },
+      ],
+      imports: [
+        HttpClientTestingModule
       ],
     }).compileComponents();
   }));
@@ -36,8 +42,15 @@ describe('AuthorizationService', () => {
     expect(routerStub.navigateByUrl).toHaveBeenCalledWith('/login');
   });
 
-  it('should call getUserInfo()', () => {
-    const userInStorage = service.getUserInfo();
-    expect(userInStorage).toBeNull();
+  it('should call login()', () => {
+    spyOn(service, 'login');
+    service.login('name1@mail.com', '111');
+    expect(service.login).toHaveBeenCalled();
+  });
+
+  it('should call getUserInfo() and return User', () => {
+    spyOn(service, 'getUserInfo');
+    service.getUserInfo();
+    expect(service.getUserInfo).toHaveBeenCalled();
   });
 });

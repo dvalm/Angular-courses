@@ -8,8 +8,9 @@ import { CoursesDescriptionComponent } from './course-description.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { Course } from '../../models/course';
 import { DatePipe } from '@angular/common';
-import { CoursesServiceStub } from 'src/app/modules/shared/testing-stub/courses-service-stub';
-import { RouterStub } from 'src/app/modules/shared/testing-stub/router-stub';
+import { CoursesServiceStub } from 'src/app/modules/shared/testing-stub/courses-service-stub.mock';
+import { RouterStub } from 'src/app/modules/shared/testing-stub/router-stub.mock';
+import { subscribeOn } from 'rxjs/operators';
 
 class ActivatedRouteStub {
   public snapshot: object = {
@@ -87,10 +88,12 @@ describe('CoursesDescriptionComponent', () => {
     it('should update course if courseId exsist in submit()', () => {
         component.course = course;
         component.submit();
-        expect(coursesServiceStub.getAllCourses().find(
-          (item: Course) => {
-            return JSON.stringify(item) === JSON.stringify(course);
-          }
+        expect(coursesServiceStub.getAllCourses().subscribe(
+          (data: Course[]) => data.find(
+            (item: Course) => {
+              return JSON.stringify(item) === JSON.stringify(course);
+            }
+          )
         )).toBeTruthy();
     });
 

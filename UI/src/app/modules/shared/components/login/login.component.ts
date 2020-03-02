@@ -1,5 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { AuthorizationService } from '../../services/authorization.service';
+import { IUser } from '../../interfaces/user';
+import { User } from '../../models/user';
 
 @Component({
     selector: 'app-login',
@@ -14,7 +16,9 @@ import { AuthorizationService } from '../../services/authorization.service';
     constructor(public authorizationService: AuthorizationService) {}
 
     public ngOnInit(): void {
-      this.name =  this.authorizationService.getUserInfo().firstName;
+      this.authorizationService.getUserInfo().subscribe(
+        (user: User) => this.name = user.firstName
+      );
     }
 
     public logout(): void {

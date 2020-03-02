@@ -1,31 +1,39 @@
-import {Injectable} from '@angular/core';
-import data from 'src/app/modules/courses-page/models/courses.json';
+import { Injectable, OnInit } from '@angular/core';
 import { Course } from 'src/app/modules/courses-page/models/course';
 import { ICourse } from '../../courses-page/interfaces/courses';
 import { TNullable } from '../../courses-page/types/nullable.type';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CoursesService {
 
-    public courses: Course[] = [];
-/* tslint:disable */
-    // 6 is random number
-    private maxCourseAmount = 6;
-/* tslint:enable */
-    constructor() {
-        this.courses = data.courses.slice(0, this.maxCourseAmount).map( (el: ICourse) => {
-            return new Course(el.id, el.name, el.date, el.length, el.description, el.isTopRated);
-        });
+    private courses: Course[] = [];
+    private baseURL = 'http://localhost:3004';
+
+    constructor(private http: HttpClient) {}
+
+    public getAllCourses(): Observable<Course[]> {
+        return this.getCourses(`/courses?start=0&count=6`);
     }
 
-    public getAllCourses(): Course[] {
-        return this.courses;
+    public loadCourses(): Observable<Course[]> {
+        return this.getCourses(`/courses?start=${this.courses.length}&count=6`);
     }
 
     public createCourse(course: Course): void {
-        this.courses.push(course);
+        this.http.post(`${this.baseURL}/courses/`, {
+            id: course.id,
+            name: course.title,
+            description: course.description,
+            isTopRated: course.isTopRated,
+            date: course.creationDate.toString(),
+            authors: [],
+            length: course.duration
+        }).subscribe();
     }
 
     public getCourseById(id: number): TNullable<Course> {
@@ -35,12 +43,42 @@ export class CoursesService {
     }
 
     public updateCourse(config: ICourse): void {
-        const index = this.courses.findIndex( (item: Course) => item.id === config.id );
-        Object.assign(this.courses[index], config);
+        const course = this.getCourseById(config.id);
+        this.http.put(`${this.baseURL}/courses/` + course.id, {
+            id: course.id,
+            name: course.title,
+            description: course.description,
+            isTopRated: course.isTopRated,
+            date: course.creationDate.toString(),
+            authors: [],
+            length: course.duration
+        }).subscribe();
+    }
+
+    public searchCourses(searchText: string): Observable<Course[]> {
+        return this.getCourses(`/courses?search=${searchText}`);
     }
 
     public removeCourse(course: Course): void {
-        const index = this.courses.findIndex( (item: Course) => item === course );
-        this.courses.splice(index, 1);
+        this.http.delete(`${this.baseURL}/courses/${course.id}`).subscribe();
+    }
+
+    private getCourses(url: string = '/courses?start=0&count=6'): Observable<Course[]> {
+        return this.http.get<Course[]>(this.baseURL + url).pipe(
+            map((data: Course[]) => {
+                let courses = data.map(
+                    (course: ICourse) => new Course(course.id, course.name, course.date, course.length,
+                        course.description, course.isTopRated)
+                );
+                if (!url.includes('search')) {
+/* tslint:disable */
+// 6 courses should be loaded in one request
+                    courses = courses.slice(0, 6);
+/* tslint:enable */
+                }
+                this.courses = this.courses.concat(courses);
+                return courses;
+            })
+        );
     }
 }

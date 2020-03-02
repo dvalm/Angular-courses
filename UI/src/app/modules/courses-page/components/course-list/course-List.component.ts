@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Course } from 'src/app/modules/courses-page/models/course';
 import { CoursesOrderByPipe } from 'src/app/modules/courses-page/pipes/courses-order-by.pipe';
 import { SearchCoursesPipe } from 'src/app/modules/courses-page/pipes/search-courses.pipe';
@@ -13,50 +13,58 @@ import { CoursesService } from 'src/app/modules/shared/services/courses.service'
     templateUrl: './course-list.component.html',
     styleUrls: ['./course-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
-  })
-  export class CourseListComponent implements OnInit, OnChanges {
+})
+export class CourseListComponent implements OnInit {
 
-    private searchText: string;
-    private courses: Course[] = [];
-    public sortedCourses: Course[] = [];
+  private courses: Course[] = [];
+  public sortedCourses: Course[] = [];
 
-    constructor(private orderByPipe: CoursesOrderByPipe,
-                private searchCourse: SearchCoursesPipe,
-                private coursesService: CoursesService,
-                private modalService: ModalService,
-                private changeDetectorRef: ChangeDetectorRef) {}
+  constructor(private orderByPipe: CoursesOrderByPipe,
+              private searchCourse: SearchCoursesPipe,
+              private coursesService: CoursesService,
+              private modalService: ModalService,
+              private changeDetectorRef: ChangeDetectorRef) {}
 
-    public ngOnInit(): void {
-      this.courses = this.coursesService.getAllCourses();
-      this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
-    }
-
-    public ngOnChanges(_changes: SimpleChanges): void {
-      this.updateCourseVisability();
-    }
-
-    public changeSearchText(searchText: string): void {
-      this.searchText = searchText;
-      this.updateCourseVisability();
-    }
-
-    public onDelete(course: Course): void {
-      const modalRef = this.modalService.openModal(ConfirmationDeleteModalComponent);
-      modalRef.instance.userAction.subscribe( (isDelete: boolean) => {
-        if (isDelete) {
-          this.coursesService.removeCourse(course);
-          this.courses = this.coursesService.getAllCourses();
-          this.updateCourseVisability();
-          this.changeDetectorRef.detectChanges();
-        }
-        this.modalService.closeModel(modalRef);
-      });
-    }
-
-    public loadMore(): void {}
-
-    public updateCourseVisability(): void {
-      this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
-      this.sortedCourses = this.searchCourse.transform(this.sortedCourses, this.searchText);
-    }
+  public ngOnInit(): void {
+    this.coursesService.getAllCourses().subscribe(
+      (courses: Course[]) => this.updateCourseVisability(courses)
+    );
   }
+
+  public changeSearchText(searchText: string): void {
+    this.coursesService.searchCourses(searchText).subscribe(
+      (courses: Course[]) => {
+        const searchCoursesList = this.searchCourse.transform(courses, searchText);
+        this.updateCourseVisability(searchCoursesList);
+      }
+    );
+  }
+
+  public onDelete(course: Course): void {
+    const modalRef = this.modalService.openModal(ConfirmationDeleteModalComponent);
+    modalRef.instance.userAction.subscribe( (isDelete: boolean) => {
+      if (isDelete) {
+        this.coursesService.removeCourse(course);
+        this.coursesService.getAllCourses().subscribe(
+          (courses: Course[]) => this.updateCourseVisability(courses)
+        );
+      }
+      this.modalService.closeModel(modalRef);
+    });
+  }
+
+  public loadMore(): void {
+    this.coursesService.loadCourses().subscribe(
+      (courses: Course[]) => {
+        this.courses.splice(this.courses.length, 0, ...courses);
+        this.updateCourseVisability(this.courses);
+      }
+    );
+  }
+
+  public updateCourseVisability(courses: Course[]): void {
+    this.courses = courses;
+    this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
+    this.changeDetectorRef.detectChanges();
+  }
+}

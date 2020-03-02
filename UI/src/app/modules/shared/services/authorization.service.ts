@@ -2,22 +2,24 @@ import { Injectable } from '@angular/core';
 import { User } from 'src/app/modules/shared/models/user';
 import { Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { IUser } from '../interfaces/user';
+import { IToken } from '../interfaces/token';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthorizationService {
-/* tslint:disable */
-    //1,2,3 are fake user ids
-    private users: User[] = [new User(1, 'name1', 'lastName1', 'name1@mail.com', '111'),
-                        new User(2, 'name2', 'lastName2', 'name2@mail.com', '222'),
-                        new User(4, 'lera', 'lera2', 'lera', 'lera'),
-                        new User(3, 'name3', 'lastName3', 'name3@mail.com', '333')];
+
     private readonly token: string = 'userToken';
     private _isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-/* tslint: enable */
+    private _baseURL = 'http://localhost:3004';
+    private _user: BehaviorSubject<User>  = new BehaviorSubject<User>(null);
 
-    constructor(private router: Router){}
+    constructor(private router: Router,
+                private http: HttpClient,
+                private toastr: ToastrService) {}
 
     public isAuthenticated(): Observable<boolean> {
         this.readUserFromLocalStorage();
@@ -25,12 +27,16 @@ export class AuthorizationService {
     }
 
     public login(email: string, password: string): void {
-        const matchedUser = this.users.find( (user: User) => user.email === email && user.password === password);
-        if (matchedUser) {
-            localStorage.setItem(this.token, JSON.stringify(matchedUser));
-            this._isAuthenticated.next(true);
-            this.router.navigateByUrl('');
-        }
+        this.http.post(`${this._baseURL}/auth/login`, {
+            login: email,
+            password: password
+        }).subscribe(
+            (data: IToken)  => {
+                localStorage.setItem(this.token, JSON.stringify(data));
+                this.readUserFromLocalStorage('');
+            },
+            (error: HttpErrorResponse) =>  this.toastr.error('Internal Server Error')
+        );
     }
 
     public logout(): void {
@@ -39,18 +45,22 @@ export class AuthorizationService {
         this.router.navigateByUrl('/login');
     }
 
-    public getUserInfo(): User {
-        const user: User = JSON.parse(localStorage.getItem(this.token));
-        return user ? user : null ;
+    public getUserInfo(): Observable<User> {
+        return this._user.asObservable();
     }
 
-    private readUserFromLocalStorage(): void {
+    private readUserFromLocalStorage(navigateByURL: string = null): void {
         const userInLocalStorage = localStorage.getItem(this.token);
         if (userInLocalStorage) {
-            const matchedUser = JSON.parse(userInLocalStorage);
-            if (this.users.find( (user: User) => user.email === matchedUser.email && user.password === matchedUser.password)) {
-                this._isAuthenticated.next(true);
-            }
+            this.http.post<IUser>(`${this._baseURL}/auth/userInfo`, JSON.parse(localStorage.getItem(this.token))).subscribe(
+                (user: IUser) => {
+                    this._user.next(new User(user.id, user.name.first, user.name.last, user.login, user.password));
+                    this._isAuthenticated.next(true);
+                    if (navigateByURL !== null ) {
+                        this.router.navigateByUrl(navigateByURL);
+                    }
+                }
+            );
         }
     }
 }

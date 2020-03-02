@@ -4,9 +4,9 @@ import { BreadcrumbsComponent } from './breadcrumbs.component';
 import { AuthorizationService } from '../../services/authorization.service';
 import { CoursesService } from '../../services/courses.service';
 import { Router } from '@angular/router';
-import { CoursesServiceStub } from '../../testing-stub/courses-service-stub';
-import { RouterStub } from '../../testing-stub/router-stub';
-import { AuthorizationServiceStub } from '../../testing-stub/authorization-service-stub';
+import { CoursesServiceStub } from '../../testing-stub/courses-service-stub.mock';
+import { RouterStub } from '../../testing-stub/router-stub.mock';
+import { AuthorizationServiceStub } from '../../testing-stub/authorization-service-stub.mock';
 
 const routerStub = new RouterStub();
 const authorizationServiceStub = new AuthorizationServiceStub();

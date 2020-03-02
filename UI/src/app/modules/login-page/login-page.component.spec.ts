@@ -4,6 +4,9 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LoginPageComponent } from './login-page.component';
 import { AuthorizationService } from '../shared/services/authorization.service';
 import { By } from '@angular/platform-browser';
+import { AuthorizationServiceStub } from '../shared/testing-stub/authorization-service-stub.mock';
+
+const authorizationServiceStub = new AuthorizationServiceStub();
 
 describe('LoginPageComponent', () => {
   let component: LoginPageComponent;
@@ -21,7 +24,7 @@ describe('LoginPageComponent', () => {
         NO_ERRORS_SCHEMA
       ],
       providers:  [
-        AuthorizationService
+        { provide: AuthorizationService, useValue: authorizationServiceStub },
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(LoginPageComponent);
@@ -37,10 +40,9 @@ describe('LoginPageComponent', () => {
   });
 
   it('click login button and call method login()', () => {
-    const comp = new LoginPageComponent(new AuthorizationService(null));
-    spyOn(comp, 'login');
-    comp.login();
-    expect(comp.login).toHaveBeenCalled();
+    spyOn(component, 'login');
+    component.login();
+    expect(component.login).toHaveBeenCalled();
   });
 
   it('click login button and call method login()', () => {
