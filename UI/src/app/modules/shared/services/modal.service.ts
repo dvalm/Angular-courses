@@ -5,15 +5,22 @@ import {Injectable, ApplicationRef, Injector, ComponentFactoryResolver, Componen
 })
 export class ModalService {
 
+    private _isOpen = false;
+    public get isOpen(): boolean {
+        return this._isOpen;
+    }
+
     constructor(private appRef: ApplicationRef,
                 private injector: Injector,
                 private resolver: ComponentFactoryResolver) {}
  /* tslint:disable */
     public openModal(modalInstance: any): ComponentRef<any> {
+        this._isOpen = true;
         return this.attachComponentToBody(modalInstance);
     }
 
     public closeModel(componentRef: ComponentRef<any>): void {
+        this._isOpen = false;
         this.removeComponentFromBody(componentRef);
     }
 

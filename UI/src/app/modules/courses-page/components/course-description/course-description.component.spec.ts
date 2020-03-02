@@ -85,18 +85,6 @@ describe('CoursesDescriptionComponent', () => {
       expect(component.courseDescription.status).toEqual(courseDescription.status);
     });
 
-    it('should update course if courseId exsist in submit()', () => {
-        component.course = course;
-        component.submit();
-        expect(coursesServiceStub.getAllCourses().subscribe(
-          (data: Course[]) => data.find(
-            (item: Course) => {
-              return JSON.stringify(item) === JSON.stringify(course);
-            }
-          )
-        )).toBeTruthy();
-    });
-
     it('should navigate by url \'/courses\' in goBack()', () => {
       component.goBack();
       expect(routerStub.navigateByUrl).toHaveBeenCalledWith('/courses');

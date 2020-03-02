@@ -35,7 +35,7 @@ export class AuthorizationService {
                 localStorage.setItem(this.token, JSON.stringify(data));
                 this.readUserFromLocalStorage('');
             },
-            (error: HttpErrorResponse) =>  this.toastr.error('Internal Server Error')
+            () =>  this.toastr.error('Internal Server Error')
         );
     }
 
@@ -59,7 +59,8 @@ export class AuthorizationService {
                     if (navigateByURL !== null ) {
                         this.router.navigateByUrl(navigateByURL);
                     }
-                }
+                },
+                () => this.toastr.error('Internal Server Error')
             );
         }
     }

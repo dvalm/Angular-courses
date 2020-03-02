@@ -12,6 +12,8 @@ import {
 import {
   ConfirmationDontSaveModalComponent
 } from 'src/app/modules/shared/components/confirmation-dont-save-modal/confirmation-dont-save-modal.component';
+import { LoadingBlockComponent } from './components/loading-block/loading-block.component';
+import { SearchCoursesPipe } from '../courses-page/pipes/search-courses.pipe';
 
 const declarations = [
   HeaderComponent,
@@ -19,7 +21,8 @@ const declarations = [
   FooterComponent,
   BreadcrumbsComponent,
   ConfirmationDeleteModalComponent,
-  ConfirmationDontSaveModalComponent
+  ConfirmationDontSaveModalComponent,
+  LoadingBlockComponent,
 ];
 
 @NgModule({
@@ -30,7 +33,11 @@ const declarations = [
     HttpClientModule,
   ],
   providers: [],
-  entryComponents: [ ConfirmationDeleteModalComponent, ConfirmationDontSaveModalComponent ],
+  entryComponents: [
+    ConfirmationDeleteModalComponent,
+    ConfirmationDontSaveModalComponent,
+    LoadingBlockComponent
+  ],
   exports: [
     TranslateModule,
     HttpClientModule,

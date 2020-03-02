@@ -12,13 +12,14 @@ export class LoginGuard implements CanActivate  {
                 private authorizationService: AuthorizationService) {}
 
     canActivate(): Observable<boolean> | boolean {
-        let isAuthenticated: boolean;
+
         this.authorizationService.isAuthenticated().subscribe(
-            (value: boolean) => isAuthenticated = value
-          );
-        if (isAuthenticated) {
-          this.router.navigateByUrl('/courses');
-        }
+          (isAuthenticated: boolean) => {
+              if (isAuthenticated) {
+                this.router.navigateByUrl('/courses');
+              }
+          }
+        );
         return true;
     }
 }

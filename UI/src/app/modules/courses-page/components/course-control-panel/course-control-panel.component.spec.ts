@@ -38,11 +38,10 @@ describe('CourseControlPanelComponent', () => {
     });
 
     it('click search button and emit output events', () => {
-      const comp = new CourseControlPanelComponent();
-      spyOn(comp.changeSearchText, 'emit');
+      spyOn(component, 'search');
       const searchButton = fixture.nativeElement.querySelector('.search__button');
       searchButton.click();
-      expect(comp.changeSearchText.emit).not.toHaveBeenCalled();
+      expect(component.search).toHaveBeenCalled();
     });
 
     it('should allow us to see a bound input field', fakeAsync(() => {

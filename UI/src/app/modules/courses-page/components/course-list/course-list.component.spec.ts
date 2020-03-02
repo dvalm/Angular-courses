@@ -1,9 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA} from '@angular/core';
 import { Course } from '../../models/course';
 import { CourseListComponent } from './course-list.component';
 import { CoursesOrderByPipe } from '../../pipes/courses-order-by.pipe';
-import { SearchCoursesPipe } from '../../pipes/search-courses.pipe';
 import { CoursesService } from 'src/app/modules/shared/services/courses.service';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import { CoursesServiceStub } from 'src/app/modules/shared/testing-stub/courses-service-stub.mock';
@@ -18,6 +17,7 @@ const allCourses = [
   new Course(2, 'reprehenderit eiusmod nostrud amet', '2019-01-18T19:10:51+00:00', 120, 'magna excepteur aute deserunt', true),
 /* tslint:enable */
 ];
+const coursesServiceStub = new CoursesServiceStub();
 
 describe('CourseListComponent', () => {
   let component: CourseListComponent;
@@ -30,10 +30,10 @@ describe('CourseListComponent', () => {
       ],
       providers: [
         CoursesOrderByPipe,
-        SearchCoursesPipe,
-        { provide: CoursesService, useValue:  new CoursesServiceStub() },
+        { provide: CoursesService, useValue: coursesServiceStub },
         { provide: ModalService, useValue: {} }
       ],
+      imports: [],
       schemas: [
         NO_ERRORS_SCHEMA
       ],
@@ -47,20 +47,12 @@ describe('CourseListComponent', () => {
   });
 
   afterEach(() => {
+    component.ngOnDestroy();
     fixture.destroy();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should get and sort course list in OnInit()', () => {
-    component.ngOnInit();
-/* tslint:disable */
-    // 2, 0, 1, 4 and 3 are numbers of elements in allCourses[]
-    const sortedCourses = [allCourses[2], allCourses[0], allCourses[1], allCourses[4], allCourses[3]];
-/* tslint:enable */
-    expect(component.sortedCourses).toEqual(sortedCourses);
   });
 
   it('should update sourses visability in changeSearchText()', () => {
@@ -70,23 +62,5 @@ describe('CourseListComponent', () => {
     spyOn(component, 'updateCourseVisability');
     component.updateCourseVisability(component.sortedCourses);
     expect(component.updateCourseVisability).toHaveBeenCalled();
-  });
-
-  it('should update courses visability with oreder by parametr - \'creationDate\' and searchText=\'aaa\'', () => {
-    component.ngOnInit();
-    component.changeSearchText('aaa');
-    component.updateCourseVisability(component.sortedCourses);
-    let courses = (new CoursesOrderByPipe()).transform(allCourses.slice(), 'creationDate');
-    courses = (new SearchCoursesPipe()).transform(courses, 'aaa');
-    expect(component.sortedCourses).toEqual(courses);
-  });
-
-  it('should update courses visability with oreder by parametr - \'creationDate\' and searchText=\'\'', () => {
-    component.ngOnInit();
-    component.changeSearchText('');
-    component.updateCourseVisability(component.sortedCourses);
-    let courses = (new CoursesOrderByPipe()).transform(allCourses.slice(), 'creationDate');
-    courses = (new SearchCoursesPipe()).transform(courses, '');
-    expect(component.sortedCourses).toEqual(courses);
   });
 });

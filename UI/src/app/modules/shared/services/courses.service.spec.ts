@@ -4,6 +4,7 @@ import { CoursesService } from './courses.service';
 import { Course } from '../../courses-page/models/course';
 import { RouterStub } from '../testing-stub/router-stub.mock';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { ToastrService } from 'ngx-toastr';
 
 const routerStub = new RouterStub();
 const courses = [
@@ -43,7 +44,7 @@ describe('CoursesService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers:  [
-        CoursesService,
+        { provide: ToastrService, useValue: {} },
         { provide: Router, useValue: routerStub },
       ],
       imports: [
@@ -63,21 +64,17 @@ describe('CoursesService', () => {
   );
 
   it('should call getAllCourses() and retun course list', async(() => {
-    service.getAllCourses().subscribe(
-      (allCourses: Course[]) => expect(allCourses).toEqual(courses.slice())
-    );
+    service.getAllCourses();
     const req = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
     expect(req.request.method).toBe('GET');
     req.flush(JSONCourses);
   }));
 
   it('should call loadCourse() and add courses', () => {
-    service.getAllCourses().subscribe();
+    service.getAllCourses();
     const req = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
     req.flush(JSONCourses);
-    service.loadCourses().subscribe(
-      (allCourses: Course[]) => expect(allCourses).toEqual(courses.slice())
-    );
+    service.loadCourses();
     const req2 = httpTestingController.expectOne('http://localhost:3004/courses?start=5&count=6');
     expect(req2.request.method).toBe('GET');
     req2.flush(JSONCourses);
@@ -98,14 +95,14 @@ describe('CoursesService', () => {
   }));
 
   it('should call getCourseById(1) and retun course', () => {
-    service.getAllCourses().subscribe();
+    service.getAllCourses();
     const req = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
     req.flush(JSONCourses);
     expect(service.getCourseById(1)).toEqual(courses[0]);
   });
 
   it('should call updateCourse(config: ICourse) and update courses', () => {
-    service.getAllCourses().subscribe();
+    service.getAllCourses();
     const req = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
     req.flush(JSONCourses);
     const config = {id: 1, title: 'newTitle', description: 'newDescription', isTopRated: true};
@@ -116,29 +113,24 @@ describe('CoursesService', () => {
   });
 
   it('should call searchCourses(\'sit\')', () => {
-    service.getAllCourses().subscribe();
+    service.getAllCourses();
     const req = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
     req.flush(JSONCourses);
-    service.searchCourses('sit').subscribe();
+    service.searchCourses('sit');
     const req2 = httpTestingController.expectOne('http://localhost:3004/courses?search=sit');
     expect(req2.request.method).toBe('GET');
     req2.flush([]);
   });
 
   it('should call removeCourse() and delete this from courses', () => {
-    service.getAllCourses().subscribe();
+    service.getAllCourses();
     const req1 = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
     req1.flush(JSONCourses);
     service.removeCourse(course);
     const req = httpTestingController.expectOne('http://localhost:3004/courses/3');
     expect(req.request.method).toBe('DELETE');
     req.flush({});
-    service.getAllCourses().subscribe(
-/* tslint:disable */
-// 0, 1, 3, 4 is the number of course in array courses[]
-      (allCourses: Course[]) => expect(allCourses).toEqual([courses[0], courses[1], courses[3], courses[4]])
-/* tslint:enable */
-    );
+    service.getAllCourses();
     const req3 = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
 /* tslint:disable */
 // 0, 1, 3, 4 is the number of course in array JSONCourses[]

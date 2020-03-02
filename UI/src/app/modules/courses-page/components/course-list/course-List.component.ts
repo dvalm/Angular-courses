@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Course } from 'src/app/modules/courses-page/models/course';
 import { CoursesOrderByPipe } from 'src/app/modules/courses-page/pipes/courses-order-by.pipe';
 import { SearchCoursesPipe } from 'src/app/modules/courses-page/pipes/search-courses.pipe';
@@ -7,6 +7,7 @@ import {
   ConfirmationDeleteModalComponent
 } from 'src/app/modules/shared/components/confirmation-delete-modal/confirmation-delete-modal.component';
 import { CoursesService } from 'src/app/modules/shared/services/courses.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-course-list',
@@ -14,30 +15,26 @@ import { CoursesService } from 'src/app/modules/shared/services/courses.service'
     styleUrls: ['./course-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseListComponent implements OnInit {
+export class CourseListComponent implements OnInit, OnDestroy {
 
-  private courses: Course[] = [];
   public sortedCourses: Course[] = [];
+  private _subscriptionCourses: Subscription = new Subscription();
+  private _courses: Course[] = [];
 
   constructor(private orderByPipe: CoursesOrderByPipe,
-              private searchCourse: SearchCoursesPipe,
               private coursesService: CoursesService,
               private modalService: ModalService,
               private changeDetectorRef: ChangeDetectorRef) {}
 
   public ngOnInit(): void {
-    this.coursesService.getAllCourses().subscribe(
+    this._subscriptionCourses = this.coursesService.courses.subscribe(
       (courses: Course[]) => this.updateCourseVisability(courses)
     );
+    this.coursesService.getAllCourses();
   }
 
   public changeSearchText(searchText: string): void {
-    this.coursesService.searchCourses(searchText).subscribe(
-      (courses: Course[]) => {
-        const searchCoursesList = this.searchCourse.transform(courses, searchText);
-        this.updateCourseVisability(searchCoursesList);
-      }
-    );
+    this.coursesService.searchCourses(searchText);
   }
 
   public onDelete(course: Course): void {
@@ -45,26 +42,22 @@ export class CourseListComponent implements OnInit {
     modalRef.instance.userAction.subscribe( (isDelete: boolean) => {
       if (isDelete) {
         this.coursesService.removeCourse(course);
-        this.coursesService.getAllCourses().subscribe(
-          (courses: Course[]) => this.updateCourseVisability(courses)
-        );
       }
       this.modalService.closeModel(modalRef);
     });
   }
 
   public loadMore(): void {
-    this.coursesService.loadCourses().subscribe(
-      (courses: Course[]) => {
-        this.courses.splice(this.courses.length, 0, ...courses);
-        this.updateCourseVisability(this.courses);
-      }
-    );
+    this.coursesService.loadCourses();
   }
 
   public updateCourseVisability(courses: Course[]): void {
-    this.courses = courses;
-    this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
+    this._courses = courses;
+    this.sortedCourses = this.orderByPipe.transform(this._courses, 'creationDate');
     this.changeDetectorRef.detectChanges();
+  }
+
+  public ngOnDestroy(): void {
+    this._subscriptionCourses.unsubscribe();
   }
 }

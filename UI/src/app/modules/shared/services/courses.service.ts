@@ -2,26 +2,42 @@ import { Injectable, OnInit } from '@angular/core';
 import { Course } from 'src/app/modules/courses-page/models/course';
 import { ICourse } from '../../courses-page/interfaces/courses';
 import { TNullable } from '../../courses-page/types/nullable.type';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { map, filter } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { SearchCoursesPipe } from '../../courses-page/pipes/search-courses.pipe';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CoursesService {
 
-    private courses: Course[] = [];
+    public courses: BehaviorSubject<Course[]>  = new BehaviorSubject<Course[]>([]);
+    private _courses: Course[] = [];
     private baseURL = 'http://localhost:3004';
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient,
+                private toastr: ToastrService) {}
 
-    public getAllCourses(): Observable<Course[]> {
-        return this.getCourses(`/courses?start=0&count=6`);
+    public getAllCourses(): void {
+        this.getCourses(`/courses?start=0&count=6`).subscribe(
+            (courses: Course[]) => {
+                this.courses.next(courses);
+                this._courses = courses;
+            },
+            () => this.toastr.error('Internal Server Error')
+        );
     }
 
-    public loadCourses(): Observable<Course[]> {
-        return this.getCourses(`/courses?start=${this.courses.length}&count=6`);
+    public loadCourses(): void {
+        this.getCourses(`/courses?start=${this._courses.length}&count=6`).subscribe(
+            (courses: Course[]) => {
+                this._courses = this._courses.concat(courses);
+                this.courses.next(this._courses);
+            },
+            () => this.toastr.error('Internal Server Error')
+        );
     }
 
     public createCourse(course: Course): void {
@@ -33,11 +49,14 @@ export class CoursesService {
             date: course.creationDate.toString(),
             authors: [],
             length: course.duration
-        }).subscribe();
+        }).subscribe(
+            () => {},
+            () => this.toastr.error('Internal Server Error')
+        );
     }
 
     public getCourseById(id: number): TNullable<Course> {
-        return this.courses.find(
+        return this._courses.find(
             (course: Course) => course.id === id
         );
     }
@@ -52,15 +71,35 @@ export class CoursesService {
             date: course.creationDate.toString(),
             authors: [],
             length: course.duration
-        }).subscribe();
+        }).subscribe(
+            () => {},
+            () => this.toastr.error('Internal Server Error')
+        );
     }
 
-    public searchCourses(searchText: string): Observable<Course[]> {
-        return this.getCourses(`/courses?search=${searchText}`);
+    public searchCourses(searchText: string): void {
+        if (searchText.length !== 0) {
+            this.getCourses(`/courses?search=${searchText}`).subscribe(
+                (courses: Course[]) => {
+                    this.courses.next(courses);
+                    this._courses = courses;
+                },
+                () => this.toastr.error('Internal Server Error')
+            );
+        }
     }
 
     public removeCourse(course: Course): void {
-        this.http.delete(`${this.baseURL}/courses/${course.id}`).subscribe();
+        this.http.delete(`${this.baseURL}/courses/${course.id}`).subscribe(
+            () => {
+                const index = this._courses.findIndex(
+                    (item: Course) => item.id === course.id
+                );
+                this._courses.splice(index, 1);
+                this.courses.next(this._courses);
+            },
+            () => this.toastr.error('Internal Server Error')
+        );
     }
 
     private getCourses(url: string = '/courses?start=0&count=6'): Observable<Course[]> {
@@ -75,10 +114,18 @@ export class CoursesService {
 // 6 courses should be loaded in one request
                     courses = courses.slice(0, 6);
 /* tslint:enable */
+                } else {
+/* tslint:disable */
+// 6 is start char position of searchText in URL /courses?search=searchText
+                    const searchText = url.slice(16)
+/* tslint:enable */
+                    courses = courses.filter( (item: Course) =>
+                        item.title.toUpperCase().indexOf(searchText.toUpperCase()) >= 0 ||
+                        item.description.toUpperCase().indexOf(searchText.toUpperCase()) >= 0
+                    );
                 }
-                this.courses = this.courses.concat(courses);
                 return courses;
-            })
+            }),
         );
     }
 }
