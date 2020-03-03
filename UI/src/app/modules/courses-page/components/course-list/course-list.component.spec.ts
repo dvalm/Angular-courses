@@ -51,16 +51,64 @@ describe('CourseListComponent', () => {
     fixture.destroy();
   });
 
+  it('should get and sort course list in OnInit()', () => {
+    component.ngOnInit();
+/* tslint:disable */
+    // 2, 0, 1, 4 and 3 are numbers of elements in allCourses[]
+    const sortedCourses = [allCourses[2], allCourses[0], allCourses[1], allCourses[4], allCourses[3]];
+/* tslint:enable */
+    expect(component.sortedCourses).toEqual(sortedCourses);
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update sourses visability in changeSearchText()', () => {
+  it('should update courses visability in changeSearchText()', () => {
     spyOn(component, 'changeSearchText');
     component.changeSearchText('text');
     expect(component.changeSearchText).toHaveBeenCalled();
     spyOn(component, 'updateCourseVisability');
     component.updateCourseVisability(component.sortedCourses);
     expect(component.updateCourseVisability).toHaveBeenCalled();
+  });
+
+  it('should update courses visability with oreder by parametr - \'creationDate\' and searchText=\'aaa\'', () => {
+    component.ngOnInit();
+    component.changeSearchText('aaa');
+    expect(component.sortedCourses).toEqual([]);
+  });
+
+  it('should update courses visability with oreder by parametr - \'creationDate\' and searchText=\'mollit\'', () => {
+    component.ngOnInit();
+    component.changeSearchText('mollit');
+/* tslint:disable */
+// 0 and 3  are numbers of element with text "mollit"  in allCourses[]
+    expect(component.sortedCourses).toEqual([allCourses[0], allCourses[3]]);
+/* tslint:enable */
+  });
+
+  it('should update courses visability with oreder by parametr - \'creationDate\' and searchText=\'\'', () => {
+    component.ngOnInit();
+    component.changeSearchText('');
+/* tslint:disable */
+    // 2, 0, 1, 4 and 3 are numbers of elements in allCourses[]
+    const sortedCourses = [allCourses[2], allCourses[0], allCourses[1], allCourses[4], allCourses[3]];
+/* tslint:enable */
+    expect(component.sortedCourses).toEqual(sortedCourses);
+  });
+
+  it('should load courses in loadMore()', () => {
+    component.ngOnInit();
+    component.loadMore();
+    spyOn(component, 'updateCourseVisability');
+    component.updateCourseVisability(component.sortedCourses);
+    expect(component.updateCourseVisability).toHaveBeenCalled();
+/* tslint:disable */
+// 2, 0, 1, 4 and 3 are numbers of elements in allCourses[]
+    const loadingCourses = [allCourses[2], allCourses[2], allCourses[0], allCourses[0],
+      allCourses[1], allCourses[1], allCourses[4], allCourses[4], allCourses[3], allCourses[3]];
+/* tslint:enable */
+    expect(component.sortedCourses).toEqual(loadingCourses);
   });
 });

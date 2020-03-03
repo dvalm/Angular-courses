@@ -78,7 +78,7 @@ export class CoursesService {
     }
 
     public searchCourses(searchText: string): void {
-        if (searchText.length !== 0) {
+        if (searchText !== '') {
             this.getCourses(`/courses?search=${searchText}`).subscribe(
                 (courses: Course[]) => {
                     this.courses.next(courses);
@@ -86,6 +86,8 @@ export class CoursesService {
                 },
                 () => this.toastr.error('Internal Server Error')
             );
+        } else {
+            this.getAllCourses();
         }
     }
 

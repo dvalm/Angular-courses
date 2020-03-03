@@ -68,6 +68,9 @@ describe('CoursesService', () => {
     const req = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
     expect(req.request.method).toBe('GET');
     req.flush(JSONCourses);
+    service.courses.subscribe(
+      (data: Course[]) => expect(data).toEqual(courses)
+    );
   }));
 
   it('should call loadCourse() and add courses', () => {
@@ -78,14 +81,13 @@ describe('CoursesService', () => {
     const req2 = httpTestingController.expectOne('http://localhost:3004/courses?start=5&count=6');
     expect(req2.request.method).toBe('GET');
     req2.flush(JSONCourses);
+    service.courses.subscribe(
+      (data: Course[]) => {
+        const loadingCourses = courses.concat(courses);
+        expect(data).toEqual(loadingCourses);
+      }
+    );
   });
-
-  it('should call createCourse() and add new Course()', async(() => {
-    service.createCourse(course);
-    const req = httpTestingController.expectOne('http://localhost:3004/courses/');
-    expect(req.request.method).toBe('POST');
-    req.flush(JSONCourses);
-  }));
 
   it('should call createCourse() and add new Course()', async(() => {
     service.createCourse(course);
@@ -119,7 +121,16 @@ describe('CoursesService', () => {
     service.searchCourses('sit');
     const req2 = httpTestingController.expectOne('http://localhost:3004/courses?search=sit');
     expect(req2.request.method).toBe('GET');
-    req2.flush([]);
+/* tslint:disable */
+// 1 and 2 are numbers of element with text "sit"  in JSONCourses[]
+    req2.flush([JSONCourses[1], JSONCourses[2]]);
+/* tslint:enable */
+    service.courses.subscribe(
+/* tslint:disable */
+// 1 and 2 are numbers of element with text "sit"  in courses[]
+      (data: Course[]) => expect(data).toEqual([courses[1], courses[2]])
+/* tslint:enable */
+    );
   });
 
   it('should call removeCourse() and delete this from courses', () => {
@@ -133,8 +144,12 @@ describe('CoursesService', () => {
     service.getAllCourses();
     const req3 = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
 /* tslint:disable */
-// 0, 1, 3, 4 is the number of course in array JSONCourses[]
+// 0, 1, 3, 4 is the number of course in array JSONCourses[] and courses[]
+    const coursesAfterDelete = [courses[0], courses[1], courses[3], courses[4]];
     req3.flush([JSONCourses[0], JSONCourses[1], JSONCourses[3], JSONCourses[4]]);
 /* tslint:enable */
+    service.courses.subscribe(
+      (data: Course[]) => expect(data).toEqual(coursesAfterDelete)
+    );
   });
 });

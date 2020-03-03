@@ -1,6 +1,6 @@
 import { Course } from '../../courses-page/models/course';
 import { ICourse } from '../../courses-page/interfaces/courses';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 const allCourses = [
  /* tslint:disable */
@@ -38,7 +38,7 @@ export class CoursesServiceStub {
 
     public searchCourses(searchText: string): void {
         if (searchText === '') {
-            this.courses.next([]);
+            this.courses.next(allCourses);
         } else {
             const courses = allCourses.slice().filter( (item: Course) =>
             item.title.toUpperCase().indexOf(searchText.toUpperCase()) >= 0 ||
@@ -56,6 +56,6 @@ export class CoursesServiceStub {
     }
 
     public loadCourses(): void {
-        this.courses.next(allCourses);
+        this.courses.next([...allCourses, ...allCourses]);
     }
 }
