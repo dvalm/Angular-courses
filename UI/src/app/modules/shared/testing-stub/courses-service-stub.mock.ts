@@ -1,6 +1,6 @@
 import { Course } from '../../courses-page/models/course';
 import { ICourse } from '../../courses-page/interfaces/courses';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const allCourses = [
  /* tslint:disable */
@@ -20,8 +20,6 @@ const course = new Course(3, 'duis mollit reprehenderit ad', '2020-01-28T04:39:2
 
 export class CoursesServiceStub {
 
-    public courses: BehaviorSubject<Course[]>  = new BehaviorSubject<Course[]>([]);
-
     private allCourses = allCourses.slice();
 
     constructor() {}
@@ -36,26 +34,22 @@ export class CoursesServiceStub {
 /* tslint:enable */
     }
 
-    public searchCourses(searchText: string): void {
+    public searchCourses(searchText: string): Observable<Course[]> {
         if (searchText === '') {
-            this.courses.next(allCourses);
-        } else {
-            const courses = allCourses.slice().filter( (item: Course) =>
-            item.title.toUpperCase().indexOf(searchText.toUpperCase()) >= 0 ||
-                item.description.toUpperCase().indexOf(searchText.toUpperCase()) >= 0);
-            this.courses.next(courses);
+            return new BehaviorSubject<Course[]>(allCourses);
         }
+        const courses = allCourses.slice().filter( (item: Course) =>
+            item.title.toUpperCase().indexOf(searchText.toUpperCase()) >= 0 ||
+                item.description.toUpperCase().indexOf(searchText.toUpperCase()) >= 0
+        );
+        return new BehaviorSubject<Course[]>(courses);
     }
 
-    getAllCourses(): void {
-        this.courses.next(allCourses);
+    getAllCourses(): Observable<Course[]> {
+        return new BehaviorSubject<Course[]>(allCourses);
     }
 
     public isAuthenticated(): boolean {
         return true;
-    }
-
-    public loadCourses(): void {
-        this.courses.next([...allCourses, ...allCourses]);
     }
 }

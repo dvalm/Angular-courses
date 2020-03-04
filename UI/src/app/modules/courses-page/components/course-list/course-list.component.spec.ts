@@ -6,6 +6,7 @@ import { CoursesOrderByPipe } from '../../pipes/courses-order-by.pipe';
 import { CoursesService } from 'src/app/modules/shared/services/courses.service';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import { CoursesServiceStub } from 'src/app/modules/shared/testing-stub/courses-service-stub.mock';
+import { SearchCoursesPipe } from '../../pipes/search-courses.pipe';
 
 const allCourses = [
 /* tslint:disable */
@@ -47,8 +48,11 @@ describe('CourseListComponent', () => {
   });
 
   afterEach(() => {
-    component.ngOnDestroy();
     fixture.destroy();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
   it('should get and sort course list in OnInit()', () => {
@@ -60,11 +64,7 @@ describe('CourseListComponent', () => {
     expect(component.sortedCourses).toEqual(sortedCourses);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should update courses visability in changeSearchText()', () => {
+  it('should update sourses visability in changeSearchText()', () => {
     spyOn(component, 'changeSearchText');
     component.changeSearchText('text');
     expect(component.changeSearchText).toHaveBeenCalled();
@@ -76,39 +76,18 @@ describe('CourseListComponent', () => {
   it('should update courses visability with oreder by parametr - \'creationDate\' and searchText=\'aaa\'', () => {
     component.ngOnInit();
     component.changeSearchText('aaa');
-    expect(component.sortedCourses).toEqual([]);
-  });
-
-  it('should update courses visability with oreder by parametr - \'creationDate\' and searchText=\'mollit\'', () => {
-    component.ngOnInit();
-    component.changeSearchText('mollit');
-/* tslint:disable */
-// 0 and 3  are numbers of element with text "mollit"  in allCourses[]
-    expect(component.sortedCourses).toEqual([allCourses[0], allCourses[3]]);
-/* tslint:enable */
+    component.updateCourseVisability(component.sortedCourses);
+    let courses = (new CoursesOrderByPipe()).transform(allCourses.slice(), 'creationDate');
+    courses = (new SearchCoursesPipe()).transform(courses, 'aaa');
+    expect(component.sortedCourses).toEqual(courses);
   });
 
   it('should update courses visability with oreder by parametr - \'creationDate\' and searchText=\'\'', () => {
     component.ngOnInit();
     component.changeSearchText('');
-/* tslint:disable */
-    // 2, 0, 1, 4 and 3 are numbers of elements in allCourses[]
-    const sortedCourses = [allCourses[2], allCourses[0], allCourses[1], allCourses[4], allCourses[3]];
-/* tslint:enable */
-    expect(component.sortedCourses).toEqual(sortedCourses);
-  });
-
-  it('should load courses in loadMore()', () => {
-    component.ngOnInit();
-    component.loadMore();
-    spyOn(component, 'updateCourseVisability');
     component.updateCourseVisability(component.sortedCourses);
-    expect(component.updateCourseVisability).toHaveBeenCalled();
-/* tslint:disable */
-// 2, 0, 1, 4 and 3 are numbers of elements in allCourses[]
-    const loadingCourses = [allCourses[2], allCourses[2], allCourses[0], allCourses[0],
-      allCourses[1], allCourses[1], allCourses[4], allCourses[4], allCourses[3], allCourses[3]];
-/* tslint:enable */
-    expect(component.sortedCourses).toEqual(loadingCourses);
+    let courses = (new CoursesOrderByPipe()).transform(allCourses.slice(), 'creationDate');
+    courses = (new SearchCoursesPipe()).transform(courses, '');
+    expect(component.sortedCourses).toEqual(courses);
   });
 });

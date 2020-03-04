@@ -3,45 +3,41 @@ import { Course } from 'src/app/modules/courses-page/models/course';
 import { ICourse } from '../../courses-page/interfaces/courses';
 import { TNullable } from '../../courses-page/types/nullable.type';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { map, filter } from 'rxjs/operators';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { map, filter, catchError } from 'rxjs/operators';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { SearchCoursesPipe } from '../../courses-page/pipes/search-courses.pipe';
+import { error } from 'protractor';
+
+/* tslint:disable */
+// 6 courses should be loaded in one request and placed on user screen
+const amountCoursesInPage = 6;
+/* tslint:enable */
 
 @Injectable({
     providedIn: 'root'
 })
 export class CoursesService {
 
-    public courses: BehaviorSubject<Course[]>  = new BehaviorSubject<Course[]>([]);
     private _courses: Course[] = [];
-    private baseURL = 'http://localhost:3004';
+    private _baseURL = 'http://localhost:3004';
 
     constructor(private http: HttpClient,
                 private toastr: ToastrService) {}
 
-    public getAllCourses(): void {
-        this.getCourses(`/courses?start=0&count=6`).subscribe(
-            (courses: Course[]) => {
-                this.courses.next(courses);
-                this._courses = courses;
-            },
-            () => this.toastr.error('Internal Server Error')
-        );
+    public getAllCourses(): Observable<Course[]> {
+        if (this._courses.length !== 0) {
+            return this.getCourses(`/courses?start=0&count=${this._courses.length}`);
+        }
+        return this.getCourses(`/courses?start=0&count=${amountCoursesInPage}`);
     }
 
-    public loadCourses(): void {
-        this.getCourses(`/courses?start=${this._courses.length}&count=6`).subscribe(
-            (courses: Course[]) => {
-                this._courses = this._courses.concat(courses);
-                this.courses.next(this._courses);
-            },
-            () => this.toastr.error('Internal Server Error')
-        );
+    public loadCourses(): Observable<Course[]> {
+        return this.getCourses(`/courses?start=${this._courses.length}&count=${amountCoursesInPage}`);
     }
 
     public createCourse(course: Course): void {
-        this.http.post(`${this.baseURL}/courses/`, {
+        this.http.post(`${this._baseURL}/courses/`, {
             id: course.id,
             name: course.title,
             description: course.description,
@@ -50,8 +46,8 @@ export class CoursesService {
             authors: [],
             length: course.duration
         }).subscribe(
-            () => {},
-            () => this.toastr.error('Internal Server Error')
+            () => this.toastr.success('Course created successfully!'),
+            (httpError: HttpErrorResponse) => this.toastr.error(`${httpError.status} ${httpError.statusText}`)
         );
     }
 
@@ -63,7 +59,7 @@ export class CoursesService {
 
     public updateCourse(config: ICourse): void {
         const course = this.getCourseById(config.id);
-        this.http.put(`${this.baseURL}/courses/` + course.id, {
+        this.http.put(`${this._baseURL}/courses/` + course.id, {
             id: course.id,
             name: course.title,
             description: course.description,
@@ -72,53 +68,40 @@ export class CoursesService {
             authors: [],
             length: course.duration
         }).subscribe(
-            () => {},
-            () => this.toastr.error('Internal Server Error')
+            () => this.toastr.success('Course updated successfully!'),
+            (httpError: HttpErrorResponse) => this.toastr.error(`${httpError.status} ${httpError.statusText}`)
         );
     }
 
-    public searchCourses(searchText: string): void {
+    public searchCourses(searchText: string): Observable<Course[]> {
         if (searchText !== '') {
-            this.getCourses(`/courses?search=${searchText}`).subscribe(
-                (courses: Course[]) => {
-                    this.courses.next(courses);
-                    this._courses = courses;
-                },
-                () => this.toastr.error('Internal Server Error')
+            return this.getCourses(`/courses?search=${searchText}`).pipe(
+                catchError(
+                    (httpError: HttpErrorResponse) => {
+                        this.toastr.error(`${httpError.status} ${httpError.statusText}`);
+                        return of([]);
+                    }
+                )
             );
         } else {
-            this.getAllCourses();
+            return this.getAllCourses();
         }
     }
 
-    public removeCourse(course: Course): void {
-        this.http.delete(`${this.baseURL}/courses/${course.id}`).subscribe(
-            () => {
-                const index = this._courses.findIndex(
-                    (item: Course) => item.id === course.id
-                );
-                this._courses.splice(index, 1);
-                this.courses.next(this._courses);
-            },
-            () => this.toastr.error('Internal Server Error')
-        );
+    public removeCourse(course: Course): Observable<object> {
+        return this.http.delete(`${this._baseURL}/courses/${course.id}`);
     }
 
-    private getCourses(url: string = '/courses?start=0&count=6'): Observable<Course[]> {
-        return this.http.get<Course[]>(this.baseURL + url).pipe(
+    private getCourses(url: string = `/courses?start=0&count=${amountCoursesInPage}`): Observable<Course[]> {
+        return this.http.get<Course[]>(this._baseURL + url).pipe(
             map((data: Course[]) => {
                 let courses = data.map(
                     (course: ICourse) => new Course(course.id, course.name, course.date, course.length,
                         course.description, course.isTopRated)
                 );
-                if (!url.includes('search')) {
+                if (url.includes('search')) {
 /* tslint:disable */
-// 6 courses should be loaded in one request
-                    courses = courses.slice(0, 6);
-/* tslint:enable */
-                } else {
-/* tslint:disable */
-// 6 is start char position of searchText in URL /courses?search=searchText
+// 16 is start char position of searchText in URL /courses?search=searchText
                     const searchText = url.slice(16)
 /* tslint:enable */
                     courses = courses.filter( (item: Course) =>
@@ -126,8 +109,15 @@ export class CoursesService {
                         item.description.toUpperCase().indexOf(searchText.toUpperCase()) >= 0
                     );
                 }
+                this._courses = this._courses.concat(courses);
                 return courses;
             }),
+            catchError(
+                (httpError: HttpErrorResponse) => {
+                    this.toastr.error(`${httpError.status} ${httpError.statusText}`);
+                    return of([]);
+                }
+            )
         );
     }
 }

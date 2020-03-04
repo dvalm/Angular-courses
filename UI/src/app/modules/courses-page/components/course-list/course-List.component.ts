@@ -7,7 +7,6 @@ import {
   ConfirmationDeleteModalComponent
 } from 'src/app/modules/shared/components/confirmation-delete-modal/confirmation-delete-modal.component';
 import { CoursesService } from 'src/app/modules/shared/services/courses.service';
-import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-course-list',
@@ -15,11 +14,9 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./course-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseListComponent implements OnInit, OnDestroy {
+export class CourseListComponent implements OnInit {
 
   public sortedCourses: Course[] = [];
-  private _subscriptionCourses: Subscription = new Subscription();
-  private _courses: Course[] = [];
 
   constructor(private orderByPipe: CoursesOrderByPipe,
               private coursesService: CoursesService,
@@ -27,37 +24,39 @@ export class CourseListComponent implements OnInit, OnDestroy {
               private changeDetectorRef: ChangeDetectorRef) {}
 
   public ngOnInit(): void {
-    this._subscriptionCourses = this.coursesService.courses.subscribe(
+    this.coursesService.getAllCourses().subscribe(
       (courses: Course[]) => this.updateCourseVisability(courses)
     );
-    this.coursesService.getAllCourses();
   }
 
   public changeSearchText(searchText: string): void {
-    this.coursesService.searchCourses(searchText);
+    this.coursesService.searchCourses(searchText).subscribe(
+      (courses: Course[]) => this.updateCourseVisability(courses)
+    );
   }
 
   public onDelete(course: Course): void {
     const modalRef = this.modalService.openModal(ConfirmationDeleteModalComponent);
     modalRef.instance.userAction.subscribe( (isDelete: boolean) => {
       if (isDelete) {
-        this.coursesService.removeCourse(course);
+        this.coursesService.removeCourse(course).subscribe(
+          () =>  this.coursesService.getAllCourses().subscribe(
+            (courses: Course[]) => this.updateCourseVisability(courses)
+          )
+        );
       }
       this.modalService.closeModel(modalRef);
     });
   }
 
   public loadMore(): void {
-    this.coursesService.loadCourses();
+    this.coursesService.loadCourses().subscribe(
+      (courses: Course[]) => this.updateCourseVisability(this.sortedCourses.concat(courses))
+    );
   }
 
   public updateCourseVisability(courses: Course[]): void {
-    this._courses = courses;
-    this.sortedCourses = this.orderByPipe.transform(this._courses, 'creationDate');
+    this.sortedCourses = this.orderByPipe.transform(courses, 'creationDate');
     this.changeDetectorRef.detectChanges();
-  }
-
-  public ngOnDestroy(): void {
-    this._subscriptionCourses.unsubscribe();
   }
 }
