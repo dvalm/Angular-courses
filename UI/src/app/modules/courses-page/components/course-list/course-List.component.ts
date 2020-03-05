@@ -6,7 +6,7 @@ import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import {
   ConfirmationDeleteModalComponent
 } from 'src/app/modules/shared/components/confirmation-delete-modal/confirmation-delete-modal.component';
-import { CoursesService } from 'src/app/modules/shared/services/courses.service';
+import { CoursesService } from 'src/app/modules/courses-page/services/courses.service';
 
 @Component({
     selector: 'app-course-list',

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, RouterEvent } from '@angular/router';
-import { CoursesService } from 'src/app/modules/shared/services/courses.service';
+import { CoursesService } from 'src/app/modules/courses-page/services/courses.service';
 import { Subscription } from 'rxjs';
 import { AuthorizationService } from '../../services/authorization.service';
 

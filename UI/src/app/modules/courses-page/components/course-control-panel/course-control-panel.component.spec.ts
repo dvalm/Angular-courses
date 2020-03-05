@@ -41,7 +41,7 @@ describe('CourseControlPanelComponent', () => {
       const input = fixture.debugElement.query(By.css('.search__input')).nativeElement;
       input.value = 'new Value';
       input.dispatchEvent(new Event('input'));
-      expect(component.searchText).toEqual('new Value');
+      expect(input.value).toEqual('new Value');
     });
 
     it('should call search() if serchText.length >=3', async(() => {

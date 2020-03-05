@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy, OnInit, Input
 import { Course } from '../../models/course';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { CoursesService } from '../../../shared/services/courses.service';
+import { CoursesService } from '../../services/courses.service';
 import { ICourse } from '../../interfaces/courses';
 import { TNullable } from '../../types/nullable.type';
 import { ActivatedRoute, Router } from '@angular/router';

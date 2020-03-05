@@ -1,5 +1,5 @@
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AuthorizationService } from '../services/authorization.service';
 
@@ -20,6 +20,6 @@ export class LoginGuard implements CanActivate  {
               }
           }
         );
-        return true;
+        return of(true);
     }
 }

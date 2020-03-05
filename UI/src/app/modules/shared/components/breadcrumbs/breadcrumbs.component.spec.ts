@@ -2,7 +2,7 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA, ChangeDetectorRef } from '@angular/core';
 import { BreadcrumbsComponent } from './breadcrumbs.component';
 import { AuthorizationService } from '../../services/authorization.service';
-import { CoursesService } from '../../services/courses.service';
+import { CoursesService } from '../../../courses-page/services/courses.service';
 import { Router } from '@angular/router';
 import { CoursesServiceStub } from '../../testing-stub/courses-service-stub.mock';
 import { RouterStub } from '../../testing-stub/router-stub.mock';

@@ -11,9 +11,7 @@ import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
   export class CourseControlPanelComponent implements OnInit {
 
     @Output() changeSearchText:  EventEmitter<string> = new EventEmitter<string>();
-    @ViewChild('searchInput', {static: false}) searchInput: ElementRef;
 
-    public searchText: string;
     private _sbj = new Subject<string>();
 
     public ngOnInit(): void {
@@ -30,15 +28,15 @@ import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 /* tslint:enable */
         )
       ).subscribe(
-        () => this.search()
+        (searchText: string) => this.search(searchText)
       );
     }
 
-    public searchTextChange(): void {
-      this._sbj.next(this.searchText);
+    public searchTextChange(event: string): void {
+      this._sbj.next(event);
     }
 
-    public search(): void {
-      this.changeSearchText.emit(this.searchText);
+    public search(searchText: string): void {
+      this.changeSearchText.emit(searchText);
     }
   }

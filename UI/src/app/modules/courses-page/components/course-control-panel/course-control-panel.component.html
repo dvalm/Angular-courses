@@ -2,8 +2,9 @@
     <div class="control-panel__search">
         <input class="search__input"
             placeholder="Search"
-            [(ngModel)]="searchText"
-            (ngModelChange)="searchTextChange()">
+            name="searchText"
+            [ngModel]
+            (ngModelChange)="searchTextChange($event)">
     </div>
     <div class="add-course-button">
         <button class="add-course-button__button button"

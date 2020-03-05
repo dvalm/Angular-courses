@@ -49,12 +49,16 @@ export class AuthorizationService {
         return this._user.asObservable();
     }
 
+    public setUserInfo(user: User): void {
+        this._user.next(user);
+    }
+
     private readUserFromLocalStorage(navigateByURL: string = null): void {
         const userInLocalStorage = localStorage.getItem(this.token);
         if (userInLocalStorage) {
             this.http.post<IUser>(`${this._baseURL}/auth/userInfo`, JSON.parse(localStorage.getItem(this.token))).subscribe(
                 (user: IUser) => {
-                    this._user.next(new User(user.id, user.name.first, user.name.last, user.login, user.password));
+                    this.setUserInfo(new User(user.id, user.name.first, user.name.last, user.login, user.password));
                     this._isAuthenticated.next(true);
                     if (navigateByURL !== null ) {
                         this.router.navigateByUrl(navigateByURL);

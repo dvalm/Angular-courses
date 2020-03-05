@@ -1,12 +1,12 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Course } from 'src/app/modules/courses-page/models/course';
-import { ICourse } from '../../courses-page/interfaces/courses';
-import { TNullable } from '../../courses-page/types/nullable.type';
+import { ICourse } from '../interfaces/courses';
+import { TNullable } from '../types/nullable.type';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { map, filter, catchError } from 'rxjs/operators';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { SearchCoursesPipe } from '../../courses-page/pipes/search-courses.pipe';
+import { SearchCoursesPipe } from '../pipes/search-courses.pipe';
 import { error } from 'protractor';
 
 /* tslint:disable */
@@ -27,7 +27,7 @@ export class CoursesService {
 
     public getAllCourses(): Observable<Course[]> {
         if (this._courses.length !== 0) {
-            return this.getCourses(`/courses?start=0&count=${this._courses.length}`);
+            return of(this._courses);
         }
         return this.getCourses(`/courses?start=0&count=${amountCoursesInPage}`);
     }
@@ -49,6 +49,7 @@ export class CoursesService {
             () => this.toastr.success('Course created successfully!'),
             (httpError: HttpErrorResponse) => this.toastr.error(`${httpError.status} ${httpError.statusText}`)
         );
+        this._courses.push(course);
     }
 
     public getCourseById(id: number): TNullable<Course> {
@@ -58,19 +59,21 @@ export class CoursesService {
     }
 
     public updateCourse(config: ICourse): void {
-        const course = this.getCourseById(config.id);
-        this.http.put(`${this._baseURL}/courses/` + course.id, {
-            id: course.id,
-            name: course.title,
-            description: course.description,
-            isTopRated: course.isTopRated,
-            date: course.creationDate.toString(),
+        this.http.put(`${this._baseURL}/courses/` + config.id, {
+            id: config.id,
+            name: config.title,
+            description: config.description,
+            isTopRated: config.isTopRated,
+            date: config.creationDate.toString(),
             authors: [],
-            length: course.duration
+            length: config.duration
         }).subscribe(
             () => this.toastr.success('Course updated successfully!'),
             (httpError: HttpErrorResponse) => this.toastr.error(`${httpError.status} ${httpError.statusText}`)
         );
+        const index = this.findCourseIndex(config);
+        this._courses.splice(index, 1, new Course(config.id, config.title, config.creationDate.toString(), config.duration,
+            config.description, config.isTopRated));
     }
 
     public searchCourses(searchText: string): Observable<Course[]> {
@@ -89,7 +92,14 @@ export class CoursesService {
     }
 
     public removeCourse(course: Course): Observable<object> {
+        this._courses.splice(this.findCourseIndex(course), 1);
         return this.http.delete(`${this._baseURL}/courses/${course.id}`);
+    }
+
+    private findCourseIndex(course: ICourse): number {
+        return this._courses.findIndex(
+            (item: Course) => course.id === item.id
+        );
     }
 
     private getCourses(url: string = `/courses?start=0&count=${amountCoursesInPage}`): Observable<Course[]> {

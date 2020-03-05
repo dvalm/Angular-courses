@@ -3,7 +3,7 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CoursesService } from 'src/app/modules/shared/services/courses.service';
+import { CoursesService } from 'src/app/modules/courses-page/services/courses.service';
 import { CoursesDescriptionComponent } from './course-description.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { Course } from '../../models/course';

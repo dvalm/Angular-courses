@@ -3,7 +3,7 @@ import { NO_ERRORS_SCHEMA} from '@angular/core';
 import { Course } from '../../models/course';
 import { CourseListComponent } from './course-list.component';
 import { CoursesOrderByPipe } from '../../pipes/courses-order-by.pipe';
-import { CoursesService } from 'src/app/modules/shared/services/courses.service';
+import { CoursesService } from 'src/app/modules/courses-page/services/courses.service';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import { CoursesServiceStub } from 'src/app/modules/shared/testing-stub/courses-service-stub.mock';
 import { SearchCoursesPipe } from '../../pipes/search-courses.pipe';

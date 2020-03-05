@@ -1,10 +1,11 @@
 import { TestBed, async, getTestBed, fakeAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { CoursesService } from './courses.service';
-import { Course } from '../../courses-page/models/course';
-import { RouterStub } from '../testing-stub/router-stub.mock';
+import { Course } from '../models/course';
+import { RouterStub } from '../../shared/testing-stub/router-stub.mock';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ToastrService } from 'ngx-toastr';
+import { ICourse } from '../interfaces/courses';
 
 const routerStub = new RouterStub();
 const courses = [
@@ -105,7 +106,8 @@ describe('CoursesService', () => {
     service.getAllCourses().subscribe();
     const req = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
     req.flush(JSONCourses);
-    const config = {id: 1, title: 'newTitle', description: 'newDescription', isTopRated: true};
+    const config: ICourse = {id: 1, title: 'newTitle', description: 'newDescription', isTopRated: true,
+                            creationDate: new Date(), duration: 7};
     service.updateCourse(config);
     const req2 = httpTestingController.expectOne('http://localhost:3004/courses/1');
     expect(req2.request.method).toBe('PUT');
@@ -130,16 +132,5 @@ describe('CoursesService', () => {
     const req = httpTestingController.expectOne('http://localhost:3004/courses/3');
     expect(req.request.method).toBe('DELETE');
     req.flush({});
-    service.getAllCourses().subscribe(
-/* tslint:disable */
-// 0, 1, 3, 4 is the number of course in array courses[]
-      (allCourses: Course[]) => expect(allCourses).toEqual([courses[0], courses[1], courses[3], courses[4]])
-/* tslint:enable */
-    );
-    const req3 = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=5');
-/* tslint:disable */
-// 0, 1, 3, 4 is the number of course in array JSONCourses[]
-    req3.flush([JSONCourses[0], JSONCourses[1], JSONCourses[3], JSONCourses[4]]);
-/* tslint:enable */
   });
 });
