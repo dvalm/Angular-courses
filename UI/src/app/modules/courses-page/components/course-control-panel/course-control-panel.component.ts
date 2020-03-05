@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
+import { Subject, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, concatMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-course-control-panel',
@@ -26,10 +26,9 @@ import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 //  3 chars are needed to send a request
           (searchText: string) => searchText.length >= 3 || searchText.length === 0
 /* tslint:enable */
-        )
-      ).subscribe(
-        (searchText: string) => this.search(searchText)
-      );
+        ),
+        concatMap((searchText: string) => of(this.search(searchText)))
+      ).subscribe();
     }
 
     public searchTextChange(event: string): void {
