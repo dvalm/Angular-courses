@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
 import { Subject, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, concatMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-course-control-panel',
@@ -27,7 +27,7 @@ import { debounceTime, distinctUntilChanged, filter, concatMap } from 'rxjs/oper
           (searchText: string) => searchText.length >= 3 || searchText.length === 0
 /* tslint:enable */
         ),
-        concatMap((searchText: string) => of(this.search(searchText)))
+        switchMap((searchText: string) => of(this.search(searchText)))
       ).subscribe();
     }
 
