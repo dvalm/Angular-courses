@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Course } from 'src/app/modules/courses-page/models/course';
 
 @Pipe({
-  name: 'appSearchCourses'
+  name: 'appSearchCourses',
 })
 export class SearchCoursesPipe implements PipeTransform {
   public transform(courses: Course[], searchText?: string): Course[] {

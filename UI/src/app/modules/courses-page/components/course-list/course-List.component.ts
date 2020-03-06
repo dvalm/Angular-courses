@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Course } from 'src/app/modules/courses-page/models/course';
 import { CoursesOrderByPipe } from 'src/app/modules/courses-page/pipes/courses-order-by.pipe';
 import { SearchCoursesPipe } from 'src/app/modules/courses-page/pipes/search-courses.pipe';
@@ -6,7 +6,7 @@ import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import {
   ConfirmationDeleteModalComponent
 } from 'src/app/modules/shared/components/confirmation-delete-modal/confirmation-delete-modal.component';
-import { CoursesService } from 'src/app/modules/shared/services/courses.service';
+import { CoursesService } from 'src/app/modules/courses-page/services/courses.service';
 
 @Component({
     selector: 'app-course-list',
@@ -16,11 +16,9 @@ import { CoursesService } from 'src/app/modules/shared/services/courses.service'
 })
 export class CourseListComponent implements OnInit {
 
-  private courses: Course[] = [];
   public sortedCourses: Course[] = [];
 
   constructor(private orderByPipe: CoursesOrderByPipe,
-              private searchCourse: SearchCoursesPipe,
               private coursesService: CoursesService,
               private modalService: ModalService,
               private changeDetectorRef: ChangeDetectorRef) {}
@@ -33,10 +31,7 @@ export class CourseListComponent implements OnInit {
 
   public changeSearchText(searchText: string): void {
     this.coursesService.searchCourses(searchText).subscribe(
-      (courses: Course[]) => {
-        const searchCoursesList = this.searchCourse.transform(courses, searchText);
-        this.updateCourseVisability(searchCoursesList);
-      }
+      (courses: Course[]) => this.updateCourseVisability(courses)
     );
   }
 
@@ -44,9 +39,10 @@ export class CourseListComponent implements OnInit {
     const modalRef = this.modalService.openModal(ConfirmationDeleteModalComponent);
     modalRef.instance.userAction.subscribe( (isDelete: boolean) => {
       if (isDelete) {
-        this.coursesService.removeCourse(course);
-        this.coursesService.getAllCourses().subscribe(
-          (courses: Course[]) => this.updateCourseVisability(courses)
+        this.coursesService.removeCourse(course).subscribe(
+          () =>  this.coursesService.getAllCourses().subscribe(
+            (courses: Course[]) => this.updateCourseVisability(courses)
+          )
         );
       }
       this.modalService.closeModel(modalRef);
@@ -55,16 +51,12 @@ export class CourseListComponent implements OnInit {
 
   public loadMore(): void {
     this.coursesService.loadCourses().subscribe(
-      (courses: Course[]) => {
-        this.courses.splice(this.courses.length, 0, ...courses);
-        this.updateCourseVisability(this.courses);
-      }
+      (courses: Course[]) => this.updateCourseVisability(this.sortedCourses.concat(courses))
     );
   }
 
   public updateCourseVisability(courses: Course[]): void {
-    this.courses = courses;
-    this.sortedCourses = this.orderByPipe.transform(this.courses, 'creationDate');
+    this.sortedCourses = this.orderByPipe.transform(courses, 'creationDate');
     this.changeDetectorRef.detectChanges();
   }
 }

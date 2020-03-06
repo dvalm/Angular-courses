@@ -3,7 +3,7 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CoursesService } from 'src/app/modules/shared/services/courses.service';
+import { CoursesService } from 'src/app/modules/courses-page/services/courses.service';
 import { CoursesDescriptionComponent } from './course-description.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { Course } from '../../models/course';
@@ -83,18 +83,6 @@ describe('CoursesDescriptionComponent', () => {
       });
       expect(component.courseDescription.value).toEqual(courseDescription.value);
       expect(component.courseDescription.status).toEqual(courseDescription.status);
-    });
-
-    it('should update course if courseId exsist in submit()', () => {
-        component.course = course;
-        component.submit();
-        expect(coursesServiceStub.getAllCourses().subscribe(
-          (data: Course[]) => data.find(
-            (item: Course) => {
-              return JSON.stringify(item) === JSON.stringify(course);
-            }
-          )
-        )).toBeTruthy();
     });
 
     it('should navigate by url \'/courses\' in goBack()', () => {

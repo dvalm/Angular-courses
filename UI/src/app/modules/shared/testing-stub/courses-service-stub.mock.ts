@@ -1,6 +1,6 @@
 import { Course } from '../../courses-page/models/course';
 import { ICourse } from '../../courses-page/interfaces/courses';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const allCourses = [
  /* tslint:disable */

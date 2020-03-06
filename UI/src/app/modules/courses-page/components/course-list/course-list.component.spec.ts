@@ -1,12 +1,12 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA} from '@angular/core';
 import { Course } from '../../models/course';
 import { CourseListComponent } from './course-list.component';
 import { CoursesOrderByPipe } from '../../pipes/courses-order-by.pipe';
-import { SearchCoursesPipe } from '../../pipes/search-courses.pipe';
-import { CoursesService } from 'src/app/modules/shared/services/courses.service';
+import { CoursesService } from 'src/app/modules/courses-page/services/courses.service';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import { CoursesServiceStub } from 'src/app/modules/shared/testing-stub/courses-service-stub.mock';
+import { SearchCoursesPipe } from '../../pipes/search-courses.pipe';
 
 const allCourses = [
 /* tslint:disable */
@@ -18,6 +18,7 @@ const allCourses = [
   new Course(2, 'reprehenderit eiusmod nostrud amet', '2019-01-18T19:10:51+00:00', 120, 'magna excepteur aute deserunt', true),
 /* tslint:enable */
 ];
+const coursesServiceStub = new CoursesServiceStub();
 
 describe('CourseListComponent', () => {
   let component: CourseListComponent;
@@ -30,10 +31,10 @@ describe('CourseListComponent', () => {
       ],
       providers: [
         CoursesOrderByPipe,
-        SearchCoursesPipe,
-        { provide: CoursesService, useValue:  new CoursesServiceStub() },
+        { provide: CoursesService, useValue: coursesServiceStub },
         { provide: ModalService, useValue: {} }
       ],
+      imports: [],
       schemas: [
         NO_ERRORS_SCHEMA
       ],

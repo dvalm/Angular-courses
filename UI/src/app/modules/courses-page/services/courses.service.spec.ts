@@ -1,9 +1,11 @@
 import { TestBed, async, getTestBed, fakeAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { CoursesService } from './courses.service';
-import { Course } from '../../courses-page/models/course';
-import { RouterStub } from '../testing-stub/router-stub.mock';
+import { Course } from '../models/course';
+import { RouterStub } from '../../shared/testing-stub/router-stub.mock';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { ToastrService } from 'ngx-toastr';
+import { ICourse } from '../interfaces/courses';
 
 const routerStub = new RouterStub();
 const courses = [
@@ -16,7 +18,10 @@ const courses = [
   new Course(2, 'reprehenderit eiusmod nostrud amet', '2019-01-18T19:10:51+00:00', 120, 'magna excepteur aute deserunt', true),
 /* tslint:enable */
 ];
-
+const toastrService = {
+  error: (): void => {},
+  success: (): void => {}
+};
 /* tslint:disable */
 // 23 ad 67 are random numbers
 const course = new Course(3, 'duis mollit reprehenderit ad', '2020-01-28T04:39:24+00:00', 67, 'reprehenderit est veniam elit', true);
@@ -43,7 +48,7 @@ describe('CoursesService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers:  [
-        CoursesService,
+        { provide: ToastrService, useValue: toastrService },
         { provide: Router, useValue: routerStub },
       ],
       imports: [
@@ -90,13 +95,6 @@ describe('CoursesService', () => {
     req.flush(JSONCourses);
   }));
 
-  it('should call createCourse() and add new Course()', async(() => {
-    service.createCourse(course);
-    const req = httpTestingController.expectOne('http://localhost:3004/courses/');
-    expect(req.request.method).toBe('POST');
-    req.flush(JSONCourses);
-  }));
-
   it('should call getCourseById(1) and retun course', () => {
     service.getAllCourses().subscribe();
     const req = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
@@ -108,7 +106,8 @@ describe('CoursesService', () => {
     service.getAllCourses().subscribe();
     const req = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
     req.flush(JSONCourses);
-    const config = {id: 1, title: 'newTitle', description: 'newDescription', isTopRated: true};
+    const config: ICourse = {id: 1, title: 'newTitle', description: 'newDescription', isTopRated: true,
+                            creationDate: new Date(), duration: 7};
     service.updateCourse(config);
     const req2 = httpTestingController.expectOne('http://localhost:3004/courses/1');
     expect(req2.request.method).toBe('PUT');
@@ -129,20 +128,9 @@ describe('CoursesService', () => {
     service.getAllCourses().subscribe();
     const req1 = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
     req1.flush(JSONCourses);
-    service.removeCourse(course);
+    service.removeCourse(course).subscribe();
     const req = httpTestingController.expectOne('http://localhost:3004/courses/3');
     expect(req.request.method).toBe('DELETE');
     req.flush({});
-    service.getAllCourses().subscribe(
-/* tslint:disable */
-// 0, 1, 3, 4 is the number of course in array courses[]
-      (allCourses: Course[]) => expect(allCourses).toEqual([courses[0], courses[1], courses[3], courses[4]])
-/* tslint:enable */
-    );
-    const req3 = httpTestingController.expectOne('http://localhost:3004/courses?start=0&count=6');
-/* tslint:disable */
-// 0, 1, 3, 4 is the number of course in array JSONCourses[]
-    req3.flush([JSONCourses[0], JSONCourses[1], JSONCourses[3], JSONCourses[4]]);
-/* tslint:enable */
   });
 });

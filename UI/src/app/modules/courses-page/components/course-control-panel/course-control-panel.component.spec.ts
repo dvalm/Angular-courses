@@ -37,18 +37,32 @@ describe('CourseControlPanelComponent', () => {
       expect(component).toBeTruthy();
     });
 
-    it('click search button and emit output events', () => {
-      const comp = new CourseControlPanelComponent();
-      spyOn(comp.changeSearchText, 'emit');
-      const searchButton = fixture.nativeElement.querySelector('.search__button');
-      searchButton.click();
-      expect(comp.changeSearchText.emit).not.toHaveBeenCalled();
-    });
-
-    it('should allow us to see a bound input field', fakeAsync(() => {
+    it('should allow us to see a bound input field', () => {
       const input = fixture.debugElement.query(By.css('.search__input')).nativeElement;
       input.value = 'new Value';
       input.dispatchEvent(new Event('input'));
-      expect(component.searchText).toEqual('new Value');
+      expect(input.value).toEqual('new Value');
+    });
+
+    it('should call search() if serchText.length >=3', async(() => {
+      spyOn(component, 'search');
+      component.ngOnInit();
+      const input = fixture.debugElement.query(By.css('.search__input')).nativeElement;
+      input.value = 'newValue';
+      input.dispatchEvent(new Event('input'));
+      fixture.whenStable().then(() => {
+        expect(component.search).toHaveBeenCalled();
+      });
+    }));
+
+    it('shoudn\'t call search() if serchText.length <3', async(() => {
+      spyOn(component, 'search');
+      component.ngOnInit();
+      const input = fixture.debugElement.query(By.css('.search__input')).nativeElement;
+      input.value = 'ne';
+      input.dispatchEvent(new Event('input'));
+      fixture.whenStable().then(() => {
+        expect(component.search).not.toHaveBeenCalled();
+      });
     }));
 });

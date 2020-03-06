@@ -1,9 +1,10 @@
 <div class="control-panel">
     <div class="control-panel__search">
-        <input class="search__input" placeholder="Name" (keyup.enter)="search()" [(ngModel)]="searchText">
-        <div class="search__border-button">
-            <button class="search__button button" (click)="search()">Search</button>
-        </div>
+        <input class="search__input"
+            placeholder="Search"
+            name="searchText"
+            [ngModel]
+            (ngModelChange)="searchTextChange($event)">
     </div>
     <div class="add-course-button">
         <button class="add-course-button__button button"

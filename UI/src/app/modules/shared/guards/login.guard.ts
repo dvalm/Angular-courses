@@ -1,5 +1,5 @@
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AuthorizationService } from '../services/authorization.service';
 
@@ -12,13 +12,14 @@ export class LoginGuard implements CanActivate  {
                 private authorizationService: AuthorizationService) {}
 
     canActivate(): Observable<boolean> | boolean {
-        let isAuthenticated: boolean;
+
         this.authorizationService.isAuthenticated().subscribe(
-            (value: boolean) => isAuthenticated = value
-          );
-        if (isAuthenticated) {
-          this.router.navigateByUrl('/courses');
-        }
-        return true;
+          (isAuthenticated: boolean) => {
+              if (isAuthenticated) {
+                this.router.navigateByUrl('/courses');
+              }
+          }
+        );
+        return of(true);
     }
 }
