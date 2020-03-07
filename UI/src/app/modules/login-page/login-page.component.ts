@@ -1,5 +1,7 @@
-import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
-import { AuthorizationService } from '../shared/services/authorization.service';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
+import { Store } from '@ngrx/store';
+import { LoginUser } from 'src/app/ngrx/authorization/authorization.action';
+import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
 
 @Component({
   selector: 'app-login-page',
@@ -9,12 +11,12 @@ import { AuthorizationService } from '../shared/services/authorization.service';
 })
 export class LoginPageComponent {
 
-    constructor(private authorizationService: AuthorizationService) {}
+    constructor(private store$: Store<AuthorizationState>) {}
 
     public email: string;
     public password: string;
 
     public login(): void {
-      this.authorizationService.login(this.email, this.password);
+      this.store$.dispatch(new LoginUser({email: this.email, password: this.password}));
     }
 }

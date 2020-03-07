@@ -1,7 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { AuthorizationService } from '../../services/authorization.service';
-import { IUser } from '../../interfaces/user';
-import { User } from '../../models/user';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { LoginUserLogoutAction } from 'src/app/ngrx/authorization/authorization.action';
+import { authorizationUserFirstNameSelector } from 'src/app/ngrx/authorization/authorization.selector';
+import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
 
 @Component({
     selector: 'app-login',
@@ -9,19 +11,13 @@ import { User } from '../../models/user';
     styleUrls: ['./login.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
   })
-  export class LoginComponent implements OnInit {
+  export class LoginComponent {
 
-    public name: string;
+    public name: Observable<string> = this.store$.pipe(select(authorizationUserFirstNameSelector));
 
-    constructor(public authorizationService: AuthorizationService) {}
-
-    public ngOnInit(): void {
-      this.authorizationService.getUserInfo().subscribe(
-        (user: User) => this.name = user.firstName
-      );
-    }
+    constructor(private store$: Store<AuthorizationState>) {}
 
     public logout(): void {
-      this.authorizationService.logout();
+      this.store$.dispatch(new LoginUserLogoutAction());
     }
   }

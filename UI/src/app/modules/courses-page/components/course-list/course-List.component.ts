@@ -1,7 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Course } from 'src/app/modules/courses-page/models/course';
 import { CoursesOrderByPipe } from 'src/app/modules/courses-page/pipes/courses-order-by.pipe';
-import { SearchCoursesPipe } from 'src/app/modules/courses-page/pipes/search-courses.pipe';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import {
   ConfirmationDeleteModalComponent

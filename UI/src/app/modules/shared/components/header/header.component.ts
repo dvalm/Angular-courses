@@ -1,6 +1,7 @@
-import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, ChangeDetectorRef} from '@angular/core';
-import { AuthorizationService } from '../../services/authorization.service';
-import { Subscription } from 'rxjs';
+import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef} from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { isAuthenticatedSelector } from 'src/app/ngrx/authorization/authorization.selector';
+import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
 
 @Component({
     selector: 'app-header',
@@ -8,24 +9,19 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
   })
-  export class HeaderComponent implements OnInit, OnDestroy {
+  export class HeaderComponent implements OnInit {
 
     public isAuthenticated: boolean;
-    public subscription: Subscription;
 
-    constructor(private authorizationService: AuthorizationService,
-                private changeDetectorRef: ChangeDetectorRef) {}
+    constructor(private changeDetectorRef: ChangeDetectorRef,
+                private store$: Store<AuthorizationState>) {}
 
     public ngOnInit(): void {
-      this.subscription = this.authorizationService.isAuthenticated().subscribe(
+      this.store$.pipe(select(isAuthenticatedSelector)).subscribe(
         (value: boolean) => {
           this.isAuthenticated = value;
           this.changeDetectorRef.detectChanges();
         }
       );
-    }
-
-    public ngOnDestroy(): void {
-      this.subscription.unsubscribe();
     }
   }

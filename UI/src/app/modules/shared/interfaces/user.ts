@@ -6,4 +6,7 @@ export interface IUser {
     fakeToken?: string;
     login?: string;
     password?: string;
+    firstNane?: string;
+    lastName?: string;
+    email?: string;
 }

@@ -2,7 +2,9 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestro
 import { Router, NavigationEnd, RouterEvent } from '@angular/router';
 import { CoursesService } from 'src/app/modules/courses-page/services/courses.service';
 import { Subscription } from 'rxjs';
-import { AuthorizationService } from '../../services/authorization.service';
+import { Store, select } from '@ngrx/store';
+import { isAuthenticatedSelector } from 'src/app/ngrx/authorization/authorization.selector';
+import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
 
 @Component({
     selector: 'app-breadcrumbs',
@@ -15,12 +17,11 @@ import { AuthorizationService } from '../../services/authorization.service';
     public routePath: string[];
     public isAuthenticated: boolean;
     private subscriptionURL: Subscription;
-    private subscriptionIsAuthenticated: Subscription;
 
     constructor(private router: Router,
                 private changeDetectorRef: ChangeDetectorRef,
-                private authorizationService: AuthorizationService,
-                private coursesService: CoursesService) {}
+                private coursesService: CoursesService,
+                private store$: Store<AuthorizationState>) {}
 
     public ngOnInit(): void {
       this.subscriptionURL = this.router.events.subscribe( (path: RouterEvent) => {
@@ -29,7 +30,7 @@ import { AuthorizationService } from '../../services/authorization.service';
           this.changeDetectorRef.detectChanges();
         }
       });
-      this.subscriptionIsAuthenticated = this.authorizationService.isAuthenticated().subscribe(
+      this.store$.pipe(select(isAuthenticatedSelector)).subscribe(
         (value: boolean) => {
           this.isAuthenticated = value;
           this.changeDetectorRef.detectChanges();
@@ -45,7 +46,6 @@ import { AuthorizationService } from '../../services/authorization.service';
 
     public ngOnDestroy(): void {
       this.subscriptionURL.unsubscribe();
-      this.subscriptionIsAuthenticated.unsubscribe();
     }
 
     private setRoutePath(url: string): void {
