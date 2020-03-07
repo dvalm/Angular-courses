@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { isAuthenticatedSelector } from 'src/app/ngrx/authorization/authorization.selector';
-import { GetUser } from 'src/app/ngrx/authorization/authorization.action';
+import { GetUserAction } from 'src/app/ngrx/authorization/authorization.action';
 import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class CoursesGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
     let isAuthenticated: boolean;
-    this.store$.dispatch(new GetUser());
+    this.store$.dispatch(new GetUserAction());
     this.store$.pipe(select(isAuthenticatedSelector)).subscribe(
       (value: boolean) => isAuthenticated = value
     );

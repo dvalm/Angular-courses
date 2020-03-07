@@ -1,6 +1,6 @@
 import {Component, ChangeDetectionStrategy} from '@angular/core';
 import { Store } from '@ngrx/store';
-import { LoginUser } from 'src/app/ngrx/authorization/authorization.action';
+import { LoginUserAction } from 'src/app/ngrx/authorization/authorization.action';
 import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
 
 @Component({
@@ -17,6 +17,6 @@ export class LoginPageComponent {
     public password: string;
 
     public login(): void {
-      this.store$.dispatch(new LoginUser({email: this.email, password: this.password}));
+      this.store$.dispatch(new LoginUserAction({email: this.email, password: this.password}));
     }
 }

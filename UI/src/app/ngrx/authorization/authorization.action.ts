@@ -22,41 +22,41 @@ export class SetUserInfoAction implements Action {
     constructor (public payload: {user: IUser}) {}
 }
 
-export class LoginUser implements Action {
+export class LoginUserAction implements Action {
     readonly type = AuthorizationActionsType.loginUser;
     constructor(public payload: {email: string, password: string}) {}
 }
 
-export class UserLoginSuccess implements Action {
+export class UserLoginSuccessAction implements Action {
     readonly type = AuthorizationActionsType.userLoginSuccess;
     constructor() {}
 }
 
-export class UserLoginError implements Action {
+export class UserLoginErrorAction implements Action {
     readonly type = AuthorizationActionsType.userLoginError;
     constructor() {}
 }
 
-export class GetUser implements Action {
+export class GetUserAction implements Action {
     readonly type = AuthorizationActionsType.getUser;
     constructor() {}
 }
 
-export class GetUserError implements Action {
+export class GetUserErrorAction implements Action {
     readonly type = AuthorizationActionsType.getUserError;
     constructor() {}
 }
 
-export class SetIsAuthenticated implements Action {
+export class SetIsAuthenticatedAction implements Action {
     readonly type = AuthorizationActionsType.setIsAuthenticated;
     constructor (public payload: {isAuthenticated: boolean}) {}
 }
 /* tslint:enable:max-classes-per-file */
 export type AuthorizationAction = LoginUserLogoutAction
     | SetUserInfoAction
-    | LoginUser
-    | UserLoginSuccess
-    | UserLoginError
-    | SetIsAuthenticated
-    | GetUser
-    | GetUserError;
+    | LoginUserAction
+    | UserLoginSuccessAction
+    | UserLoginErrorAction
+    | SetIsAuthenticatedAction
+    | GetUserAction
+    | GetUserErrorAction;

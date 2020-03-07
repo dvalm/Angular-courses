@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from '../interfaces/user';
 import { Store } from '@ngrx/store';
-import { SetIsAuthenticated } from 'src/app/ngrx/authorization/authorization.action';
+import { SetIsAuthenticatedAction } from 'src/app/ngrx/authorization/authorization.action';
 import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
 
 @Injectable({
@@ -28,7 +28,7 @@ export class AuthorizationService {
     }
 
     public logout(): void {
-        this.store$.dispatch(new SetIsAuthenticated({isAuthenticated: false}));
+        this.store$.dispatch(new SetIsAuthenticatedAction({isAuthenticated: false}));
         localStorage.removeItem(this.token);
         this.router.navigateByUrl('/login');
     }

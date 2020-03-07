@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { AuthorizationService } from 'src/app/modules/shared/services/authorization.service';
-import { AuthorizationActionsType, LoginUser, UserLoginError, UserLoginSuccess,
-    GetUser, SetIsAuthenticated, SetUserInfoAction, GetUserError } from './authorization.action';
+import { AuthorizationActionsType, LoginUserAction, UserLoginErrorAction, UserLoginSuccessAction,
+    GetUserAction, SetIsAuthenticatedAction, SetUserInfoAction, GetUserErrorAction } from './authorization.action';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { IToken } from 'src/app/modules/shared/interfaces/token';
@@ -17,15 +17,15 @@ export class AthorizationEffects {
     @Effect({ dispatch: false })
     login$ = this.actions$.pipe(
         ofType(AuthorizationActionsType.loginUser),
-        mergeMap((action: LoginUser) => this.authorizationService.login(action.payload.email, action.payload.password).pipe(
+        mergeMap((action: LoginUserAction) => this.authorizationService.login(action.payload.email, action.payload.password).pipe(
             map((token: IToken) => {
                 localStorage.setItem(this.authorizationService.token, JSON.stringify(token));
-                this.store$.dispatch(new GetUser());
-                return of(new UserLoginSuccess());
+                this.store$.dispatch(new GetUserAction());
+                return of(new UserLoginSuccessAction());
             }),
             catchError(() => {
                 this.toastr.error('Internal Server Error');
-                return of(new UserLoginError());
+                return of(new UserLoginErrorAction());
             }))
         )
     );
@@ -36,12 +36,12 @@ export class AthorizationEffects {
         mergeMap(() => this.authorizationService.readUserFromLocalStorage().pipe(
             map((user: User) => {
                 this.store$.dispatch(new SetUserInfoAction({ user: user }));
-                this.store$.dispatch(new SetIsAuthenticated({ isAuthenticated: true }));
+                this.store$.dispatch(new SetIsAuthenticatedAction({ isAuthenticated: true }));
             }))
         ),
         catchError(() => {
             this.toastr.error('Internal Server Error');
-            return of(new GetUserError());
+            return of(new GetUserErrorAction());
         })
     );
 
