@@ -1,10 +1,11 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, RouterEvent } from '@angular/router';
-import { CoursesService } from 'src/app/modules/courses-page/services/courses.service';
 import { Subscription } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { isAuthenticatedSelector } from 'src/app/ngrx/authorization/authorization.selector';
 import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
+import { ICourse } from 'src/app/modules/courses-page/interfaces/courses';
+import { getCourseByIdSelector } from 'src/app/ngrx/courses/courses.selector';
 
 @Component({
     selector: 'app-breadcrumbs',
@@ -20,7 +21,6 @@ import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.sta
 
     constructor(private router: Router,
                 private changeDetectorRef: ChangeDetectorRef,
-                private coursesService: CoursesService,
                 private store$: Store<AuthorizationState>) {}
 
     public ngOnInit(): void {
@@ -52,7 +52,11 @@ import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.sta
       this.routePath = url.slice(1).split('/');
       const id = parseInt(this.routePath[this.routePath.length - 1 ], 10);
       if (id) {
-        this.routePath[this.routePath.length - 1] = this.coursesService.getCourseById(id).title;
+        this.store$.pipe(select(getCourseByIdSelector, {id: id})).subscribe(
+          (course: ICourse) => {
+            this.routePath[this.routePath.length - 1] = course.name;
+          }
+        );
       }
     }
   }

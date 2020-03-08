@@ -1,13 +1,13 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Course } from 'src/app/modules/courses-page/models/course';
 import { ICourse } from '../interfaces/courses';
-import { TNullable } from '../types/nullable.type';
-import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { map, filter, catchError } from 'rxjs/operators';
-import { Observable, BehaviorSubject, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { SearchCoursesPipe } from '../pipes/search-courses.pipe';
-import { error } from 'protractor';
+import { Store } from '@ngrx/store';
+import { CoursesState } from 'src/app/ngrx/courses/courses.state';
+import { SetCoursesAction, LoadCoursesAction } from 'src/app/ngrx/courses/courses.action';
 
 /* tslint:disable */
 // 6 courses should be loaded in one request and placed on user screen
@@ -19,25 +19,25 @@ const amountCoursesInPage = 6;
 })
 export class CoursesService {
 
-    private _courses: Course[] = [];
+    public courseslength = 0;
     private _baseURL = 'http://localhost:3004';
 
     constructor(private http: HttpClient,
-                private toastr: ToastrService) {}
+                private toastr: ToastrService,
+                private store$: Store<CoursesState>) {}
 
-    public getAllCourses(): Observable<Course[]> {
-        if (this._courses.length !== 0) {
-            return of(this._courses);
+    public getAllCourses(): void {
+        if (this.courseslength === 0) {
+            this.getCourses(`/courses?start=0&count=${amountCoursesInPage}`);
         }
-        return this.getCourses(`/courses?start=0&count=${amountCoursesInPage}`);
     }
 
-    public loadCourses(): Observable<Course[]> {
-        return this.getCourses(`/courses?start=${this._courses.length}&count=${amountCoursesInPage}`);
+    public loadCourses(): void {
+        this.getCourses(`/courses?start=${this.courseslength}&count=${amountCoursesInPage}`);
     }
 
-    public createCourse(course: Course): void {
-        this.http.post(`${this._baseURL}/courses/`, {
+    public createCourse(course: Course): Observable<ICourse> {
+        return this.http.post(`${this._baseURL}/courses/`, {
             id: course.id,
             name: course.title,
             description: course.description,
@@ -45,21 +45,11 @@ export class CoursesService {
             date: course.creationDate.toString(),
             authors: [],
             length: course.duration
-        }).subscribe(
-            () => this.toastr.success('Course created successfully!'),
-            (httpError: HttpErrorResponse) => this.toastr.error(`${httpError.status} ${httpError.statusText}`)
-        );
-        this._courses.push(course);
+        });
     }
 
-    public getCourseById(id: number): TNullable<Course> {
-        return this._courses.find(
-            (course: Course) => course.id === id
-        );
-    }
-
-    public updateCourse(config: ICourse): void {
-        this.http.put(`${this._baseURL}/courses/` + config.id, {
+    public updateCourse(config: ICourse): Observable<ICourse> {
+        return this.http.put(`${this._baseURL}/courses/` + config.id, {
             id: config.id,
             name: config.title,
             description: config.description,
@@ -67,43 +57,23 @@ export class CoursesService {
             date: config.creationDate.toString(),
             authors: [],
             length: config.duration
-        }).subscribe(
-            () => this.toastr.success('Course updated successfully!'),
-            (httpError: HttpErrorResponse) => this.toastr.error(`${httpError.status} ${httpError.statusText}`)
-        );
-        const index = this.findCourseIndex(config);
-        this._courses.splice(index, 1, new Course(config.id, config.title, config.creationDate.toString(), config.duration,
-            config.description, config.isTopRated));
+        });
     }
 
-    public searchCourses(searchText: string): Observable<Course[]> {
+    public searchCourses(searchText: string): void {
         if (searchText !== '') {
-            return this.getCourses(`/courses?search=${searchText}`).pipe(
-                catchError(
-                    (httpError: HttpErrorResponse) => {
-                        this.toastr.error(`${httpError.status} ${httpError.statusText}`);
-                        return of([]);
-                    }
-                )
-            );
+            this.getCourses(`/courses?search=${searchText}`);
         } else {
-            return this.getAllCourses();
+            this.getAllCourses();
         }
     }
 
     public removeCourse(course: Course): Observable<object> {
-        this._courses.splice(this.findCourseIndex(course), 1);
         return this.http.delete(`${this._baseURL}/courses/${course.id}`);
     }
 
-    private findCourseIndex(course: ICourse): number {
-        return this._courses.findIndex(
-            (item: Course) => course.id === item.id
-        );
-    }
-
-    private getCourses(url: string = `/courses?start=0&count=${amountCoursesInPage}`): Observable<Course[]> {
-        return this.http.get<Course[]>(this._baseURL + url).pipe(
+    private getCourses(url: string = `/courses?start=0&count=${amountCoursesInPage}`): void {
+        this.http.get<Course[]>(this._baseURL + url).pipe(
             map((data: Course[]) => {
                 let courses = data.map(
                     (course: ICourse) => new Course(course.id, course.name, course.date, course.length,
@@ -118,16 +88,23 @@ export class CoursesService {
                         item.title.toUpperCase().indexOf(searchText.toUpperCase()) >= 0 ||
                         item.description.toUpperCase().indexOf(searchText.toUpperCase()) >= 0
                     );
+                    this.courseslength = courses.length;
+                    this.store$.dispatch(new SetCoursesAction({courses: courses}));
+                } else {
+                    if (url.includes('start=0')) {
+                        this.courseslength = courses.length;
+                        this.store$.dispatch(new SetCoursesAction({courses: courses}));
+                    } else {
+                        this.courseslength += courses.length;
+                        this.store$.dispatch(new LoadCoursesAction({courses: courses}));
+                    }
                 }
-                this._courses = this._courses.concat(courses);
-                return courses;
-            }),
-            catchError(
-                (httpError: HttpErrorResponse) => {
-                    this.toastr.error(`${httpError.status} ${httpError.statusText}`);
-                    return of([]);
-                }
-            )
+            })
+        ).subscribe(
+            () => {},
+            (httpError: HttpErrorResponse) => {
+                this.toastr.error(`${httpError.status} ${httpError.statusText}`);
+            }
         );
     }
 }

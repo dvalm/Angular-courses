@@ -21,6 +21,12 @@ export function authorizationReduser(state: AuthorizationState = initialState, a
                 isAuthenticated: actoin.payload.isAuthenticated,
                 user: setIsAuthenticatedUser
             };
+        // case AuthorizationActionsType.userLoginSuccess:
+        //     return {
+        //             ...state,
+        //             isAuthenticated: true,
+        //             user: state.user
+        //     };
         default:
             return state;
     }

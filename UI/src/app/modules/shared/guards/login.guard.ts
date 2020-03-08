@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { isAuthenticatedSelector } from 'src/app/ngrx/authorization/authorization.selector';
 import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
+import { GetUserAction } from 'src/app/ngrx/authorization/authorization.action';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class LoginGuard implements CanActivate {
     private store$: Store<AuthorizationState>) { }
 
   canActivate(): Observable<boolean> | boolean {
-
+    this.store$.dispatch(new GetUserAction());
     this.store$.pipe(select(isAuthenticatedSelector)).subscribe(
       (isAuthenticated: boolean) => {
         if (isAuthenticated) {

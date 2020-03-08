@@ -3,7 +3,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { AuthorizationService } from 'src/app/modules/shared/services/authorization.service';
 import { AuthorizationActionsType, LoginUserAction, UserLoginErrorAction, UserLoginSuccessAction,
     GetUserAction, SetIsAuthenticatedAction, SetUserInfoAction, GetUserErrorAction } from './authorization.action';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { IToken } from 'src/app/modules/shared/interfaces/token';
 import { User } from 'src/app/modules/shared/models/user';
@@ -20,8 +20,9 @@ export class AthorizationEffects {
         mergeMap((action: LoginUserAction) => this.authorizationService.login(action.payload.email, action.payload.password).pipe(
             map((token: IToken) => {
                 localStorage.setItem(this.authorizationService.token, JSON.stringify(token));
+                this.store$.dispatch(new SetIsAuthenticatedAction({isAuthenticated: true}));
                 this.store$.dispatch(new GetUserAction());
-                return of(new UserLoginSuccessAction());
+                return this.store$.dispatch(new UserLoginSuccessAction());
             }),
             catchError(() => {
                 this.toastr.error('Internal Server Error');
@@ -41,7 +42,7 @@ export class AthorizationEffects {
         ),
         catchError(() => {
             this.toastr.error('Internal Server Error');
-            return of(new GetUserErrorAction());
+            return of(this.store$.dispatch(new GetUserErrorAction()));
         })
     );
 

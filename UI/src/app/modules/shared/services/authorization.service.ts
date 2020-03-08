@@ -6,6 +6,7 @@ import { IUser } from '../interfaces/user';
 import { Store } from '@ngrx/store';
 import { SetIsAuthenticatedAction } from 'src/app/ngrx/authorization/authorization.action';
 import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
+import { IToken } from '../interfaces/token';
 
 @Injectable({
     providedIn: 'root'
@@ -18,9 +19,8 @@ export class AuthorizationService {
     constructor(private router: Router,
                 private http: HttpClient,
                 private store$: Store<AuthorizationState>) {}
- /* tslint:disable */
-    public login(email: string, password: string): Observable<any> {
- /* tslint:enable */
+
+    public login(email: string, password: string): Observable<IToken> {
         return this.http.post(`${this._baseURL}/auth/login`, {
             login: email,
             password: password
