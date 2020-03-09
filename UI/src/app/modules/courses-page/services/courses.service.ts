@@ -62,7 +62,7 @@ export class CoursesService {
 
     public searchCourses(searchText: string): void {
         if (searchText !== '') {
-            this.getCourses(`/courses?search=${searchText}`);
+            this.getCourses(`/courses?textFragment=${searchText}`);
         } else {
             this.getAllCourses();
         }
@@ -75,29 +75,16 @@ export class CoursesService {
     private getCourses(url: string = `/courses?start=0&count=${amountCoursesInPage}`): void {
         this.http.get<Course[]>(this._baseURL + url).pipe(
             map((data: Course[]) => {
-                let courses = data.map(
+                const courses = data.map(
                     (course: ICourse) => new Course(course.id, course.name, course.date, course.length,
                         course.description, course.isTopRated)
                 );
-                if (url.includes('search')) {
-/* tslint:disable */
-// 16 is start char position of searchText in URL /courses?search=searchText
-                    const searchText = url.slice(16)
-/* tslint:enable */
-                    courses = courses.filter( (item: Course) =>
-                        item.title.toUpperCase().indexOf(searchText.toUpperCase()) >= 0 ||
-                        item.description.toUpperCase().indexOf(searchText.toUpperCase()) >= 0
-                    );
+                if (url.includes('start=0') || url.includes('textFragment')) {
                     this.courseslength = courses.length;
                     this.store$.dispatch(new SetCoursesAction({courses: courses}));
                 } else {
-                    if (url.includes('start=0')) {
-                        this.courseslength = courses.length;
-                        this.store$.dispatch(new SetCoursesAction({courses: courses}));
-                    } else {
-                        this.courseslength += courses.length;
-                        this.store$.dispatch(new LoadCoursesAction({courses: courses}));
-                    }
+                    this.courseslength += courses.length;
+                    this.store$.dispatch(new LoadCoursesAction({courses: courses}));
                 }
             })
         ).subscribe(
