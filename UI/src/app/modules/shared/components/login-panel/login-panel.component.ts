@@ -6,14 +6,14 @@ import { authorizationUserFirstNameSelector } from 'src/app/ngrx/authorization/a
 import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
+    selector: 'app-login-panel',
+    templateUrl: './login-panel.component.html',
+    styleUrls: ['./login-panel.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
   })
-  export class LoginComponent {
+  export class LoginPanelComponent {
 
-    public name: Observable<string> = this.store$.pipe(select(authorizationUserFirstNameSelector));
+    public name$: Observable<string> = this.store$.pipe(select(authorizationUserFirstNameSelector));
 
     constructor(private store$: Store<AuthorizationState>) {}
 

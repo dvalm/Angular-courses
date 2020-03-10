@@ -1,60 +1,90 @@
-import { initialState, CoursesState } from './courses.state';
+import { initialState, ICoursesState } from './courses.state';
 import { CoursesAction, CoursesActionsType } from './courses.action';
 import { Course } from 'src/app/modules/courses-page/models/course';
 
 export const COURSES_REDUSER_NODE = 'courses';
 
-export function coursesReduser(state: CoursesState = initialState, actoin: CoursesAction): CoursesState {
-    switch (actoin.type) {
-        case CoursesActionsType.setCourses:
+export function coursesReduser(state: ICoursesState = initialState, action: CoursesAction): ICoursesState {
+    switch (action.type) {
+        case CoursesActionsType.readSearchCoursesSuccess:
             return {
                 ...state,
-                courses: actoin.payload.courses
+                courses: action.payload.courses,
+                error: null
+            };
+        case CoursesActionsType.readSearchCoursesError:
+            return {
+                ...state,
+                courses: state.courses,
+                error: action.payload.error
             };
         case CoursesActionsType.createCourseSuccess:
             return {
                 ...state,
-                courses: state.courses.concat(actoin.payload.course)
+                courses: state.courses.concat(action.payload.course),
+                error: null
             };
         case CoursesActionsType.createCourseError:
             return {
                 ...state,
-                courses: state.courses
+                courses: state.courses,
+                error: action.payload.error
             };
         case CoursesActionsType.updateCourseSuccess:
             const updateIndex = state.courses.findIndex(
-                (item: Course) => actoin.payload.course.id === item.id
+                (item: Course) => action.payload.course.id === item.id
             );
             const updatedCourses = state.courses.slice();
-            updatedCourses.splice(updateIndex, 1, actoin.payload.course);
+            updatedCourses[updateIndex] = { ...action.payload.course };
             return {
                 ...state,
-                courses: updatedCourses
+                courses: updatedCourses,
+                error: null
             };
         case CoursesActionsType.updateCourseError:
             return {
                 ...state,
-                courses: state.courses
+                courses: state.courses,
+                error: action.payload.error
             };
-        case CoursesActionsType.removeCourseSuccess:
-            const removeIndex = state.courses.findIndex(
-                (item: Course) => actoin.payload.course.id === item.id
+        case CoursesActionsType.deleteCourseSuccess:
+            const filteredCourses = state.courses.filter(
+                (course: Course) => course.id !== action.payload.course.id
             );
-            const removeCourses = state.courses.slice();
-            removeCourses.splice(removeIndex, 1);
             return {
                 ...state,
-                courses: removeCourses
+                courses: filteredCourses,
+                error: null
             };
-        case CoursesActionsType.removeCourseError:
+        case CoursesActionsType.deleteCourseError:
             return {
                 ...state,
-                courses: state.courses
+                courses: state.courses,
+                error: action.payload.error
             };
-        case CoursesActionsType.loadCourses:
+        case CoursesActionsType.loadCoursesSuccess:
             return {
                 ...state,
-                courses: state.courses.concat(actoin.payload.courses)
+                courses: state.courses.concat(action.payload.courses),
+                error: null
+            };
+        case CoursesActionsType.loadCoursesError:
+            return {
+                ...state,
+                courses: state.courses,
+                error: action.payload.error
+            };
+        case CoursesActionsType.readAllCoursesSuccess:
+            return {
+                ...state,
+                courses: action.payload.courses,
+                error: null
+            };
+        case CoursesActionsType.readAllCoursesError:
+            return {
+                ...state,
+                courses: state.courses,
+                error: action.payload.error
             };
         default:
             return state;

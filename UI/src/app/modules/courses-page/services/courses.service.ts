@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Course } from 'src/app/modules/courses-page/models/course';
 import { ICourse } from '../interfaces/courses';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
-import { Store } from '@ngrx/store';
-import { CoursesState } from 'src/app/ngrx/courses/courses.state';
-import { SetCoursesAction, LoadCoursesAction } from 'src/app/ngrx/courses/courses.action';
 
 /* tslint:disable */
 // 6 courses should be loaded in one request and placed on user screen
@@ -19,21 +15,21 @@ const amountCoursesInPage = 6;
 })
 export class CoursesService {
 
-    public courseslength = 0;
+    public coursesLength = 0;
     private _baseURL = 'http://localhost:3004';
 
-    constructor(private http: HttpClient,
-                private toastr: ToastrService,
-                private store$: Store<CoursesState>) {}
+    constructor(private http: HttpClient) {}
 
-    public getAllCourses(): void {
-        if (this.courseslength === 0) {
-            this.getCourses(`/courses?start=0&count=${amountCoursesInPage}`);
+    public readAllCourses(): Observable<Course[]> {
+        if (this.coursesLength === 0) {
+            return this.getCourses(`/courses?start=0&count=${amountCoursesInPage}`);
+        } else {
+            return this.loadCourses();
         }
     }
 
-    public loadCourses(): void {
-        this.getCourses(`/courses?start=${this.courseslength}&count=${amountCoursesInPage}`);
+    public loadCourses(): Observable<Course[]> {
+        return this.getCourses(`/courses?start=${this.coursesLength}&count=${amountCoursesInPage}`);
     }
 
     public createCourse(course: Course): Observable<ICourse> {
@@ -60,38 +56,32 @@ export class CoursesService {
         });
     }
 
-    public searchCourses(searchText: string): void {
+    public searchCourses(searchText: string): Observable<Course[]> {
         if (searchText !== '') {
-            this.getCourses(`/courses?textFragment=${searchText}`);
+            return this.getCourses(`/courses?textFragment=${searchText}`);
         } else {
-            this.getAllCourses();
+            return this.readAllCourses();
         }
     }
 
-    public removeCourse(course: Course): Observable<object> {
+    public deleteCourse(course: Course): Observable<object> {
         return this.http.delete(`${this._baseURL}/courses/${course.id}`);
     }
 
-    private getCourses(url: string = `/courses?start=0&count=${amountCoursesInPage}`): void {
-        this.http.get<Course[]>(this._baseURL + url).pipe(
+    private getCourses(url: string = `/courses?start=0&count=${amountCoursesInPage}`): Observable<Course[]> {
+        return this.http.get<Course[]>(this._baseURL + url).pipe(
             map((data: Course[]) => {
                 const courses = data.map(
                     (course: ICourse) => new Course(course.id, course.name, course.date, course.length,
                         course.description, course.isTopRated)
                 );
                 if (url.includes('start=0') || url.includes('textFragment')) {
-                    this.courseslength = courses.length;
-                    this.store$.dispatch(new SetCoursesAction({courses: courses}));
+                    this.coursesLength = courses.length;
                 } else {
-                    this.courseslength += courses.length;
-                    this.store$.dispatch(new LoadCoursesAction({courses: courses}));
+                    this.coursesLength += courses.length;
                 }
+                return courses;
             })
-        ).subscribe(
-            () => {},
-            (httpError: HttpErrorResponse) => {
-                this.toastr.error(`${httpError.status} ${httpError.statusText}`);
-            }
         );
     }
 }

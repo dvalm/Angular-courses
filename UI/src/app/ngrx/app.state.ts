@@ -1,7 +1,7 @@
 import { AuthorizationState } from './authorization/authorization.state';
-import { CoursesState } from './courses/courses.state';
+import { ICoursesState } from './courses/courses.state';
 
 export interface State {
   authorizationState: AuthorizationState;
-  coursesState: CoursesState;
+  coursesState: ICoursesState;
 }

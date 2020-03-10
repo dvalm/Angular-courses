@@ -1,0 +1,121 @@
+@import 'src/app/styles/variables/colors';
+
+.registration{
+    min-height: 100%;
+    display: flex;
+    margin-top: 80px;
+    justify-content: center;
+
+    &__title{
+        color: $сolor-dark-purple;
+        font-size: 25px;
+        text-align: center;
+    }
+
+    &__block{
+        margin-top: 15px;
+    }
+
+    &__content{
+        width: fit-content;
+        padding: 20px 48px;
+        box-sizing: border-box;
+        border: 2px solid $сolor-transparent;
+        border-radius: 5px;
+        border-image: linear-gradient(to right, $сolor-dark-purple 0%, $сolor-purple 100%);
+        border-image-slice: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &__fields{
+        box-shadow: 0px 0px 5px 5px $сolor-lilac;
+        border-radius: 15px;
+        max-width: fit-content;
+
+        &-input{
+            max-width: fit-content;
+        }
+
+        &:hover {
+            box-shadow: 1px 1px 15px 1px $сolor-purple-light-pink;
+        }
+    }
+
+    &__input{
+        width: 250px;
+        height: 35px;
+    }
+
+    .fields{
+        box-sizing: border-box;
+        border: none;
+        border-radius: 15px;
+        outline: none;
+        color: $сolor-dark-voilet;
+        background-color: $сolor-light;
+        cursor: text;
+        padding: 10px;
+
+        &::placeholder {
+            color: $сolor-light-purple;
+        }        
+    }
+
+    &__text{
+        color: $сolor-light-voilet;
+        font-size: 15px;
+        margin: 10px 5px;
+    }
+
+    &__buttons{
+        margin: 50px 0 20px 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        .save__border-button{
+            width: 120px;
+            height: 35px;
+            border: solid 1px transparent;
+            border-width: 1px;
+            box-sizing: border-box;
+            border-radius: 15px;
+            background-image: linear-gradient($сolor-light-lilac, $сolor-light-lilac), 
+                            linear-gradient(to right, $сolor-dark-purple, $сolor-purple);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+        }
+    
+        .save__button{
+            border-color: $сolor-transparent;
+            background-color: $сolor-transparent;
+            width: 100%;
+            height: 100%;
+            color: $сolor-dark-voilet;
+        }
+    
+        .button{
+            cursor: pointer;
+    
+            &:focus{
+                outline: none;
+            }
+        }
+    
+        .cancel-button__button{
+            margin-left: 10px;
+            width: 120px;
+            height: 35px;
+            border: none;
+            background-color: $сolor-light-voilet;
+            border-radius: 15px;
+            box-shadow: 2px 2px 5px 5px $сolor-lilac;
+    
+            &:hover {
+                box-shadow: 1px 1px 10px 1px $сolor-light-purple;
+            }
+        }
+    }
+}

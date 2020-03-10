@@ -1,17 +1,15 @@
-import { Component, Output, EventEmitter, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Course } from '../../models/course';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { CoursesService } from '../../services/courses.service';
 import { ICourse } from '../../interfaces/courses';
-import { TNullable } from '../../types/nullable.type';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import {
   ConfirmationDontSaveModalComponent
 } from 'src/app/modules/shared/components/confirmation-dont-save-modal/confirmation-dont-save-modal.component';
 import { Store, select } from '@ngrx/store';
-import { CoursesState } from 'src/app/ngrx/courses/courses.state';
+import { ICoursesState } from 'src/app/ngrx/courses/courses.state';
 import { CreateCourseAction, UpdateCourseAction } from 'src/app/ngrx/courses/courses.action';
 import { getCourseByIdSelector } from 'src/app/ngrx/courses/courses.selector';
 
@@ -23,8 +21,6 @@ import { getCourseByIdSelector } from 'src/app/ngrx/courses/courses.selector';
 })
 export class CoursesDescriptionComponent implements OnInit {
 
-  @Output() changePage: EventEmitter<void> = new EventEmitter();
-  @Input() course: TNullable<Course>;
   public courseDescription: FormGroup;
   private courseId: number = parseInt(this.activateRoute.snapshot.url[0].path, 10);
 
@@ -33,7 +29,7 @@ export class CoursesDescriptionComponent implements OnInit {
     private modalService: ModalService,
     private activateRoute: ActivatedRoute,
     private router: Router,
-    private store$: Store<CoursesState>) { }
+    private store$: Store<ICoursesState>) { }
 
   public ngOnInit(): void {
 

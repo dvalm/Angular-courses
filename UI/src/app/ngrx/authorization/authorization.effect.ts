@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { AuthorizationService } from 'src/app/modules/shared/services/authorization.service';
-import { AuthorizationActionsType, LoginUserAction, UserLoginErrorAction, UserLoginSuccessAction,
-    GetUserAction, SetIsAuthenticatedAction, SetUserInfoAction, GetUserErrorAction } from './authorization.action';
-import { mergeMap, map, catchError, switchMap } from 'rxjs/operators';
+import {
+    AuthorizationActionsType, LoginUserAction, LoginUserErrorAction, LoginUserSuccessAction,
+    GetUserErrorAction, GetUserSuccessAction, GetUserAction
+} from './authorization.action';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { IToken } from 'src/app/modules/shared/interfaces/token';
 import { User } from 'src/app/modules/shared/models/user';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { AuthorizationState } from './authorization.state';
+import { IUser } from 'src/app/modules/shared/interfaces/user';
 
 @Injectable()
 export class AthorizationEffects {
@@ -17,27 +20,28 @@ export class AthorizationEffects {
     @Effect({ dispatch: false })
     login$ = this.actions$.pipe(
         ofType(AuthorizationActionsType.loginUser),
-        mergeMap((action: LoginUserAction) => this.authorizationService.login(action.payload.email, action.payload.password).pipe(
+        switchMap((action: LoginUserAction) => this.authorizationService.login(action.payload.email, action.payload.password).pipe(
             map((token: IToken) => {
+                console.log(token);
                 localStorage.setItem(this.authorizationService.token, JSON.stringify(token));
-                this.store$.dispatch(new SetIsAuthenticatedAction({isAuthenticated: true}));
                 this.store$.dispatch(new GetUserAction());
-                return this.store$.dispatch(new UserLoginSuccessAction());
+                return this.store$.dispatch(new LoginUserSuccessAction());
             }),
             catchError(() => {
                 this.toastr.error('Internal Server Error');
-                return of(new UserLoginErrorAction());
+                return of(new LoginUserErrorAction());
             }))
-        )
+        ),
     );
 
     @Effect({ dispatch: false })
     getUser$ = this.actions$.pipe(
         ofType(AuthorizationActionsType.getUser),
-        mergeMap(() => this.authorizationService.readUserFromLocalStorage().pipe(
-            map((user: User) => {
-                this.store$.dispatch(new SetUserInfoAction({ user: user }));
-                this.store$.dispatch(new SetIsAuthenticatedAction({ isAuthenticated: true }));
+        switchMap(() => this.authorizationService.readUserFromLocalStorage().pipe(
+            map((data: IUser) => {
+                const user = new User(data.id, data.name.first,
+                    data.name.last, data.login, data.password);
+                return this.store$.dispatch(new GetUserSuccessAction({ user: user }));
             }))
         ),
         catchError(() => {

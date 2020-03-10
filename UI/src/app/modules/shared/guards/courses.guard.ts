@@ -18,11 +18,8 @@ export class CoursesGuard implements CanActivate {
     let isAuthenticated: boolean;
     this.store$.dispatch(new GetUserAction());
     this.store$.pipe(select(isAuthenticatedSelector)).subscribe(
-      (value: boolean) => isAuthenticated = value
+      (value: boolean) => value ? isAuthenticated = value : this.router.navigateByUrl('/login')
     );
-    if (!isAuthenticated) {
-      this.router.navigateByUrl('/login');
-    }
     return isAuthenticated;
   }
 }

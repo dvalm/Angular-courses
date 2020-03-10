@@ -4,8 +4,8 @@ import { Subscription } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { isAuthenticatedSelector } from 'src/app/ngrx/authorization/authorization.selector';
 import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
-import { ICourse } from 'src/app/modules/courses-page/interfaces/courses';
 import { getCourseByIdSelector } from 'src/app/ngrx/courses/courses.selector';
+import { Course } from 'src/app/modules/courses-page/models/course';
 
 @Component({
     selector: 'app-breadcrumbs',
@@ -53,8 +53,8 @@ import { getCourseByIdSelector } from 'src/app/ngrx/courses/courses.selector';
       const id = parseInt(this.routePath[this.routePath.length - 1 ], 10);
       if (id) {
         this.store$.pipe(select(getCourseByIdSelector, {id: id})).subscribe(
-          (course: ICourse) => {
-            this.routePath[this.routePath.length - 1] = course.name;
+          (course: Course) => {
+            this.routePath[this.routePath.length - 1] = course.title;
           }
         );
       }

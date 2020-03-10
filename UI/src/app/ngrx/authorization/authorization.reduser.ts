@@ -1,32 +1,48 @@
 import { AuthorizationAction, AuthorizationActionsType } from './authorization.action';
-import { User } from 'src/app/modules/shared/models/user';
 import { AuthorizationState, initialState } from './authorization.state';
 
 export const AUTHORIZATION_REDUSER_NODE = 'login';
 
-export function authorizationReduser(state: AuthorizationState = initialState, actoin: AuthorizationAction): AuthorizationState {
-    switch (actoin.type) {
-        case AuthorizationActionsType.setUserInfo:
-            const setUserInfoUser = new User(actoin.payload.user.id, actoin.payload.user.name.first,
-                actoin.payload.user.name.last, actoin.payload.user.login, actoin.payload.user.password);
+export function authorizationReduser(state: AuthorizationState = initialState, action: AuthorizationAction): AuthorizationState {
+    switch (action.type) {
+        // case AuthorizationActionsType.setUserInfo:
+        //     const setUserInfoUser = new User(action.payload.user.id, action.payload.user.name.first,
+        //         action.payload.user.name.last, action.payload.user.login, action.payload.user.password);
+        //     return {
+        //         ...state,
+        //         isAuthenticated: true,
+        //         user: setUserInfoUser
+        //     };
+        case AuthorizationActionsType.setIsAuthenticated:
+            return {
+                ...state,
+                isAuthenticated: action.payload.isAuthenticated,
+                user: action.payload.isAuthenticated ? state.user : null
+            };
+        case AuthorizationActionsType.loginUserSuccess:
             return {
                 ...state,
                 isAuthenticated: true,
-                user: setUserInfoUser
+                user: state.user
             };
-        case AuthorizationActionsType.setIsAuthenticated:
-            const setIsAuthenticatedUser = actoin.payload.isAuthenticated ? state.user : null;
+        case AuthorizationActionsType.loginUserError:
             return {
                 ...state,
-                isAuthenticated: actoin.payload.isAuthenticated,
-                user: setIsAuthenticatedUser
+                isAuthenticated: false,
+                user: null
             };
-        // case AuthorizationActionsType.userLoginSuccess:
-        //     return {
-        //             ...state,
-        //             isAuthenticated: true,
-        //             user: state.user
-        //     };
+        case AuthorizationActionsType.getUserSuccess:
+            return {
+                ...state,
+                isAuthenticated: true,
+                user: action.payload.user
+            };
+        case AuthorizationActionsType.getUserError:
+            return {
+                ...state,
+                isAuthenticated: false,
+                user: null
+            };
         default:
             return state;
     }
