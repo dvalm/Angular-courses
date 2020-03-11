@@ -17,7 +17,7 @@ export class LoginGuard implements CanActivate {
     private authorizationService: AuthorizationService) { }
 
   canActivate(): Observable<boolean> | boolean {
-    if(localStorage.getItem(this.authorizationService.token)) {
+    if (localStorage.getItem(this.authorizationService.token)) {
       this.store$.dispatch(new GetUserAction());
     }
     this.store$.pipe(select(isAuthenticatedSelector)).subscribe(
