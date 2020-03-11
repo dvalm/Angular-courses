@@ -4,12 +4,12 @@ import { LoginUserAction } from 'src/app/ngrx/authorization/authorization.action
 import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginPageComponent {
+export class LoginComponent {
 
     constructor(private store$: Store<AuthorizationState>) {}
 
