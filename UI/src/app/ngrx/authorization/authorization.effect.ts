@@ -13,6 +13,7 @@ import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { AuthorizationState } from './authorization.state';
 import { IUser } from 'src/app/modules/shared/interfaces/user';
+import { authorizationUserSelector } from './authorization.selector';
 
 @Injectable()
 export class AthorizationEffects {
@@ -22,7 +23,6 @@ export class AthorizationEffects {
         ofType(AuthorizationActionsType.loginUser),
         switchMap((action: LoginUserAction) => this.authorizationService.login(action.payload.email, action.payload.password).pipe(
             map((token: IToken) => {
-                console.log(token);
                 localStorage.setItem(this.authorizationService.token, JSON.stringify(token));
                 this.store$.dispatch(new GetUserAction());
                 return this.store$.dispatch(new LoginUserSuccessAction());
@@ -45,6 +45,7 @@ export class AthorizationEffects {
             }))
         ),
         catchError(() => {
+            console.log(555);
             this.toastr.error('Internal Server Error');
             return of(this.store$.dispatch(new GetUserErrorAction()));
         })

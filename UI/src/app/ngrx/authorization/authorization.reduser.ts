@@ -5,14 +5,6 @@ export const AUTHORIZATION_REDUSER_NODE = 'login';
 
 export function authorizationReduser(state: AuthorizationState = initialState, action: AuthorizationAction): AuthorizationState {
     switch (action.type) {
-        // case AuthorizationActionsType.setUserInfo:
-        //     const setUserInfoUser = new User(action.payload.user.id, action.payload.user.name.first,
-        //         action.payload.user.name.last, action.payload.user.login, action.payload.user.password);
-        //     return {
-        //         ...state,
-        //         isAuthenticated: true,
-        //         user: setUserInfoUser
-        //     };
         case AuthorizationActionsType.setIsAuthenticated:
             return {
                 ...state,

@@ -5,6 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { isAuthenticatedSelector } from 'src/app/ngrx/authorization/authorization.selector';
 import { AuthorizationState } from 'src/app/ngrx/authorization/authorization.state';
 import { GetUserAction } from 'src/app/ngrx/authorization/authorization.action';
+import { AuthorizationService } from '../services/authorization.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,13 @@ import { GetUserAction } from 'src/app/ngrx/authorization/authorization.action';
 export class LoginGuard implements CanActivate {
 
   constructor(private router: Router,
-    private store$: Store<AuthorizationState>) { }
+    private store$: Store<AuthorizationState>,
+    private authorizationService: AuthorizationService) { }
 
   canActivate(): Observable<boolean> | boolean {
-    this.store$.dispatch(new GetUserAction());
+    if(localStorage.getItem(this.authorizationService.token)) {
+      this.store$.dispatch(new GetUserAction());
+    }
     this.store$.pipe(select(isAuthenticatedSelector)).subscribe(
       (isAuthenticated: boolean) => {
         if (isAuthenticated) {
@@ -23,6 +27,7 @@ export class LoginGuard implements CanActivate {
         }
       }
     );
+
     return of(true);
   }
 }

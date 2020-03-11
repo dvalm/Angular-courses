@@ -17,8 +17,8 @@ export class AuthorizationService {
     private _baseURL = 'http://localhost:3004';
 
     constructor(private router: Router,
-                private http: HttpClient,
-                private store$: Store<AuthorizationState>) {}
+        private http: HttpClient,
+        private store$: Store<AuthorizationState>) { }
 
     public login(email: string, password: string): Observable<IToken> {
         return this.http.post(`${this._baseURL}/auth/login`, {
@@ -28,7 +28,7 @@ export class AuthorizationService {
     }
 
     public logout(): void {
-        this.store$.dispatch(new SetIsAuthenticatedAction({isAuthenticated: false}));
+        this.store$.dispatch(new SetIsAuthenticatedAction({ isAuthenticated: false }));
         localStorage.removeItem(this.token);
         this.router.navigateByUrl('/login');
     }
