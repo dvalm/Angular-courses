@@ -32,11 +32,10 @@ export class CoursesDescriptionComponent implements OnInit {
     private store$: Store<ICoursesState>) { }
 
   public ngOnInit(): void {
-
     this.store$.pipe(select(getCourseByIdSelector, { id: this.courseId })).subscribe(
-      (data: ICourse) => {
+      (data: Course) => {
         if (data) {
-          this.setCourseDescripton(data as Course);
+          this.setCourseDescripton(data);
         } else {
           this.setCourseDescripton(new Course());
         }
@@ -45,40 +44,38 @@ export class CoursesDescriptionComponent implements OnInit {
   }
 
   public submit(): void {
-    const course: ICourse = this.courseDescription.value;
-    course.creationDate = this.parseDateString(course.date);
-    course.duration = parseInt(course.duration.toString(), 10);
+    const courseValue = this.courseDescription.value;
+    const id = this.courseId ? this.courseId : null;
+    const course: Course = new Course(id, courseValue.title, this.parseDateString(courseValue.date).toString(),
+      parseInt(courseValue.duration.toString(), 10), courseValue.description, courseValue.isTopRated, courseValue.authors);
     if (this.courseId) {
-      course.id = this.courseId;
       this.store$.dispatch(new UpdateCourseAction({ course: course }));
     } else {
-      const mycourse = new Course(course.id, course.title, course.creationDate.toString(),
-        course.duration, course.description, course.isTopRated);
-      this.store$.dispatch(new CreateCourseAction({ course: mycourse }));
+      this.store$.dispatch(new CreateCourseAction({ course: course }));
     }
   }
 
   public goBack(): void {
-    if (this.courseDescription.touched) {
-      const modalRef = this.modalService.openModal(ConfirmationDontSaveModalComponent);
-      modalRef.instance.userAction.subscribe((goBack: boolean) => {
-        if (goBack) {
-          this.router.navigateByUrl('/courses');
-        }
-        this.modalService.closeModel(modalRef);
-      });
-    } else {
-      this.router.navigateByUrl('/courses');
-    }
+    const modalRef = this.modalService.openModal(ConfirmationDontSaveModalComponent);
+    modalRef.instance.userAction.subscribe((goBack: boolean) => {
+      if (goBack) {
+        this.router.navigateByUrl('/courses');
+      }
+      this.modalService.closeModel(modalRef);
+    });
   }
 
   private setCourseDescripton(course: Course): void {
     this.courseDescription = this.fb.group({
-      title: [course.title, Validators.required],
-      description: [course.description, Validators.required],
-      date: [this.datePipe.transform(course.creationDate, 'dd/MM/yyyy'), Validators.required],
-      duration: [course.duration, Validators.required],
-      isTopRated: [course.isTopRated]
+      /* tslint:disable */
+      // 50 and 500 is max length of string
+      title: [course.title, [Validators.required, Validators.maxLength(50)]],
+      description: [course.description, [Validators.required, Validators.maxLength(500)]],
+      /* tslint:enable */
+      date: [this.datePipe.transform(course.creationDate, 'dd/MM/yyyy')],
+      duration: [course.duration],
+      isTopRated: [course.isTopRated],
+      authors: [course.authors]
     });
   }
 

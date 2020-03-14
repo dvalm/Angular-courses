@@ -6,20 +6,93 @@
         color: $сolor-light-voilet;
         font-size: 15px;
         margin: 10px;
+
+        &-invalid{
+            font-size: 15px;
+            margin: 10px;
+            color: $сolor-red;
+        }
+    }
+
+    &__all-authors{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__author{
+        box-shadow: 0px 0px 2px 2px $сolor-lilac;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: row;
+        color: $сolor-dark-voilet;
+        padding: 10px 10px;
+        margin: 10px;
+
+        &:hover {
+            box-shadow: 0px 0px 3px 3px  lighten($сolor-purple-light-pink, 8%);
+        }
+
+        &.ng-invalid{
+            background-color: $сolor-pink;
+            border: 1px solid $сolor-red;
+            color: $сolor-red;
+
+            .course-authors__delete-author-cross{
+                background-image: url(src\app\styles\images\delete-cross-red.svg);
+            }
+        }
+    }
+
+    &__delete-author-cross{
+        margin-left: 10px;
+        display: inline-block;
+        height: 15px;
+        width: 10px;
+        transition: transform 0.3s;
+        background-image: url(src\app\styles\images\delete-cross.svg);
+    
+        &:hover{
+            transform: rotate(180deg); 
+        }
+    }
+
+    &__search-author{
+        color: $сolor-dark-voilet;
+        padding: 10px 10px;
+        background-color: $сolor-light;
+        border-bottom: 1px solid $сolor-purple-light-pink;
+
+        &:last-child{
+            border-bottom: 0;
+        }
+    }
+
+    &__all-search-authors{
+        border-radius: 5px;
+        position: absolute;
+        min-width: fit-content;
+        overflow: auto;
+        height: 74px;
     }
     
     &__field{
         box-shadow: 0px 0px 5px 5px $сolor-lilac;
         border-radius: 5px;
-        max-width: fit-content;
 
         &:hover {
             box-shadow: 1px 1px 15px 1px $сolor-purple-light-pink;
         }
     }
 
+    &__block{
+        height: fit-content;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 5px;
+        background-color: $сolor-light;
+    }
+
     &__input{
-        width: 350px;
         height: 35px;
         box-sizing: border-box;
         border: none;
@@ -29,9 +102,15 @@
         background-color: $сolor-light;
         cursor: text;
         padding: 10px;
+        margin: 10px;
 
         &::placeholder {
             color: $сolor-light-purple;
         }
+    }
+
+    &__block--horizontal{
+        display: flex;
+        flex-direction: row;
     }
 }

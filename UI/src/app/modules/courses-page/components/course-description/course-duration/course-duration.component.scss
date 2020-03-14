@@ -12,6 +12,12 @@
         color: $сolor-light-voilet;
         font-size: 15px;
         margin: 10px;
+
+        &-invalid{
+            font-size: 15px;
+            margin: 10px;
+            color: $сolor-red;
+        }
     }
     
     &__field{
@@ -39,5 +45,19 @@
         &::placeholder {
             color: $сolor-light-purple;
         }
+
+        &.ng-invalid.ng-touched{
+            background-color: $сolor-pink;
+            border: 1px solid $сolor-red;
+
+            &::placeholder {
+                color: $сolor-red;
+            }
+        }
+    }
+
+    &__block--horizontal{
+        display: flex;
+        flex-direction: row;
     }
 }

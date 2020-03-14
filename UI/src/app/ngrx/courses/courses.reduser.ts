@@ -35,7 +35,7 @@ export function coursesReduser(state: ICoursesState = initialState, action: Cour
                 (item: Course) => action.payload.course.id === item.id
             );
             const updatedCourses = state.courses.slice();
-            updatedCourses[updateIndex] = { ...action.payload.course };
+            updatedCourses[updateIndex] = action.payload.course;
             return {
                 ...state,
                 courses: updatedCourses,
