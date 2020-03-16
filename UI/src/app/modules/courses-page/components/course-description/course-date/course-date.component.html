@@ -1,7 +1,9 @@
 <div class="course-date">
     <div class="course-date__block--horizontal">
         <p class="course-date__text">Date</p>
-        <p *ngIf="parentForm.get(_formControlName).invalid && date.touched" class="course-date__text-invalid">Date must match format dd/mm/yyyy</p>
+        <p *ngIf="parentForm.get(_formControlName).invalid && date.touched"
+           class="course-date__text-invalid">
+           Date must match format dd/mm/yyyy</p>
     </div>
     <div class="course-date__field">
         <input class="course-date__input"

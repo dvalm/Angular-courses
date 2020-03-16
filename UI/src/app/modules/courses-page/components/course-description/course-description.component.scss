@@ -138,6 +138,7 @@
 
             &:disabled{
                 border-radius: 5px;
+                cursor: not-allowed;
                 background-color: darken($сolor-light-lilac, 5%);
             }
         }

@@ -15,7 +15,8 @@
                 type="password"
                 required
                 name="password">
-        <button class="login__button login__fields link" 
+        <button class="login__button login__fields"
+                [disabled]="loginForm.invalid || loginForm.untouched" 
                 type="submit">Sign in</button>
         <div class="login__text">
             <div><p><a href="#" class="link">Forgot Password</a></p></div>

@@ -1,28 +1,34 @@
-import { Component, ChangeDetectionStrategy, Input, Attribute, OnInit, forwardRef,
-  ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import {
+  Component, ChangeDetectionStrategy, Input, Attribute, OnInit, forwardRef,
+  ViewChild, ElementRef, ChangeDetectorRef
+} from '@angular/core';
 import { FormGroup, ControlValueAccessor, Validators, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl } from '@angular/forms';
 import { Author } from '../../../models/author';
 import { CoursesService } from '../../../services/courses.service';
 import { TNullable } from '../../../types/nullable.type';
 
 export function validateAuthors(formControl: FormControl): TNullable<object> {
-  const value = formControl.value;
+  const value: Author[] = formControl.value;
   const err = {
     error: {
       given: value,
       farmat: 'There should be no duplicate authors'
     }
   };
+  return hasDuplicate(value) ? err : null;
+}
+
+function hasDuplicate(arrayToCheck: Author[]): boolean {
   let duplicate = false;
-  value.forEach((author: Author, authorIndex: number) => {
-    value.forEach((item: Author, itemIndex: number) => {
+  arrayToCheck.forEach((author: Author, authorIndex: number) => {
+    arrayToCheck.forEach((item: Author, itemIndex: number) => {
       if (author.firstName === item.firstName &&
         author.lastName === item.lastName && authorIndex !== itemIndex) {
         duplicate = true;
       }
     });
   });
-  return duplicate ? err : null;
+  return duplicate;
 }
 
 @Component({
@@ -55,13 +61,10 @@ export class CourseAuthorsComponent implements ControlValueAccessor, OnInit {
   }
 
   public get isInputVisible(): boolean {
-    if (this.authors.length === 0) {
-      return true;
-    }
-    return this._isInputVisible;
+    return this.authors.length === 0 || this._isInputVisible;
   }
 
-  constructor(@Attribute('formControlName') private _formControlName: string,
+  constructor(@Attribute('formControlName') public _formControlName: string,
     private coursesService: CoursesService,
     private changeDetectorRef: ChangeDetectorRef) { }
 
@@ -75,35 +78,32 @@ export class CourseAuthorsComponent implements ControlValueAccessor, OnInit {
   }
 
   public ngOnInit(): void {
-    this.parentForm.get(this._formControlName).setValidators([validateAuthors, Validators.required]);
+    this.parentForm.get(this._formControlName).setValidators([validateAuthors]);
   }
 
   public writeValue(authors: Author[]): void {
     this.authors = authors;
   }
-/* tslint:disable */
+  /* tslint:disable */
   public registerOnChange(fn: any): void {
- /* tslint:enable */
+    /* tslint:enable */
     this.onChange = fn;
   }
-/* tslint:disable */
+  /* tslint:disable */
   public registerOnTouched(fn: any): void {
- /* tslint:enable */
+    /* tslint:enable */
     this.onTouche = fn;
   }
 
-  public deleteAuthor(author: Author): void {
-    this.authors = this.authors.filter((item: Author) => item.id !== author.id);
+  public deleteAuthor(index: number): void {
+    this.authors = this.authors.filter((item: Author, itemIndex: number) => itemIndex !== index);
     this.isInputVisible = false;
   }
 
   public createAuthor(event: Event): void {
-    const firstName = (event.target as HTMLInputElement).value.split(' ')[0];
-    const lastName = (event.target as HTMLInputElement).value.split(' ')[1];
+    const [firstName, lastName]: string[] = (event.target as HTMLInputElement).value.split(' ');
     (event.target as HTMLInputElement).value = '';
-    const updateAuthors = this.authors.slice();
-    updateAuthors[updateAuthors.length] = new Author(undefined, firstName, lastName);
-    this.authors = updateAuthors;
+    this.authors = [...this.authors, new Author(undefined, firstName, lastName)];
   }
 
   public createSearchAuthor(author: Author): void {
@@ -114,8 +114,9 @@ export class CourseAuthorsComponent implements ControlValueAccessor, OnInit {
     this.searchAuthors = [];
   }
 
-  public updateAuthor(author: Author): void {
-    this.deleteAuthor(author);
+  public updateAuthor(index: number): void {
+    const author = this.authors[index];
+    this.deleteAuthor(index);
     this.isInputVisible = true;
     this.newAuthor.nativeElement.value = `${author.firstName} ${author.lastName}`;
     setTimeout(() => this.newAuthor.nativeElement.focus(), 0);
@@ -125,7 +126,7 @@ export class CourseAuthorsComponent implements ControlValueAccessor, OnInit {
     this.coursesService.searchAuthors((event.target as HTMLInputElement).value).subscribe(
       (authors: Author[]) => {
         this.searchAuthors = authors;
-        this.changeDetectorRef.detectChanges();
+        this.changeDetectorRef.markForCheck();
       }
     );
   }
@@ -133,8 +134,8 @@ export class CourseAuthorsComponent implements ControlValueAccessor, OnInit {
   public isAuthorDuplicate(author: Author, index: number): boolean {
     return this.authors.some(
       (itemAuthor: Author, itemIndex: number) => author.firstName === itemAuthor.firstName &&
-            author.lastName === itemAuthor.lastName && index !==  itemIndex
-      );
+        author.lastName === itemAuthor.lastName && index !== itemIndex
+    );
   }
 
   public makeInputVisible(event: Event): void {
@@ -143,9 +144,9 @@ export class CourseAuthorsComponent implements ControlValueAccessor, OnInit {
       setTimeout(() => this.newAuthor.nativeElement.focus(), 0);
     }
   }
-/* tslint:disable */
+  /* tslint:disable */
   private onChange = (_: any) => { };
 
   private onTouche: any = () => { };
- /* tslint:enable */
+  /* tslint:enable */
 }

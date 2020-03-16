@@ -2,7 +2,6 @@ import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Course } from '../../models/course';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ICourse } from '../../interfaces/courses';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import {
@@ -45,7 +44,7 @@ export class CoursesDescriptionComponent implements OnInit {
 
   public submit(): void {
     const courseValue = this.courseDescription.value;
-    const id = this.courseId ? this.courseId : null;
+    const id = this.courseId || null;
     const course: Course = new Course(id, courseValue.title, this.parseDateString(courseValue.date).toString(),
       parseInt(courseValue.duration.toString(), 10), courseValue.description, courseValue.isTopRated, courseValue.authors);
     if (this.courseId) {

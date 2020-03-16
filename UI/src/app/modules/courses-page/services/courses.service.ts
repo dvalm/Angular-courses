@@ -39,9 +39,8 @@ export class CoursesService {
     }
 
     public createCourse(course: Course): Observable<ICourse> {
-        const authors = course.authors.map((author: IAuthor) => {
-            return { id: author.id, name: author.firstName, lastName: author.lastName };
-        });
+        const authors = course.authors.map((author: IAuthor) =>
+            ({ id: author.id, name: author.firstName, lastName: author.lastName }));
         return this.http.post(`${this._baseURL}/courses/`, {
             id: course.id,
             name: course.title,
@@ -82,8 +81,7 @@ export class CoursesService {
             return this.http.get<Author[]>(this._baseURL + `/authors?textFragment=${searchText}`).pipe(
                 map((authors: IAuthor[]) => {
                     return authors.map((author: IAuthor) => {
-                        const firstName = author.name.split(' ')[0];
-                        const lastName = author.name.split(' ')[1];
+                        const [firstName, lastName]: string[] = author.name.split(' ');
                         return new Author(author.id, firstName, lastName);
                     });
                 })

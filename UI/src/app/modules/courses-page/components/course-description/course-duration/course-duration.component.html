@@ -1,7 +1,9 @@
 <div class="course-duration">
     <div class="course-duration__block--horizontal">
         <p class="course-duration__text">Duration</p>
-        <p *ngIf="parentForm.get(_formControlName).invalid && duration.touched" class="course-duration__text-invalid">Duration must be greater than 0</p>
+        <p *ngIf="parentForm.get(_formControlName).invalid && duration.touched"
+           class="course-duration__text-invalid">
+           Duration must be greater than 0</p>
     </div>
     <div class="course-duration__time">
         <div class="course-duration__field">
@@ -12,8 +14,8 @@
                 #duration="ngModel"
                 placeholder="duation of the course in minutes"> 
         </div>
-        <p *ngIf="duration.value" 
+        <p *ngIf="value" 
             class="course-duration__text">
-            {{duration.value | appDuration}}</p>    
+            {{value.toString() | appDuration}}</p>    
     </div>
 </div>
