@@ -1,0 +1,76 @@
+{
+    "PAGES": {
+        "LOGIN_PAGE": {
+          "LOGIN": {
+            "LOGIN_TITLE": "Рады видеть вас снова",
+            "SIGN_IN": "Войти",
+            "FORGOT_PASSWORD": "Забыли пароль?",
+            "DONT_HAVE_ACCOUNT": "У вас нет аккаунта?",
+            "REGISTER": "Зарегистрироваться"
+          },
+          "REGISTRATION": {
+            "REGISTRATION_TITLE": "Форма регистрации",
+            "FIRST_NAME": "Ваше имя",
+            "LAST_NAME": "Ваша фамилия",
+            "LOGIN": "Логин",
+            "PASSWORD": "Пароль",
+            "REPEAT_PASSWORD": "Повторите пароль",
+            "SAVE": "Сохранить",
+            "CANCEL": "Выйти"
+          }
+        }, 
+        "NOT_FOUND_PAGE": {
+          "PAGE_NOT_FOUND": "Очень жаль, но такая страница не найдена",
+          "GO_TO_MAIN_PAGE": "Вернуться на главную страницу"
+        },
+        "COURSES_PAGE": {
+          "COURSE_LIST": {
+            "LOAD_MORE": "Загрузить больше",
+            "NO_DATA": "Нет данных. Пожалуйста добавьте новый курс"
+          },
+          "COURSE_CONTROL_PANEL": {
+            "ADD_COURSE": "Добавть курс"
+          },
+          "COURSE_DESCRIPTION": {
+            "TITLE": "Название",
+            "MAX_LENGTH_50": "Максимальная длина - 50 символов",
+            "REQUIRED_FIELD": "Это поле обязатльно для заполнения",
+            "TOP_RATED": "Высший рейтинг",
+            "DESCRIPTION": "Описание",
+            "MAX_LENGTH_500": "Максимальная длина - 50 символов",
+            "SAVE": "Добавить",
+            "CANCEL": "Назад",
+            "COURSE_AUTHORS": {
+              "AUTHORS_TITLE": "Авторы",
+              "DUPLICATE_ERROR": "У вас есть повторяющиеся авторы"
+            },
+            "COURSE_DATE": {
+              "DATE_TITLE": "Дата",
+              "FORMAT_ERROR": "Дата должна быть в формате дд/мм/гггг"
+            },
+            "COURSE_DURATION": {
+              "DURATION_TITLE": "Длительность",
+              "DURATION_VALUE_ERROR": "Длительность курса должна быть больше 0"
+            }
+          }
+        }
+      },
+    "SHARED": {
+        "APP_NAME": "Skills Tracking",
+        "CONFIRMATION_DELETE_MODAL": {
+          "DELETE_THIS_COURSE": "Удалить этот курс?",
+          "YES": "Да",
+          "NO": "Нет"
+        },
+        "CONFIRMATION_DONT_SAVE_MODAL": {
+          "GO_AWAY_FROM_PAGE": "Уйти со страницы?",
+          "CHENGES_DONT_SAVE": "(Ваши изменеия не сохранятся)",
+          "YES": "Да",
+          "NO": "Нет"
+        },
+        "LOGIN_PANEL": {
+          "YOURE_SIGNED_IN_AS": "вы вошли как ",
+          "LOG_OUT": "Выйти"
+        }
+    }
+  }

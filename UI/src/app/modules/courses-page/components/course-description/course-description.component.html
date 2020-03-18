@@ -2,14 +2,20 @@
      class="course-description">
     <div class="course-description__block">
         <div class="course-description__block--horizontal">
-            <p class="course-description__text">Title</p>
+            <p class="course-description__text">
+                {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.TITLE' | translate }}
+            </p>
             <p *ngIf="courseDescription.get('title').invalid &&
                       courseDescription.get('title').dirty &&
                       courseDescription.get('title').value.length > 0"
-               class="course-description__text-invalid">Max length is 50</p>
+               class="course-description__text-invalid">
+               {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.MAX_LENGTH_50' | translate }}
+            </p>
             <p *ngIf="courseDescription.get('title').dirty &&
                       courseDescription.get('title').value.length === 0"
-                class="course-description__text-invalid">This field is required</p>       
+                class="course-description__text-invalid">
+                {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.REQUIRED_FIELD' | translate }}
+            </p>       
         </div>
         <div class="course-description__block--horizontal">
             <div class="course-description__fields course-description__fields-input">
@@ -25,26 +31,34 @@
                     <div class="course-description__checkbox-border">
                         <input #isTopRated class="course-description__checkbox"
                                type="checkbox"
-                               formControlName="isTopRated"> 
+                               formControlName="isTopRated">
+                               <div *ngIf="courseDescription.value.isTopRated"
+                               class="course-description__checkbox-checked"></div>
                     </div>
-                    <p class="course-description__text">Is Top Rated</p>
-                    <div *ngIf="courseDescription.value.isTopRated"
-                         class="course-description__checkbox-checked"></div>
+                    <p class="course-description__text">
+                        {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.TOP_RATED' | translate }}
+                    </p>
+                   
                 </label>
             </div>
         </div>
     </div>
     <div class="course-description__block">
         <div class="course-description__block--horizontal">
-            <p class="course-description__text">Description</p>
+            <p class="course-description__text">
+                {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.DESCRIPTION' | translate }}
+            </p>
             <p *ngIf="courseDescription.get('description').invalid &&
                       courseDescription.get('description').dirty &&
                       courseDescription.get('description').value.length > 0"
                class="course-description__text-invalid">
-               Max length is 500</p>
+               {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.MAX_LENGTH_500' | translate }}
+            </p>
             <p *ngIf="courseDescription.get('description').dirty &&
                       courseDescription.get('description').value.length === 0"
-                class="course-description__text-invalid">This field is required</p>       
+                class="course-description__text-invalid">
+                {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.REQUIRED_FIELD' | translate }}
+            </p>       
         </div>
         <div class="course-description__fields course-description__fields-description">
             <textarea class="course-description__textarea fields"
@@ -75,11 +89,15 @@
             <button class="save__button button"
                     (click)="submit()"
                     [disabled]="courseDescription.invalid"
-                    routerLink='/courses'>Save</button>
+                    routerLink='/courses'>
+                    {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.SAVE' | translate }}
+                </button>
         </div>
         <div>
             <button class="cancel-button__button button"
-                    (click)="goBack()">Cancel</button>
+                    (click)="goBack()">
+                    {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.CANCEL' | translate }}
+                </button>
         </div>
     </div>
 </div>

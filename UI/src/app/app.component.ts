@@ -14,6 +14,9 @@ export class AppComponent {
   public isAuthenticated: boolean;
 
   constructor(private translate: TranslateService) {
+    translate.addLangs(['en', 'ru']);
     translate.setDefaultLang('en');
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|ru/) ? browserLang : 'en');
   }
 }

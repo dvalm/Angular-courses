@@ -1,29 +1,39 @@
 <div class="registration">
     <div class="registration__content">
-        <p class="registration__title">Registration form</p>
+        <p class="registration__title">
+            {{ 'PAGES.LOGIN_PAGE.REGISTRATION.REGISTRATION_TITLE' | translate }}
+        </p>
         <div class="registration__block">
-            <p class="registration__text">Your first name</p>
+            <p class="registration__text">
+                {{ 'PAGES.LOGIN_PAGE.REGISTRATION.FIRST_NAME' | translate }}
+            </p>
             <div class="registration__fields registration__fields-input">
                 <input class="registration__input fields"
                        placeholder="uour first name">
             </div>
         </div>
         <div class="registration__block">
-            <p class="registration__text">Your last name</p>
+            <p class="registration__text">
+                {{ 'PAGES.LOGIN_PAGE.REGISTRATION.LAST_NAME' | translate }}
+            </p>
             <div class="registration__fields registration__fields-input">
                 <input class="registration__input fields"
                        placeholder="uour last name">
             </div>
         </div>
         <div class="registration__block">
-            <p class="registration__text">Login</p>
+            <p class="registration__text">
+                {{ 'PAGES.LOGIN_PAGE.REGISTRATION.LOGIN' | translate }}
+            </p>
             <div class="registration__fields registration__fields-input">
                 <input class="registration__input fields"
                        placeholder="login">
             </div>
         </div>
         <div class="registration__block">
-            <p class="registration__text">Password</p>
+            <p class="registration__text">
+                {{ 'PAGES.LOGIN_PAGE.REGISTRATION.PASSWORD' | translate }}
+            </p>
             <div class="registration__fields registration__fields-input">
                 <input class="registration__input fields"
                        type="password"
@@ -31,7 +41,9 @@
             </div>
         </div>
         <div class="registration__block">
-            <p class="registration__text">Repeat password</p>
+            <p class="registration__text">
+                {{ 'PAGES.LOGIN_PAGE.REGISTRATION.REPEAT_PASSWORD' | translate }}
+            </p>
             <div class="registration__fields registration__fields-input">
                 <input class="registration__input fields"
                        type="password"
@@ -42,11 +54,15 @@
             <div class="save__border-button">
                 <button class="save__button button"
                         type="submit"
-                        routerLink='/login'>Save</button>
+                        routerLink='/login'>
+                        {{ 'PAGES.LOGIN_PAGE.REGISTRATION.SAVE' | translate }}
+                    </button>
             </div>
             <div>
                 <button class="cancel-button__button button"
-                        (click)="goBack()">Cancel</button>
+                        (click)="goBack()">
+                        {{ 'PAGES.LOGIN_PAGE.REGISTRATION.CANCEL' | translate }}
+                    </button>
             </div>
         </div>
     </div>

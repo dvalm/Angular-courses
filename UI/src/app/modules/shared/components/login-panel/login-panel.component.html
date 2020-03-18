@@ -1,9 +1,13 @@
 <div class="login">
     <div class="login__text">
-        <p>you're signed in as <span class="login__text_dark">{{name$ | async}}</span></p>
+        <p>
+            {{'SHARED.LOGIN_PANEL.YOURE_SIGNED_IN_AS' | translate }}
+            <span class="login__text_dark">{{name$ | async}}</span></p>
     </div>
     <div class="login__border-button">
-        <button class="login__button" (click)="logout()">log out</button>
+        <button class="login__button" (click)="logout()">
+            {{'SHARED.LOGIN_PANEL.LOG_OUT' | translate }}
+        </button>
     </div>
     
 </div>
