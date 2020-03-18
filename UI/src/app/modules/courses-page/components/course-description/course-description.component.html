@@ -4,13 +4,19 @@
         <div class="course-description__block--horizontal">
             <p class="course-description__text">Title</p>
             <p *ngIf="courseDescription.get('title').invalid &&
-                      courseDescription.get('title').dirty"
-               class="course-description__text-invalid">Max length is 50</p>    
+                      courseDescription.get('title').dirty &&
+                      courseDescription.get('title').value.length > 0"
+               class="course-description__text-invalid">Max length is 50</p>
+            <p *ngIf="courseDescription.get('title').dirty &&
+                      courseDescription.get('title').value.length === 0"
+                class="course-description__text-invalid">This field is required</p>       
         </div>
         <div class="course-description__block--horizontal">
             <div class="course-description__fields course-description__fields-input">
                 <input class="course-description__input fields"
                        formControlName="title"
+                       [ngClass]="{'invalid':courseDescription.get('title').invalid &&
+                                             courseDescription.get('title').value.length > 0}"
                        placeholder="Your title"
                        required>
             </div>
@@ -32,13 +38,19 @@
         <div class="course-description__block--horizontal">
             <p class="course-description__text">Description</p>
             <p *ngIf="courseDescription.get('description').invalid &&
-                      courseDescription.get('description').dirty"
+                      courseDescription.get('description').dirty &&
+                      courseDescription.get('description').value.length > 0"
                class="course-description__text-invalid">
-               Max length is 500</p>    
+               Max length is 500</p>
+            <p *ngIf="courseDescription.get('description').dirty &&
+                      courseDescription.get('description').value.length === 0"
+                class="course-description__text-invalid">This field is required</p>       
         </div>
         <div class="course-description__fields course-description__fields-description">
             <textarea class="course-description__textarea fields"
                       formControlName="description"
+                      [ngClass]="{'invalid':courseDescription.get('description').invalid &&
+                                             courseDescription.get('description').value.length > 0}"
                       placeholder="Your description"
                       required></textarea>
         </div>

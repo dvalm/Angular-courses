@@ -8,7 +8,6 @@
     <div class="course-duration__time">
         <div class="course-duration__field">
             <input class="course-duration__input"
-                [ngClass]="{'ng-invalid':parentForm.get(_formControlName).invalid}"
                 [(ngModel)]="value"
                 (input)=inputValidator($event)
                 #duration="ngModel"
@@ -16,6 +15,6 @@
         </div>
         <p *ngIf="value" 
             class="course-duration__text">
-            {{value.toString() | appDuration}}</p>    
+            {{value | appDuration}}</p>    
     </div>
 </div>

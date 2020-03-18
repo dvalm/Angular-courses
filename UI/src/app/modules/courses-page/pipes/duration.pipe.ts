@@ -8,7 +8,8 @@ export class DurationPipe implements PipeTransform {
 
   constructor(private numberPipe: DecimalPipe) {}
 
-  public transform(value: number): string {
+  public transform(value: number | string): string {
+    value = typeof value === 'string' ? parseInt(value) : value;
     let hours = 0;
     const minutesInHour = 60;
     while (value >= minutesInHour) {

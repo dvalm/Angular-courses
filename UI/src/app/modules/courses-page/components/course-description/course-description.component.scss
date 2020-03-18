@@ -96,7 +96,7 @@
         cursor: text;
         padding: 10px;
 
-        &.ng-invalid.ng-dirty{
+        &.invalid{
             background-color: $сolor-pink;
             border: 1px solid $сolor-red;
 
