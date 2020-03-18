@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +14,8 @@ import { CoursesActionsType, CreateCourseAction, CreateCourseErrorAction, Create
 import { Course } from 'src/app/modules/courses-page/models/course';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ICourse } from 'src/app/modules/courses-page/interfaces/courses';
+import { IAuthor } from 'src/app/modules/courses-page/interfaces/author';
+import { Author } from 'src/app/modules/courses-page/models/author';
 
 @Injectable()
 export class CoursesEffects {
@@ -24,8 +26,10 @@ export class CoursesEffects {
         switchMap((action: CreateCourseAction) => this.coursesService.createCourse(action.payload.course).pipe(
             map((data: ICourse) => {
                 this.toastr.success('Course created successfully!');
+                const authors = data.authors.map((author: IAuthor) => new Author(author.id,
+                    author.firstName ? author.firstName : author.name, author.lastName));
                 const course = new Course(data.id, data.name, data.date, data.length,
-                                          data.description, data.isTopRated);
+                                          data.description, data.isTopRated, authors);
                 return this.store$.dispatch(new CreateCourseSuccessAction({ course: course }));
             }),
             catchError((httpError: HttpErrorResponse) => {
@@ -40,9 +44,11 @@ export class CoursesEffects {
         ofType(CoursesActionsType.updateCourse),
         switchMap((action: UpdateCourseAction) => this.coursesService.updateCourse(action.payload.course).pipe(
             map((data: ICourse) => {
-                this.toastr.success('Course updated successfully!');
+                const authors = data.authors.map((author: IAuthor) => new Author(author.id,
+                    author.firstName ? author.firstName : author.name, author.lastName));
                 const course = new Course(data.id, data.name, data.date, data.length,
-                                          data.description, data.isTopRated);
+                    data.description, data.isTopRated, authors);
+                this.toastr.success('Course updated successfully!');
                 return this.store$.dispatch(new UpdateCourseSuccessAction({ course: course }));
             }),
             catchError((httpError: HttpErrorResponse) => {

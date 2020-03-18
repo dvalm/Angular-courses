@@ -1,3 +1,5 @@
+import { Author } from '../models/author';
+
 export interface ICourse {
     id?: number;
     description?: string;
@@ -8,5 +10,5 @@ export interface ICourse {
     title?: string;
     creationDate?: Date;
     duration?: number;
-    authors?: string[];
+    authors?: Author[];
 }

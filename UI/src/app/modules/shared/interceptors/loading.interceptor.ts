@@ -17,6 +17,9 @@ export class LoadingInterceptor implements HttpInterceptor {
     constructor(private modalService: ModalService) { }
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+        if (request.url.includes('authors')) {
+            return next.handle(request);
+        }
         let modalRef: ComponentRef<LoadingBlockComponent>;
         if (!this.modalService.isOpen) {
             modalRef = this.modalService.openModal(LoadingBlockComponent);

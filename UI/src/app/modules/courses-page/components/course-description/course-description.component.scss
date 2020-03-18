@@ -2,11 +2,18 @@
 
 .course-description{
     min-width: 510px;
+    padding-bottom: 20px;
 
     &__text{
         color: $сolor-light-voilet;
         font-size: 15px;
         margin: 10px;
+
+        &-invalid{
+            font-size: 15px;
+            margin: 10px;
+            color: $сolor-red;
+        }
     }
 
     &__block{
@@ -36,8 +43,7 @@
         }
 
         &-border{
-            position: relative;
-            top: 9px;
+            margin-top: 10px;
             width: 15px;
             height: 15px;
             border: solid 1px transparent;
@@ -65,6 +71,11 @@
     &__fields{
         box-shadow: 0px 0px 5px 5px $сolor-lilac;
         border-radius: 5px;
+        height: fit-content;
+
+        &-description{
+            height: 200px;
+        }
 
         &-input{
             max-width: fit-content;
@@ -84,6 +95,15 @@
         background-color: $сolor-light;
         cursor: text;
         padding: 10px;
+
+        &.invalid{
+            background-color: $сolor-pink;
+            border: 1px solid $сolor-red;
+
+            &::placeholder {
+                color: $сolor-red;
+            }
+        }
 
         &::placeholder {
             color: $сolor-light-purple;
@@ -115,6 +135,12 @@
             width: 100%;
             height: 100%;
             color: $сolor-dark-voilet;
+
+            &:disabled{
+                border-radius: 5px;
+                cursor: not-allowed;
+                background-color: darken($сolor-light-lilac, 5%);
+            }
         }
     
         .button{

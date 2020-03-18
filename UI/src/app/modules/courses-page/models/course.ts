@@ -1,4 +1,5 @@
 import { ICourse } from '../interfaces/courses';
+import { Author } from './author';
 /* tslint:disable */
 // 7 is the number with we fixed randomNumber
 // 2 is the number of start chart in randomNumber: 0,nnnnnnnnnn
@@ -12,14 +13,17 @@ export class Course implements ICourse {
     duration: number;
     description: string;
     isTopRated: boolean;
+    authors: Author[];
 
     constructor(id: number = idDefaultValue, title: string = '', creationDate: string = null,
-                duration: number = null, description: string = '', isTopRated: boolean = false) {
+                duration: number = null, description: string = '', isTopRated: boolean = false,
+                authors: Author[] = []) {
         this.id = id;
         this.title = title;
         this.creationDate = creationDate ? new Date(creationDate) : null;
         this.duration = duration;
         this.description = description;
         this.isTopRated = isTopRated;
+        this.authors = authors;
     }
 }

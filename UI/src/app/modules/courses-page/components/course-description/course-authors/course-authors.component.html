@@ -1,8 +1,40 @@
 <div class="course-authors">
-    <p class="course-authors__text">Authors</p>
+    <div class="course-authors__block--horizontal">
+        <p class="course-authors__text">Authors</p>
+        <p *ngIf="parentForm.get(_formControlName).invalid"
+            class="course-authors__text-invalid">
+            There should be no duplicate authors</p>
+    </div>
     <div class="course-authors__field">
-        <input class="course-authors__input"
-            placeholder="Add authors"
-            required>
+        <div class="course-authors__block">
+            <div class="course-authors__all-authors"
+                 (click)="makeInputVisible($event)">
+                <ng-container *ngFor="let author of authors; let i=index;">
+                    <div class="course-authors__author"
+                         (click)="updateAuthor(i)"
+                         [ngClass]="{'ng-invalid':isAuthorDuplicate(author, i)}">
+                        <div>
+                            <p>{{author.firstName}} {{author.lastName}}</p>
+                        </div>
+                        <div class="course-authors__delete-author-cross"
+                             (click)="deleteAuthor(i)"></div>
+                    </div>
+                </ng-container>
+                <div [hidden]="!isInputVisible">
+                    <input class="course-authors__input"
+                           placeholder="Add authors"
+                           (keyup.enter)="createAuthor($event)"
+                        (input)="inputAuthor($event)" #newAuthor>
+                    <div class="course-authors__all-search-authors">
+                        <ng-container *ngFor="let author of searchAuthors">
+                            <div class="course-authors__search-author"
+                                 (click)="createSearchAuthor(author)">
+                                <p>{{author.firstName}} {{author.lastName}}</p>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

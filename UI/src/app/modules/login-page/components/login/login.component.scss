@@ -69,7 +69,12 @@
     &__button{
         color: $сolor-white;
         font-size: 15px;
+        cursor: pointer;
         background-image:  linear-gradient(to right, $сolor-light-voilet, $сolor-purple);
+        
+        &:disabled{
+            cursor: not-allowed;
+        }
     }
 
     .bold{

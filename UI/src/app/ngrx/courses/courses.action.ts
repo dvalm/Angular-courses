@@ -71,7 +71,7 @@ export class CreateCourseErrorAction implements Action {
 
 export class UpdateCourseAction implements Action {
     readonly type = CoursesActionsType.updateCourse;
-    constructor (public payload: {course: ICourse}) {}
+    constructor (public payload: {course: Course}) {}
 }
 
 export class UpdateCourseSuccessAction implements Action {

@@ -1,15 +1,20 @@
 <div class="course-duration">
-    <p class="course-duration__text">Duration</p>
+    <div class="course-duration__block--horizontal">
+        <p class="course-duration__text">Duration</p>
+        <p *ngIf="parentForm.get(_formControlName).invalid && duration.touched"
+           class="course-duration__text-invalid">
+           Duration must be greater than 0</p>
+    </div>
     <div class="course-duration__time">
-        <div class="course-duration__field" [formGroup]="parentForm">
+        <div class="course-duration__field">
             <input class="course-duration__input"
-                #duration
-                (input)="inputValidator($event)"
-                placeholder="What is the duation of the course? (in minutes)"
-                [formControlName]="courseFormControlName">   
+                [(ngModel)]="value"
+                (input)=inputValidator($event)
+                #duration="ngModel"
+                placeholder="duation of the course in minutes"> 
         </div>
-        <p *ngIf="duration.value" 
+        <p *ngIf="value" 
             class="course-duration__text">
-            {{duration.value | appDuration}}</p>    
+            {{value | appDuration}}</p>    
     </div>
 </div>

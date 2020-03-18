@@ -1,24 +1,26 @@
 <div class="login">
-    <div class="login__content">
+    <form class="login__content" (ngSubmit)="login()"
+          #loginForm="ngForm">
         <div>
             <p class="login__tietle bold">Nice to see you again!</p>
         </div>
         <input class="login__input login__fields"
                [(ngModel)]="email"
                placeholder="email"
-               (keyup.enter)="login()"
-               required>
+               required
+               name="email">
         <input  class="login__input login__fields"
-                (keyup.enter)="login()"
                 [(ngModel)]="password"
                 placeholder="password"
                 type="password"
-                required>
-        <button class="login__button login__fields link" 
-                (click)="login()">Sign in</button>
+                required
+                name="password">
+        <button class="login__button login__fields"
+                [disabled]="loginForm.invalid || loginForm.untouched" 
+                type="submit">Sign in</button>
         <div class="login__text">
             <div><p><a href="#" class="link">Forgot Password</a></p></div>
             <div><p>Dont't have an account? <span class="bold"><a routerLink="registration" routerLinkActive="active" class="link">Get started</a></span></p></div>
         </div>
-    </div>
+    </form>
 </div>
