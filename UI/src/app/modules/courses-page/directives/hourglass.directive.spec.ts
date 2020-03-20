@@ -32,30 +32,21 @@ describe('HourglassDirective', () => {
     }));
 
     it('should appear hourglass on course that duration 94min', () => {
-/* tslint:disable */
-        // 94 > maxDuration = 90
         comp.course = new Course(null, null, null, 94);
-/* tslint:enable */
         fixture.detectChanges();
         const div =  fixture.nativeElement.querySelector('.course__hourglass');
         expect(div).not.toBeNull();
     });
 
     it('should appear hourglass on course that duration 90min', () => {
-/* tslint:disable */
-        // 94 === maxDuration = 90
         comp.course = new Course(null, null, null, 90);
-/* tslint:enable */
         fixture.detectChanges();
         const div =  fixture.nativeElement.querySelector('.course__hourglass');
         expect(div).not.toBeNull();
     });
 
     it('should appear hourglass on course that duration 60min', () => {
-/* tslint:disable */
-        // 60 < maxDuration = 90
         comp.course = new Course(null, null, null, 60);
-/* tslint:enable */
         fixture.detectChanges();
         const div =  fixture.nativeElement.querySelector('.course__hourglass');
         expect(div).toBeNull();

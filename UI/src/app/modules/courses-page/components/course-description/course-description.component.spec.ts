@@ -20,10 +20,7 @@ class ActivatedRouteStub {
 }
 
 const routerStub = new RouterStub();
-/* tslint:disable */
-    // 23 ad 67 are random numbers
 const course = new Course(3, 'duis mollit reprehenderit ad', '2020-01-28T04:39:24+00:00', 67, 'reprehenderit est veniam elit', true);
-/* tslint:enable */
 const datePipe = new DatePipe('en-US');
 const formBuilder = new FormBuilder();
 const coursesServiceStub = new CoursesServiceStub();

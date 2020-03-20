@@ -111,7 +111,7 @@
     "no-consecutive-blank-lines": true,
     "one-variable-per-declaration": true,
     "prefer-function-over-method": false,
-    "no-magic-numbers": true,
+    "no-magic-numbers": false,
     "no-any": true
   }
 }

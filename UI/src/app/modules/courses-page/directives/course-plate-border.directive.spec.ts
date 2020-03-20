@@ -47,10 +47,7 @@ describe('CoursePlateBorderDirective', () => {
 
     it('should appear left green border on course', () => {
       const nowDate = new Date();
-/* tslint:disable */
-    // 7 day in one week
       const date = new Date((nowDate).setDate(nowDate.getDate() - 7));
-/* tslint:enable */
       comp.course = new Course(null, null, date.toString());
       fixture.detectChanges();
       const div =  fixture.nativeElement.querySelector('.course');
@@ -60,10 +57,7 @@ describe('CoursePlateBorderDirective', () => {
 
     it('should appear left blue border on course', () => {
         const nowDate = new Date();
-/* tslint:disable */
-    // 7 day in one week
         const date = new Date((nowDate).setDate(nowDate.getDate() + 7));
-/* tslint:enable */
         comp.course = new Course(null, null, date.toString());
         fixture.detectChanges();
         const div =  fixture.nativeElement.querySelector('.course');
@@ -73,10 +67,7 @@ describe('CoursePlateBorderDirective', () => {
 
     it('shouldn\'t appear border on course', () => {
         const nowDate = new Date();
-/* tslint:disable */
-    // 15 day > two week
         const date = new Date((nowDate).setDate(nowDate.getDate() - 15));
-/* tslint:enable */
         comp.course = new Course(null, null, date.toString());
         fixture.detectChanges();
         const div =  fixture.nativeElement.querySelector('.course');
