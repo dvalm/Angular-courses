@@ -1,9 +1,72 @@
 {
   "PAGES": {
-    "TEST_PAGE": {
-      "TEST_MESSAGE": "TEST MESSAGE, LOOK TRANSLATION ON /ASSETS/i18N/EN.JSON"
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "LOGIN_PAGE": {
+      "LOGIN": {
+        "LOGIN_TITLE": "Nice to see you again!",
+        "SIGN_IN": "Sign in",
+        "FORGOT_PASSWORD": "Forgot Password",
+        "DONT_HAVE_ACCOUNT": "Don't have an account?",
+        "REGISTER": "Get started"
+      },
+      "REGISTRATION": {
+        "REGISTRATION_TITLE": "Registration form",
+        "FIRST_NAME": "Your first name",
+        "LAST_NAME": "Your last name",
+        "LOGIN": "Login",
+        "PASSWORD": "Password",
+        "REPEAT_PASSWORD": "Repeat password"
+      }
+    }, 
+    "NOT_FOUND_PAGE": {
+      "PAGE_NOT_FOUND": "Oh no! Page not found!",
+      "GO_TO_MAIN_PAGE": "Go to the main page"
+    },
+    "COURSES_PAGE": {
+      "COURSE_LIST": {
+        "LOAD_MORE": "Load more",
+        "NO_DATA": "No data. Feel free to add new course"
+      },
+      "COURSE_CONTROL_PANEL": {
+        "ADD_COURSE": "Add course"
+      },
+      "COURSE_DESCRIPTION": {
+        "TITLE": "Title",
+        "MAX_LENGTH_50": "Max length is 50",
+        "REQUIRED_FIELD": "This field is required",
+        "TOP_RATED": "Is Top Rated",
+        "DESCRIPTION": "Description",
+        "MAX_LENGTH_500": "Max length is 500",
+        "COURSE_AUTHORS": {
+          "AUTHORS_TITLE": "Authors",
+          "DUPLICATE_ERROR": "There should be no duplicate authors"
+        },
+        "COURSE_DATE": {
+          "DATE_TITLE": "Date",
+          "FORMAT_ERROR": "Date must match format dd/mm/yyyy"
+        },
+        "COURSE_DURATION": {
+          "DURATION_TITLE": "Duration",
+          "DURATION_VALUE_ERROR": "Duration must be greater than 0"
+        }
+      }
     }
   },
   "SHARED": {
+    "YES": "Yes",
+    "NO": "No",
+    "APP_NAME": "Skills Tracking",
+    "CONFIRMATION_DELETE_MODAL": {
+      "DELETE_THIS_COURSE": "Delete this course?"
+    },
+    "CONFIRMATION_DONT_SAVE_MODAL": {
+      "GO_AWAY_FROM_PAGE": "Go away from page?",
+      "CHENGES_DONT_SAVE": "(Your chenges don't save)"
+    },
+    "LOGIN_PANEL": {
+      "YOURE_SIGNED_IN_AS": "you're signed in as ",
+      "LOG_OUT": "log out"
+    }
   }
 }

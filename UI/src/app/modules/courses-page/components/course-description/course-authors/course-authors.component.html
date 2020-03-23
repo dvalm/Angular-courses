@@ -1,9 +1,12 @@
 <div class="course-authors">
     <div class="course-authors__block--horizontal">
-        <p class="course-authors__text">Authors</p>
+        <p class="course-authors__text">
+            {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.COURSE_AUTHORS.AUTHORS_TITLE' | translate }}
+        </p>
         <p *ngIf="parentForm.get(_formControlName).invalid"
             class="course-authors__text-invalid">
-            There should be no duplicate authors</p>
+            {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.COURSE_AUTHORS.DUPLICATE_ERROR' | translate }}
+        </p>
     </div>
     <div class="course-authors__field">
         <div class="course-authors__block">

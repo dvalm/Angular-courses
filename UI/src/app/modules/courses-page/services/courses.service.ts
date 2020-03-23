@@ -10,10 +10,7 @@ import { coursesSelector } from 'src/app/ngrx/courses/courses.selector';
 import { Author } from '../models/author';
 import { IAuthor } from '../interfaces/author';
 
-/* tslint:disable */
-// 6 courses should be loaded in one request and placed on user screen
 const amountCoursesInPage = 6;
-/* tslint:enable */
 
 @Injectable({
     providedIn: 'root'

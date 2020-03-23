@@ -5,6 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { LoginPageRoutingModule } from './login-page.routing';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoginComponent } from './components/login/login.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+
+// tslint:disable-next-line:typedef
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 const declarations = [
   LoginPageComponent,
@@ -17,7 +25,14 @@ const declarations = [
   imports: [
     CommonModule,
     FormsModule,
-    LoginPageRoutingModule
+    LoginPageRoutingModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [],
   exports: [ ...declarations ]

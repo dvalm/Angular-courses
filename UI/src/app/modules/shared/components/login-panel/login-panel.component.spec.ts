@@ -6,10 +6,8 @@ import { User } from '../../models/user';
 import { AuthorizationServiceStub } from '../../testing-stub/authorization-service-stub.mock';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-/* tslint:disable */
-    // 3 is random number
 const user = new User(3, 'name', 'lastName3', 'name3@mail.com', '333');
-/* tslint:enable */
+
 const authorizationServiceStub = new AuthorizationServiceStub();
 
 describe('LoginPanelComponent', () => {

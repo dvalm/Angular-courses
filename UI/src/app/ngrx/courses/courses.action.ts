@@ -1,6 +1,5 @@
 import { Action } from '@ngrx/store';
 import { Course } from 'src/app/modules/courses-page/models/course';
-import { ICourse } from 'src/app/modules/courses-page/interfaces/courses';
 import { HttpErrorResponse } from '@angular/common/http';
 
 export enum CoursesActionsType {

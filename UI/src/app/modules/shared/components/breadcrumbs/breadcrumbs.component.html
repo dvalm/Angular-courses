@@ -1,5 +1,5 @@
 <div *ngIf="isAuthenticated" class="breadcrumbs">
-    <p (click)="navigate(path)" class="breadcrumbs__path" *ngFor="let path of routePath; let i = index">
+    <p  i18n (click)="navigate(path)" class="breadcrumbs__path" *ngFor="let path of routePath; let i = index">
         {{path}}
         <ng-container *ngIf="i!=(routePath.length-1)"> / </ng-container>
     </p>

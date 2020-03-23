@@ -2,12 +2,14 @@
     <div class="not-found-page__text">
         <div>
             <p class="not-found-page__text-title">
-                Oh no! Page not found!
+                {{ 'PAGES.NOT_FOUND_PAGE.PAGE_NOT_FOUND' | translate }}
             </p>
         </div>
         <div>
             <p class="not-found-page__text-link">
-                <a class="not-found-page__link" routerLink=''>Go to the main page</a>
+                <a class="not-found-page__link" routerLink=''>
+                    {{ 'PAGES.NOT_FOUND_PAGE.GO_TO_MAIN_PAGE' | translate }}
+                </a>
             </p>
         </div>
     </div>

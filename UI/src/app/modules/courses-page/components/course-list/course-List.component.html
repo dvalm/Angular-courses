@@ -5,11 +5,15 @@
                 class="courses-list__course"
                 [course]="course" 
                 (deleteCourse)="onDelete(course)"></app-course>
-    <button class="courses-list__button courses-list__block" (click)="loadMore()">Load more</button>
+    <button class="courses-list__button courses-list__block" (click)="loadMore()">
+      {{ 'PAGES.COURSES_PAGE.COURSE_LIST.LOAD_MORE' | translate }}
+    </button>
   </ng-container>
   <ng-template #noCoursesBlock>
     <div class="courses-list__block courses-list__no-data">
-      <p>No data. Feel free to add new course</p>
+      <p>
+        {{ 'PAGES.COURSES_PAGE.COURSE_LIST.NO_DATA' | translate }}
+      </p>
     </div>
   </ng-template>
 </div>

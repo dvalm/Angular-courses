@@ -2,7 +2,9 @@
     <form class="login__content" (ngSubmit)="login()"
           #loginForm="ngForm">
         <div>
-            <p class="login__tietle bold">Nice to see you again!</p>
+            <p class="login__tietle bold">
+                {{ 'PAGES.LOGIN_PAGE.LOGIN.LOGIN_TITLE' | translate }}
+            </p>
         </div>
         <input class="login__input login__fields"
                [(ngModel)]="email"
@@ -17,10 +19,19 @@
                 name="password">
         <button class="login__button login__fields"
                 [disabled]="loginForm.invalid || loginForm.untouched" 
-                type="submit">Sign in</button>
+                type="submit">
+                {{ 'PAGES.LOGIN_PAGE.LOGIN.SIGN_IN' | translate }}
+            </button>
         <div class="login__text">
-            <div><p><a href="#" class="link">Forgot Password</a></p></div>
-            <div><p>Dont't have an account? <span class="bold"><a routerLink="registration" routerLinkActive="active" class="link">Get started</a></span></p></div>
+            <div><p><a href="#" class="link">
+                {{ 'PAGES.LOGIN_PAGE.LOGIN.FORGOT_PASSWORD' | translate }}</a></p>
+            </div>
+            <div><p> 
+                {{ 'PAGES.LOGIN_PAGE.LOGIN.DONT_HAVE_ACCOUNT' | translate }} 
+                <span class="bold"><a routerLink="registration" routerLinkActive="active" class="link">
+                    {{ 'PAGES.LOGIN_PAGE.LOGIN.REGISTER' | translate }}
+                </a></span></p>
+            </div>
         </div>
     </form>
 </div>

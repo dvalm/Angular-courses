@@ -1,10 +1,8 @@
 import { ICourse } from '../interfaces/courses';
 import { Author } from './author';
-/* tslint:disable */
-// 7 is the number with we fixed randomNumber
-// 2 is the number of start chart in randomNumber: 0,nnnnnnnnnn
+
 const idDefaultValue = parseInt(Math.random().toFixed(7).slice(2), 10);
-/* tslint:enable */
+
 export class Course implements ICourse {
 
     id: number;

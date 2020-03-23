@@ -9,12 +9,8 @@ export class CoursePlateBorderDirective implements OnInit {
     private currentDate: Date;
     private green = '#d9e46a';
     private blue = '#98e1ea';
-/* tslint:disable */
-    // 100 * 60 * 60 * 24 is day in seconds
-    // 14 days are in two weeks
-    private day = 1000 * 60 * 60 * 24;
+    private secondsInDay = 1000 * 60 * 60 * 24;
     private twoWeaks = 14;
-/* tslint:enable */
     private hostHTMLElemenStyle = this.elementRef.nativeElement.style;
 
     constructor(private elementRef: ElementRef) {
@@ -26,7 +22,7 @@ export class CoursePlateBorderDirective implements OnInit {
     }
 
     private createCourseBorder(): void {
-        if (this.courseDate < this.currentDate && (this.courseDate.getTime() >= (this.currentDate.getTime() - this.day * this.twoWeaks) )) {
+        if (this.courseDate < this.currentDate && (this.courseDate.getTime() >= (this.currentDate.getTime() - this.secondsInDay * this.twoWeaks) )) {
             this.hostHTMLElemenStyle.borderLeft = `3px solid ${this.green}`;
             this.hostHTMLElemenStyle.paddingLeft = '7px';
         } else if (this.currentDate < this.courseDate) {

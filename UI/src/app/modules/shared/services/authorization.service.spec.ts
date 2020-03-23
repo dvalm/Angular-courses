@@ -7,13 +7,10 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToastrService } from 'ngx-toastr';
 
 const routerStub = new RouterStub();
-/* tslint:disable */
-    // all numbers are randon
 const users = [new User(1, 'name1', 'lastName1', 'name1@mail.com', '111'),
               new User(2, 'name2', 'lastName2', 'name2@mail.com', '222'),
               new User(4, 'lera', 'lera2', 'lera', 'lera'),
               new User(3, 'name3', 'lastName3', 'name3@mail.com', '333')];
-/* tslint:enable */
 
 describe('AuthorizationService', () => {
   let injector: TestBed;

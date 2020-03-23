@@ -2,6 +2,8 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, El
 import { Subject, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
+const minCountOfCharsToSearch = 3;
+
 @Component({
     selector: 'app-course-control-panel',
     templateUrl: './course-control-panel.component.html',
@@ -16,16 +18,10 @@ import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/oper
 
     public ngOnInit(): void {
       this._sbj.pipe(
-/* tslint:disable */
-// 500 is 0.5s of debounce time
         debounceTime(500),
-/* tslint:enable */
         distinctUntilChanged(),
         filter(
-/* tslint:disable */
-//  3 chars are needed to send a request
-          (searchText: string) => searchText.length >= 3 || searchText.length === 0
-/* tslint:enable */
+          (searchText: string) => searchText.length >= minCountOfCharsToSearch || searchText.length === 0
         ),
         switchMap((searchText: string) => of(this.search(searchText)))
       ).subscribe();

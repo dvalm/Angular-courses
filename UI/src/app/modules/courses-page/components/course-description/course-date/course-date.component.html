@@ -1,13 +1,17 @@
 <div class="course-date">
     <div class="course-date__block--horizontal">
-        <p class="course-date__text">Date</p>
-        <p *ngIf="parentForm.get(_formControlName).invalid && date.touched"
+        <p class="course-date__text">
+            {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.COURSE_DATE.DATE_TITLE' | translate }}
+        </p>
+        <p *ngIf="parentForm.get(_formControlName).invalid && date.dirty"
            class="course-date__text-invalid">
-           Date must match format dd/mm/yyyy</p>
+           {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.COURSE_DATE.FORMAT_ERROR' | translate }}
+        </p>
     </div>
     <div class="course-date__field">
         <input class="course-date__input"
-            [ngClass]="{'ng-invalid':parentForm.get(_formControlName).invalid}"
+            [ngClass]="{'ng-invalid':date.dirty &&
+                        parentForm.get(_formControlName).invalid}"
             [(ngModel)]="value"
             #date="ngModel"
             placeholder="dd/mm/yyyy">

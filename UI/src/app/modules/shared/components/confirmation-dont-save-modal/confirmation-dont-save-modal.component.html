@@ -2,16 +2,22 @@
     <div class="confirmation-dont-save-modal__container">
         <div class="confirmation-dont-save-modal__content">
             <div class="confirmation-dont-save-modal__text">
-                <p>Go away from page?</p>
-                <p class="confirmation-dont-save-modal__text-little">(Your chenges don't save)</p>
+                <p>{{'SHARED.CONFIRMATION_DONT_SAVE_MODAL.GO_AWAY_FROM_PAGE' | translate }}</p>
+                <p class="confirmation-dont-save-modal__text-little">
+                    {{'SHARED.CONFIRMATION_DONT_SAVE_MODAL.CHENGES_DONT_SAVE' | translate }}
+                </p>
             </div>
             <div class="confirmation-dont-save-modal__buttons">
                 <div class="confirmation-dont-save-modal__border-button-yes">
                     <button class="confirmation-dont-save-modal__button-yes button"
-                        (click)="onUsesAction(true)">Yes</button>
+                        (click)="onUsesAction(true)">
+                        {{'SHARED.YES' | translate }}
+                    </button>
                 </div>
                 <button class="confirmation-dont-save-modal__button-no button"
-                        (click)="onUsesAction(false)">No</button>
+                        (click)="onUsesAction(false)">
+                        {{'SHARED.NO' | translate }}
+                    </button>
             </div>
         </div>
     </div>

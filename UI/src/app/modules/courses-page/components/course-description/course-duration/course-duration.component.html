@@ -1,9 +1,13 @@
 <div class="course-duration">
     <div class="course-duration__block--horizontal">
-        <p class="course-duration__text">Duration</p>
-        <p *ngIf="parentForm.get(_formControlName).invalid && duration.touched"
+        <p class="course-duration__text">
+            {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.COURSE_DURATION.DURATION_TITLE' | translate }}
+        </p>
+        <p *ngIf="duration.dirty &&
+                  parentForm.get(_formControlName).invalid"
            class="course-duration__text-invalid">
-           Duration must be greater than 0</p>
+           {{ 'PAGES.COURSES_PAGE.COURSE_DESCRIPTION.COURSE_DURATION.DURATION_VALUE_ERROR' | translate }}
+        </p>
     </div>
     <div class="course-duration__time">
         <div class="course-duration__field">

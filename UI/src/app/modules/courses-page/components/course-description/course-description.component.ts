@@ -66,11 +66,8 @@ export class CoursesDescriptionComponent implements OnInit {
 
   private setCourseDescripton(course: Course): void {
     this.courseDescription = this.fb.group({
-      /* tslint:disable */
-      // 50 and 500 is max length of string
       title: [course.title, [Validators.required, Validators.maxLength(50)]],
       description: [course.description, [Validators.required, Validators.maxLength(500)]],
-      /* tslint:enable */
       date: [this.datePipe.transform(course.creationDate, 'dd/MM/yyyy')],
       duration: [course.duration],
       isTopRated: [course.isTopRated],
@@ -79,12 +76,9 @@ export class CoursesDescriptionComponent implements OnInit {
   }
 
   private parseDateString(dateString: string): Date {
-    /* tslint:disable */
-    // 6, 3, 5, 0, 2 are symbol position with we cotout in pattern: dd/mm/yyyy
     const year = parseInt(dateString.slice(6), 10);
     const month = parseInt(dateString.slice(3, 5), 10);
     const day = parseInt(dateString.slice(0, 2), 10);
     return new Date(year, month - 1, day);
-    /* tslint:enable */
   }
 }

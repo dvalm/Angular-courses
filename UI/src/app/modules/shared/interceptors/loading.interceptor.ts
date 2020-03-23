@@ -1,4 +1,3 @@
-// src/app/auth/token.interceptor.ts
 import { Injectable, ComponentRef } from '@angular/core';
 import {
     HttpRequest,
@@ -25,10 +24,7 @@ export class LoadingInterceptor implements HttpInterceptor {
             modalRef = this.modalService.openModal(LoadingBlockComponent);
         }
         return next.handle(request).pipe(
-/* tslint:disable */
-// 500 is 0.5s of fake delay
-            delay(1000),
-/* tslint:enable */
+            delay(500),
             tap(() => {
                     if (modalRef) {
                         this.modalService.closeModel(modalRef);
